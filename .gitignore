@@ -1,0 +1,19 @@
+# Môi trường ảo
+venv/
+/venv/
+*.venv
+
+# Thư mục cache của Python
+__pycache__/
+*.py[cod]
+
+# File môi trường
+.env
+*.env.*
+
+# Thư mục cơ sở dữ liệu vector (RẤT QUAN TRỌng)
+vector_db/
+/vector_db/
+
+# File hệ thống của macOS
+.DS_Store
