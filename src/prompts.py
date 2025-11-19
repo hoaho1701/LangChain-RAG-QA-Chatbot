@@ -2,7 +2,7 @@
 
 from llama_index.core import PromptTemplate
 
-# Dịch prompt sang tiếng Anh để LLM hiểu tốt nhất
+# Translate the prompt into English for better understanding by the LLM
 QA_TEMPLATE_STR = (
     "You are an expert AI research assistant. Your task is to provide a comprehensive and synthesized answer to the user's question based ONLY on the provided context.\n"
     "Analyze all parts of the context to form a complete understanding. Do not just extract sentences.\n"
