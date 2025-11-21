@@ -1,4 +1,4 @@
-# RAG Research Assistant - Your AI Research Assistant
+# RAG Research Assistant - AI Research Assistant
 
 Paper Navigator is a Q&A (Question & Answering) system built on the RAG (Retrieval-Augmented Generation) architecture. It allows users to ask questions in natural language and receive accurate answers from the content of a collection of scientific papers (in PDF format).
 
