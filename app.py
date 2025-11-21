@@ -77,7 +77,7 @@ with st.sidebar:
         st.session_state.show_confirm_dialog = True
 
     if st.session_state.get("show_confirm_dialog", False):
-        st.warning("⚠️ Are you sure? This will delete all uploaded files and the database.", icon="⚠️")
+        st.warning("⚠️ Are you sure? This will delete all uploaded files and the database.")
 
         col1, col2 = st.columns(2)
         
