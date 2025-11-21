@@ -11,3 +11,6 @@ DOCUMENTS_PATH = "./documents"
 
 # Path to the directory for the vector database
 VECTOR_DB_PATH = "./vector_db"
+
+CHUNK_SIZE = 1000
+CHUNK_OVERLAP = 200

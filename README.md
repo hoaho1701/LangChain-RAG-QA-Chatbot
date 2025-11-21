@@ -1,17 +1,20 @@
-# Paper Navigator 📚 - Your AI Research Assistant
+# RAG Research Assistant - Your AI Research Assistant
 
 Paper Navigator is a Q&A (Question & Answering) system built on the RAG (Retrieval-Augmented Generation) architecture. It allows users to ask questions in natural language and receive accurate answers from the content of a collection of scientific papers (in PDF format).
 
-This project runs 100% locally on your personal computer, with no need for paid APIs, ensuring privacy and accessibility.
+Powered by LangChain and Ollama, this project runs 100% locally on your machine, ensuring complete data privacy with no API costs.
 
 ---
 
-### ✨ Key Features
+### Key Features
 
--   **Synthesized & Intelligent Answers:** The chatbot doesn't just extract information; it synthesizes knowledge from multiple sources within the documents to provide comprehensive answers.
--   **Contextual Enhancement:** Utilizes advanced retrieval strategies to provide the LLM with a broader context of the query.
--   **100% Local:** Uses Ollama to run the large language model right on your machine.
--   **Interactive Interface:** A user-friendly chatbot interface that allows file uploads, data management, and clearing chat history.
+-   **LangChain Powered:** Utilizes the flexible LCEL (LangChain Expression Language) architecture for a robust RAG pipeline.
+-   **100% Local & Private:** Runs entirely on your hardware using Ollama (Llama 3) and local embeddings.
+-   **Smart Processing:** Explicit two-step document processing:
+    1.  **Load & Split:** Efficiently chunks PDF documents.
+    2.  **Embed & Store:** Vectorizes data into a persistent ChromaDB.
+-   **Safe Memory Management:** Optimized to handle database locking issues (using Garbage Collection & ChromaDB Reset API).
+-   **User-Friendly Interface:** Clean Streamlit UI with chat history management and safe workspace clearing.
 
 ---
 
@@ -19,7 +22,7 @@ This project runs 100% locally on your personal computer, with no need for paid 
 
 | Component         | Technology                              |
 | ----------------- | --------------------------------------- |
-| **Framework**     | LlamaIndex                              |
+| **Framework**     | LangChain (Community & Core)                           |
 | **LLM**           | Ollama (Model: `llama3:8b`)             |
 | **Embedding Model** | Hugging Face (`BAAI/bge-small-en-v1.5`) |
 | **Vector Database** | ChromaDB (Local)                        |
@@ -37,7 +40,6 @@ RAG-based-AI-Paper-Analyzer/
 ├── documents/
 └── src/
     ├── config.py
-    ├── data_processing.py
     └── prompts.py
     └── rag_pipeline.py
 ├── vector_db/
@@ -55,7 +57,6 @@ RAG-based-AI-Paper-Analyzer/
 | `documents/`        | Stores the scientific paper PDF files as input data.                |
 | `src/`              | Contains all the core logic and source code of the application.     |
 | `src/config.py`     | Defines constants and configurations like model names, file paths.  |
-| `src/data_processing.py` | Responsible for loading and processing documents from the `documents` folder. |
 | `src/prompts.py`    | Defines custom prompt templates to guide the LLM for better responses. |
 | `src/rag_pipeline.py` | The brain of the application, connecting all components to create the RAG pipeline. |
 | `vector_db/`        | Stores the vector database generated from the documents.            |
@@ -101,7 +102,17 @@ RAG-based-AI-Paper-Analyzer/
     ```bash
     streamlit run app.py
     ```
-    The first time you process documents, the system will need some time to build the vector database. Subsequently, you can continue to upload more documents to expand the system's knowledge base.
+
+---
+
+### 📖 How to Use
+
+1.  **Upload:** Open the sidebar, upload your PDF files, and click **"Process Documents"**.
+2.  **Wait:** The system will load, split, and embed your documents. Watch the spinner!
+3.  **Chat:** Once finished, type your question in the chat box (e.g., *"Summarize the main methodology"*).
+4.  **Manage:**
+    -   **Clear Chat History:** Wipes the conversation screen.
+    -   **Clear Workspace:** Completely deletes the database and files (requires confirmation).
 
 ---
 
@@ -109,7 +120,7 @@ RAG-based-AI-Paper-Analyzer/
 
 Here are some potential features to improve and expand the project:
 
--   [ ] **Support for Multiple Formats:** Extend processing capabilities to include `.docx` and `.txt` files.
+-   [ ] **Multi-Modal:** Support asking questions about images inside PDFs.
 -   [ ] **Save Chat History:** Persist conversations so users can review them later.
 -   [ ] **Source Citations:** Display the source (document name and page number) from which the answer was derived.
 
@@ -124,7 +135,6 @@ This project is licensed under the **MIT License**. See the `LICENSE` file for m
 ### 🙏 Acknowledgements
 
 This project would not have been possible without the amazing open-source tools from the community:
--   [LlamaIndex](https://www.llamaindex.ai/)
+-   [LangChain](https://www.langchain.com/)
 -   [Ollama](https://ollama.com/)
--   [ChromaDB](https://www.trychroma.com/)
 -   [Streamlit](https://streamlit.io/)
