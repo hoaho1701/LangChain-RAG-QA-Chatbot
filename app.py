@@ -26,7 +26,7 @@ if "pipeline" not in st.session_state:
 
 pipeline = st.session_state.pipeline
 
-# --- Sidebar: Upload & Info ---
+# --- Sidebar: Upload and Information ---
 with st.sidebar:
     st.header("📚 RAG Research Assistant")
     st.write("Upload PDF files to start asking questions.")
