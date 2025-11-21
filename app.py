@@ -8,7 +8,7 @@ from src.config import DOCUMENTS_PATH
 
 # --- App Configuration ---
 st.set_page_config(
-    page_title="Paper Navigator",
+    page_title="RAG Research Assistant",
     page_icon="📚",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -22,13 +22,14 @@ if not os.path.exists(DOCUMENTS_PATH):
 if "pipeline" not in st.session_state:
     print("Initializing RAG Pipeline for new session...")
     st.session_state.pipeline = RAGPipeline()
+    st.session_state.pipeline.load_existing_index()
 
 pipeline = st.session_state.pipeline
 
 # --- Sidebar: Upload & Info ---
 with st.sidebar:
-    st.header("📚 Paper Navigator")
-    st.write("Upload scientific papers (PDF) to start asking questions.")
+    st.header("📚 RAG Research Assistant")
+    st.write("Upload PDF files to start asking questions.")
     
     # --- File Uploader Logic ---
     uploaded_files = st.file_uploader(
@@ -40,103 +41,99 @@ with st.sidebar:
 
     if uploaded_files:
         # The process button only appears when files are selected
-        if st.button("Process and Load Data", use_container_width=True):
-            with st.spinner("Processing documents... This may take a moment."):
-                # Save files to the documents directory
-                for uploaded_file in uploaded_files:
-                    file_path = os.path.join(DOCUMENTS_PATH, uploaded_file.name)
-                    with open(file_path, "wb") as f:
-                        f.write(uploaded_file.getbuffer())
-                
-                pipeline.reset_index()
-
-                if "messages" not in st.session_state:
-                    st.session_state.messages = []
-                st.session_state.messages.append({
-                    "role": "assistant", 
-                    "content": f"🔄 **The system has been updated with {len(uploaded_files)} new document(s).** You can now continue asking questions."
-                })
-
-                st.toast(f"Successfully processed {len(uploaded_files)} file(s)!", icon="🎉")
-                st.rerun()
+        if st.button("Process Documents", use_container_width=True):
+            with st.spinner("Processing documents... Please wait."):
+                try:
+                    # Save files to the documents directory
+                    for uploaded_file in uploaded_files:
+                        file_path = os.path.join(DOCUMENTS_PATH, uploaded_file.name)
+                        with open(file_path, "wb") as f:
+                            f.write(uploaded_file.getbuffer())
+                    
+                    # Load and split documents
+                    splits = pipeline.load_and_split_documents()
+                    
+                    if splits:
+                        # Embed and store documents
+                        pipeline.embed_and_store_documents(splits)
+                        st.toast("Documents processed successfully!", icon="✅")
+                    else:
+                        st.error("Could not load documents. No valid PDF content found.")
+                except Exception as e:
+                    st.error(f"Error processing documents: {e}")
     
     st.divider()
     st.header("Settings")
 
     # Clear chat history button
     if st.button("Clear Chat History", use_container_width=True):
-        if "messages" in st.session_state:
-            st.session_state.messages = []
-        st.toast("Chat history cleared!", icon="🗑️")
+        st.session_state.messages = []
+        st.toast("Chat history cleared!", icon="🧹")
+        time.sleep(1)
         st.rerun()
 
     # Clear workspace button
-    if st.button("Delete All Data", type="primary", use_container_width=True):
-        st.session_state.confirm_delete = True
+    if st.button("Clear Workspace", type="primary", use_container_width=True):
+        st.session_state.show_confirm_dialog = True
 
-    if st.session_state.get("confirm_delete", False):
-        st.warning(
-            "This action will delete all uploaded files and the database. Are you sure?", 
-            icon="⚠️"
-        )
+    if st.session_state.get("show_confirm_dialog", False):
+        st.warning("⚠️ Are you sure? This will delete all uploaded files and the database.", icon="⚠️")
+
         col1, col2 = st.columns(2)
+        
+        # Button YES (Confirm)
         with col1:
-            if st.button("YES, DELETE NOW", use_container_width=True):
-                with st.spinner("Deleting data..."):
-                    pipeline.clear_workspace()
-                    # st.session_state.messages = []
-                    if "pipeline" in st.session_state:
-                        del st.session_state.pipeline
-                    if "messages" in st.session_state: 
-                        del st.session_state.messages
-                    st.session_state.confirm_delete = False
-                    st.success("All data has been deleted!", icon="✅")
-                    time.sleep(2)
-                    st.rerun()
+            if st.button("Yes, Delete All", type="primary", use_container_width=True):
+                pipeline.clear_workspace()
+                st.session_state.messages = [] # Clear chat history
+                st.session_state.show_confirm_dialog = False # Close dialog
+                st.toast("Workspace deleted successfully!", icon="🗑️")
+                time.sleep(1) # Pause briefly to show toast
+                st.rerun()
+        
+        # Button NO (Cancel)
         with col2:
-            if st.button("CANCEL", use_container_width=True):
-                st.session_state.confirm_delete = False
+            if st.button("Cancel", use_container_width=True):
+                st.session_state.show_confirm_dialog = False # Close dialog
                 st.rerun()
 
 # --- Main UI ---
-st.title("Paper Navigator: Your AI Research Assistant")
+st.title("RAG Research Assistant 📚")
 
-# Get query engine (can be None if no data yet)
-query_engine = pipeline.get_query_engine()
+if "messages" not in st.session_state:
+    st.session_state.messages = [{"role": "assistant", "content": "Hello! Upload a PDF and ask me anything."}]
 
-if query_engine is None:
-    st.info("👋 Welcome! Please upload documents in the sidebar to get started.")
-else:
-    # Initialize chat history
-    if "messages" not in st.session_state or not st.session_state.messages:
-        st.session_state.messages = [
-            {"role": "assistant", "content": "Hello! I'm ready to answer your questions about the documents."}
-        ]
+# Display chat history
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-    # Display chat history
-    for message in st.session_state.messages:
-        with st.chat_message(message["role"]):
-            st.markdown(message["content"])
+# Handle user input
+if prompt := st.chat_input("Ask a question..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
 
-    # Handle new question
-    if prompt := st.chat_input("Ask about the document content..."):
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
-
-        with st.chat_message("assistant"):
-            message_placeholder = st.empty()
-            full_response = ""
-                
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+            
+        if pipeline.chain is None:
+            message_placeholder.error("⚠️ Please upload and process documents first.")
+            full_response = "Please upload and process documents first."
+        else:
             with st.spinner("Thinking..."):
                 try:
-                    streaming_response = query_engine.query(prompt)
-                    for text in streaming_response.response_gen:
-                        full_response += text
+                    stream = pipeline.chat(prompt)
+
+                    for chunk in stream:
+                        full_response += chunk
                         message_placeholder.markdown(full_response + "▌")
+                    
                     message_placeholder.markdown(full_response)
                 except Exception as e:
-                    full_response = f"An error occurred: {e}"
-                    message_placeholder.error(full_response)
-            st.session_state.messages.append({"role": "assistant", "content": full_response})
+                    message_placeholder.error(f"Error: {e}")
+                    full_response = f"Error: {e}"
+
+    st.session_state.messages.append({"role": "assistant", "content": full_response})
 

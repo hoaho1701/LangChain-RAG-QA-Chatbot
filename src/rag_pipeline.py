@@ -1,125 +1,162 @@
 # src/rag_pipeline.py
 
-import chromadb
-from chromadb.config import Settings as ChromaSettings
-from llama_index.core import VectorStoreIndex, StorageContext, Settings
-from llama_index.core.node_parser import SentenceSplitter
-from llama_index.vector_stores.chroma import ChromaVectorStore
-from llama_index.llms.ollama import Ollama
-from llama_index.core.embeddings import resolve_embed_model
-from src.config import LLM_MODEL, EMBEDDING_MODEL, VECTOR_DB_PATH, DOCUMENTS_PATH
-from src.prompts import QA_TEMPLATE
-from src.data_processing import load_documents
 import os
 import shutil
+import gc
+from typing import List, Generator
+import chromadb
+from chromadb.config import Settings
+
+from langchain_community.document_loaders import PyPDFDirectoryLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
+from langchain_ollama import ChatOllama
+from langchain_core.prompts import PromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
+
+from src.config import (LLM_MODEL, EMBEDDING_MODEL, DOCUMENTS_PATH,
+                        VECTOR_DB_PATH, CHUNK_SIZE, CHUNK_OVERLAP)
+from src.prompts import QA_TEMPLATE
 
 class RAGPipeline:
     def __init__(self):
-        """Initializes the RAG pipeline components."""
-        self.llm = Ollama(model=LLM_MODEL, request_timeout=120.0)
-        self.embed_model = resolve_embed_model(f"local:{EMBEDDING_MODEL}")
-        Settings.llm = self.llm
-        Settings.embed_model = self.embed_model
-        self.index = None
-        self.db_client = None
+        """Initialize the RAG pipeline components."""
 
-    def _get_db_client(self):
-        """Creates or returns the database connection. Ensures only one connection exists."""
-        if self.db_client is None:
-            print("Creating new ChromaDB client...")
-            self.db_client = chromadb.PersistentClient(path=VECTOR_DB_PATH, settings=ChromaSettings(allow_reset=True))
-        return self.db_client
+        # Set up LLM (Ollama)
+        print(f"Loading LLM model: {LLM_MODEL}...")
+        self.llm = ChatOllama(model=LLM_MODEL, temperature=0, keep_alive="5m")
 
-    def build_index(self):
-        """Builds and persists the index from documents."""
-        print("Building a new index with advanced chunking...")
-        try:
-            documents = load_documents()
-        except FileNotFoundError:
-            # If no files, do nothing and return False
-            return False
-            
-        node_parser = SentenceSplitter(chunk_size=1024, chunk_overlap=20)
-
-        # Create ChromaDB client
-        client = self._get_db_client()
-        chroma_collection = client.get_or_create_collection("paper_navigator")
-        vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
-        storage_context = StorageContext.from_defaults(vector_store=vector_store)
-        
-        # Create index from documents
-        self.index = VectorStoreIndex.from_documents(
-            documents,
-            storage_context=storage_context,
-            transformations = [node_parser],
-            show_progress=True
+        # Set up Embeddings
+        print(f"Loading Embedding model: {EMBEDDING_MODEL}...")
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name=EMBEDDING_MODEL,
+            model_kwargs={"device": "cpu"},
+            encode_kwargs={"normalize_embeddings": True}
         )
-        print("Index built and persisted successfully.")
-        return True
 
-    def load_index(self):
-        """Loads an existing index from storage."""
-        if not os.path.exists(os.path.join(VECTOR_DB_PATH, "chroma.sqlite3")):
-            return False
-
-        print("Loading existing index from storage...")
-        client = self._get_db_client()
-        chroma_collection = client.get_or_create_collection("paper_navigator")
-        vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
-        self.index = VectorStoreIndex.from_vector_store(vector_store)
-        print("Index loaded successfully.")
-        return True
-
-    def get_query_engine(self):
-        """Returns a query engine for the index. Initializes index if not loaded."""
-        if self.index is None:
-            # If loading fails (no index), try building a new one
-            if not self.load_index():
-                self.build_index()
-
-        # If after both attempts there is still no index (due to no documents)
-        if self.index is None:
-            return None
-        
-        print("Creating query engine with custom prompt...")
-        return self.index.as_query_engine(
-            streaming=True,
-            text_qa_template=QA_TEMPLATE,
-            similarity_top_k=5
+        # Setup ChromaDB Client (PERSISTENT)
+        print("Initializing ChromaDB Client...")
+        self.client = chromadb.PersistentClient(
+            path=VECTOR_DB_PATH,
+            settings=Settings(allow_reset=True)
         )
+
+        self.vector_store = None
+        self.chain = None
+
+    def load_and_split_documents(self) -> List:
+        """Load and split documents from the specified path."""
+        if not os.path.exists(DOCUMENTS_PATH) or not any(f.endswith('.pdf') for f in os.listdir(DOCUMENTS_PATH)):
+            print(f"No PDF documents found in {DOCUMENTS_PATH}. Please add documents and try again.")
+            return []
+        
+        print(f"Loading documents from: {DOCUMENTS_PATH}...")
+        loader = PyPDFDirectoryLoader(DOCUMENTS_PATH)
+        docs = loader.load()
+        print(f"Loaded {len(docs)} documents.")
+
+        print("Splitting documents into chunks...")
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size = CHUNK_SIZE,
+            chunk_overlap = CHUNK_OVERLAP,
+            add_start_index = True
+        )
+        splits = text_splitter.split_documents(docs)
+        print(f"Created {len(splits)} document chunks.")
+
+        return splits
     
-    def reset_index(self):
-        """Force rebuilds the index (Used when new files are uploaded)."""
-        # Clear index from memory
-        self.index = None
-        client = self._get_db_client()
+    def embed_and_store_documents(self, splits) -> bool:
+        """Embed and store documents in the vector database."""
+        if not splits:
+            print("No splits to process.")
+            return False
+        
+        print("Resetting database before ingestion...")
         try:
-            # Delete existing collection from ChromaDB
-            client.delete_collection(name="paper_navigator")
-            print("Successfully deleted old collection from ChromaDB.")
+            self.client.reset()
         except Exception as e:
-            # Ignore error if collection does not exist
-            print(f"Could not delete collection (it might not exist): {e}")
+            print(f"Warning during reset: {e}")
 
-        # Rebuild from scratch
-        self.build_index()
+        print(f"Embedding {len(splits)} chunks into ChromaDB...")
+        self.vector_store = Chroma.from_documents(
+            documents = splits,
+            embedding = self.embeddings,
+            client = self.client,
+            collection_name = "paper_navigator_db"
+        )
+        print("Embedded and stored document chunks in the vector database.")
+
+        self.setup_rag_chain()
+        return True
+    
+    def load_existing_index(self) -> bool:
+        """Load existing vector database index if available."""
+        try:
+            collections = self.client.list_collections()
+            if not collections:
+                print("No existing collections found in DB.")
+                return False
+        except Exception:
+            return False
+        
+        print("Loading existing ChromaDB index...")
+        self.vector_store = Chroma(
+            embedding_function = self.embeddings,
+            client = self.client,
+            collection_name = "paper_navigator_db"
+        )
+
+        self.setup_rag_chain()
+        return True
+    
+    def setup_rag_chain(self):
+        """Set up the RAG chain with prompt templates and output parsers."""
+        if not self.vector_store:
+            raise ValueError("Vector store is not initialized.")
+        
+        retriever = self.vector_store.as_retriever(
+            search_type="similarity",
+            search_kwargs={"k": 5}
+        )
+        
+        prompt = QA_TEMPLATE
+
+        def format_docs(docs: List) -> str:
+            return "\n\n".join([doc.page_content for doc in docs])
+        
+        self.chain = (
+            {"context": retriever | format_docs, "question": RunnablePassthrough()}
+            | prompt
+            | self.llm
+            | StrOutputParser()
+        )
+        print("RAG Chain initialized successfully.")
+
+    def chat(self, question: str) -> Generator:
+        """Process a user query through the RAG chain."""
+        if not self.chain:
+            raise ValueError("RAG chain is not initialized.")
+        
+        return self.chain.stream(question)
+
 
     def clear_workspace(self):
-        """Deletes all documents and the vector database, then resets the index."""
-        print("Clearing workspace...")
-        self.index = None
+        """Clear the entire workspace including documents and vector database."""
+        print("Clearing Vector DB...")
+        try:
+            self.client.reset()
+            self.vector_store = None
+            self.chain = None
+        except Exception as e:
+            print(f"Error resetting DB: {e}")
 
-        client = self._get_db_client()
-        client.reset()
-        print("ChromaDB has been reset via API.")
-
-        self.db_client = None
-        
         if os.path.exists(DOCUMENTS_PATH):
-            for filename in os.listdir(DOCUMENTS_PATH):
-                if filename == '.gitkeep': continue
-                file_path = os.path.join(DOCUMENTS_PATH, filename)
-                if os.path.isfile(file_path): os.unlink(file_path)
-        print("Documents folder cleared.")
-        
-        print("Workspace cleared.")
+            for f in os.listdir(DOCUMENTS_PATH):
+                try:
+                    os.remove(os.path.join(DOCUMENTS_PATH, f))
+                except Exception as e:
+                    print(f"Error deleting file {f}: {e}")
+        print("Workspace cleared successfully.")
