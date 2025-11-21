@@ -1,4 +1,4 @@
-# RAG Research Assistant - AI Research Assistant
+# RAG Research Assistant -  AI Research Assistant
 
 Paper Navigator is a Q&A (Question & Answering) system built on the RAG (Retrieval-Augmented Generation) architecture. It allows users to ask questions in natural language and receive accurate answers from the content of a collection of scientific papers (in PDF format).
 
@@ -6,7 +6,7 @@ Powered by LangChain and Ollama, this project runs 100% locally on your machine,
 
 ---
 
-### Key Features
+### ✨ Key Features
 
 -   **LangChain Powered:** Utilizes the flexible LCEL (LangChain Expression Language) architecture for a robust RAG pipeline.
 -   **100% Local & Private:** Runs entirely on your hardware using Ollama (Llama 3) and local embeddings.
