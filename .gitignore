@@ -1,22 +1,19 @@
-# Môi trường ảo
+# Virtual environment
 venv/
 /venv/
 *.venv
 
-# Thư mục cache của Python
+# Python cache directories
 __pycache__/
 *.py[cod]
 
-# File môi trường
+# Environment files
 .env
 *.env.*
 
-# Thư mục cơ sở dữ liệu vector (RẤT QUAN TRỌng)
+# Vector database directory (VERY IMPORTANT)
 vector_db/
 /vector_db/
 
-# File hệ thống của macOS
+# macOS system files
 .DS_Store
-
-Project_path.md
-repo.md
