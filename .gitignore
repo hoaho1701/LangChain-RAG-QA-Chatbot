@@ -15,5 +15,26 @@ __pycache__/
 vector_db/
 /vector_db/
 
+# User-uploaded documents (PDF/TXT/DOCX ingested at runtime)
+documents/
+/documents/
+
+# Claude Code local state
+.claude/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Logs
+*.log
+
 # macOS system files
 .DS_Store
+**/.DS_Store
+
+# Windows system files
+Thumbs.db
+
+CLAUDE.md
+KNOWLEDGE.md
