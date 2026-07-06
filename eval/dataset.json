@@ -1,0 +1,162 @@
+[
+  {
+    "question": "According to Hands-On Large Language Models, which AI model was the first system able to write articles indistinguishable from those written by humans?",
+    "language": "en",
+    "expected_answer": "GPT-2 (Generative Pre-trained Transformer 2).",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 24,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "According to Hands-On Large Language Models, what term does the book use to encompass technologies that may not technically be LLMs but still significantly impact the field?",
+    "language": "en",
+    "expected_answer": "Language AI.",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 26,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "According to Hands-On Large Language Models, what was the first technique in the history of Language AI used to represent unstructured text, and around what decade was it first mentioned?",
+    "language": "en",
+    "expected_answer": "Bag-of-words, first mentioned around the 1950s.",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 27,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "According to Hands-On Large Language Models, which 2013 model was one of the first successful attempts at capturing the meaning of text in embeddings?",
+    "language": "en",
+    "expected_answer": "word2vec.",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 29,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "According to Hands-On Large Language Models, why is the word \"bank\" used as an example of a limitation of word2vec's static embeddings?",
+    "language": "en",
+    "expected_answer": "Because word2vec always gives \"bank\" the same embedding regardless of context, even though it can mean a financial bank or the bank of a river — its meaning (and embedding) should change depending on context, which static embeddings can't do.",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 32,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "According to Hands-On Large Language Models, what term describes an architecture where generating the next word requires consuming all previously generated words?",
+    "language": "en",
+    "expected_answer": "Autoregressive.",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 33,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "According to Hands-On Large Language Models, in what year was the solution called \"attention\" introduced to address the difficulty of handling longer sentences with a single context embedding?",
+    "language": "en",
+    "expected_answer": "2014.",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 34,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "According to Hands-On Large Language Models, which 2017 paper introduced the Transformer architecture?",
+    "language": "en",
+    "expected_answer": "\"Attention Is All You Need\" (2017).",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 36,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "According to Hands-On Large Language Models, why does the self-attention layer in the Transformer's decoder mask future positions?",
+    "language": "en",
+    "expected_answer": "To prevent leaking information when generating the output — it should only attend to earlier positions, not \"look into the future.\"",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 38,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "According to Hands-On Large Language Models, in what year was BERT introduced?",
+    "language": "en",
+    "expected_answer": "2018.",
+    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
+    "expected_page": 39,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, Phần I của cuốn sách có tiêu đề là gì?",
+    "language": "vi",
+    "expected_answer": "Kiến thức toán cơ bản cho machine learning.",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 22,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, ký hiệu nào được dùng để biểu diễn phép chuyển vị (transpose) của một vector hoặc ma trận?",
+    "language": "vi",
+    "expected_answer": "Chữ T (ví dụ x^T, A^T).",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 24,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, phép nhân ma trận có tính chất giao hoán hay không?",
+    "language": "vi",
+    "expected_answer": "Không — phép nhân ma trận không có tính chất giao hoán (thông thường AB khác BA).",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 25,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, tập hợp tất cả các vector biểu diễn được dưới dạng tổ hợp tuyến tính của các cột một ma trận được gọi là gì?",
+    "language": "vi",
+    "expected_answer": "Không gian sinh (span).",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 29,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, một hệ vector được gọi là \"cơ sở\" (basis) của một không gian vector khi thoả mãn những điều kiện nào?",
+    "language": "vi",
+    "expected_answer": "Hệ vector đó phải sinh ra (span) toàn bộ không gian, và là một hệ độc lập tuyến tính.",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 30,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, hạng (rank) của một ma trận có bằng với hạng của ma trận chuyển vị của nó không?",
+    "language": "vi",
+    "expected_answer": "Có — rank(A) = rank(A^T).",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 31,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, một ma trận U thoả mãn UU^T = U^T U = I được gọi là ma trận gì?",
+    "language": "vi",
+    "expected_answer": "Ma trận trực giao (orthogonal matrix).",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 32,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, cách biểu diễn một ma trận A dưới dạng A = XΛX^-1 được gọi là gì?",
+    "language": "vi",
+    "expected_answer": "Eigendecomposition (chéo hoá ma trận, dựa trên vector riêng và trị riêng).",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 35,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, mọi ma trận Hermitian nửa xác định dương có thể biểu diễn duy nhất dưới dạng A = LL^H — đây là phép khai triển gì?",
+    "language": "vi",
+    "expected_answer": "Khai triển Cholesky (Cholesky decomposition).",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 37,
+    "expected_chunk_index": 0
+  },
+  {
+    "question": "Theo sách Machine Learning cơ bản, chuẩn l1 (l1 norm) của một vector x được tính như thế nào?",
+    "language": "vi",
+    "expected_answer": "Là tổng các trị tuyệt đối của từng phần tử của x: ||x||1 = |x1| + |x2| + ... + |xn|.",
+    "expected_source": "./documents/book_ML_color.pdf",
+    "expected_page": 39,
+    "expected_chunk_index": 0
+  }
+]

@@ -1,7 +1,6 @@
 # Virtual environment
 venv/
-/venv/
-*.venv
+.venv/
 
 # Python cache directories
 __pycache__/
@@ -13,11 +12,9 @@ __pycache__/
 
 # Vector database directory
 vector_db/
-/vector_db/
 
 # User-uploaded documents (PDF/TXT/DOCX ingested at runtime)
 documents/
-/documents/
 
 # Claude Code local state
 .claude/
@@ -29,6 +26,9 @@ documents/
 # Logs
 *.log
 
+# Generated evaluation report (regenerate with `python evaluate.py`)
+eval/last_report.md
+
 # macOS system files
 .DS_Store
 **/.DS_Store
@@ -36,5 +36,6 @@ documents/
 # Windows system files
 Thumbs.db
 
+# Personal working notes (not published)
 CLAUDE.md
 KNOWLEDGE.md

@@ -16,6 +16,7 @@ Powered by LangChain (Core/LCEL), LangGraph, and Ollama, this project runs **100
 - **Multi-File Management:** Additive indexing — add or remove individual files without rebuilding the whole vector database.
 - **Streaming Responses:** Answers are streamed token-by-token for a responsive, ChatGPT-like UX.
 - **LangSmith Tracing (optional):** Full pipeline observability with zero code changes — just set environment variables.
+- **Evaluation Harness:** Retrieval metrics (Recall@k, MRR) and LLM-as-judge generation metrics (Correctness, Faithfulness), with a per-language breakdown to catch regressions instead of guessing.
 
 ---
 
@@ -56,10 +57,14 @@ Answer streamed token-by-token, with source citations (file + page)
 ```
 LangChain-RAG-QA-Chatbot/
 ├── app.py                  # Streamlit UI
+├── evaluate.py              # CLI: run the evaluation harness
 ├── src/
 │   ├── config.py            # Constants + env vars
 │   ├── prompts.py            # All ChatPromptTemplate definitions
-│   └── rag_pipeline.py       # RAGPipeline: ingestion, retrieval, agentic graph
+│   ├── rag_pipeline.py       # RAGPipeline: ingestion, retrieval, agentic graph
+│   └── evaluation.py         # Retrieval + generation evaluation metrics
+├── eval/
+│   └── dataset.json          # Q&A ground truth used by evaluate.py
 ├── documents/               # Uploaded source files (gitignored)
 ├── vector_db/               # ChromaDB persistent storage (gitignored)
 ├── .env.example             # Template for optional LangSmith tracing keys
@@ -70,9 +75,12 @@ LangChain-RAG-QA-Chatbot/
 | File / Directory       | Description                                                          |
 | ----------------------- | --------------------------------------------------------------------- |
 | `app.py`                | Streamlit entry point — upload UI, chat UI, sidebar file management.  |
+| `evaluate.py`           | CLI to run the evaluation harness and print/save a report.            |
 | `src/config.py`         | Model names, chunking, retrieval/reranking parameters.                |
-| `src/prompts.py`        | Prompt templates: contextualize, QA, document grading, query rewrite. |
+| `src/prompts.py`        | Prompt templates: contextualize, QA, document grading, query rewrite, evaluation judges. |
 | `src/rag_pipeline.py`   | Ingestion (PDF/TXT/DOCX/URL), chunking, embeddings, ChromaDB, reranker, and the LangGraph agentic loop. |
+| `src/evaluation.py`     | Recall@k/MRR (retrieval) and LLM-as-judge Correctness/Faithfulness (generation). |
+| `eval/dataset.json`     | Hand-written Q&A ground truth, tagged by language, used to run `evaluate.py`. |
 
 ---
 
@@ -131,11 +139,25 @@ LangChain-RAG-QA-Chatbot/
 
 ---
 
+### 📊 Evaluating the Pipeline
+
+```bash
+python evaluate.py                          # uses eval/dataset.json by default
+python evaluate.py --dataset eval/other.json --report eval/other_report.md
+```
+
+Runs every question in the dataset through the retriever+reranker (Recall@k, MRR) and the full
+agentic `chat()` pipeline (LLM-as-judge Correctness, Faithfulness), then prints a Markdown report
+— including a breakdown by language — and saves it to `eval/last_report.md`.
+
+See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run.
+
+---
+
 ### 🔮 Future Development
 
 - [ ] **Multi-Modal:** Support asking questions about images/figures inside PDFs.
 - [ ] **Persistent Chat History:** Save conversations across app restarts (currently in-memory per session).
-- [ ] **Evaluation Suite:** Automated RAG quality evaluation (retrieval precision, answer faithfulness).
 - [ ] **Docker Support:** One-command containerized setup for Ollama + app.
 
 ---

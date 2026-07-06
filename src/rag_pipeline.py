@@ -1,6 +1,7 @@
 # src/rag_pipeline.py
 
 import os
+import re
 from typing import List, Generator, TypedDict
 import chromadb
 from chromadb.config import Settings
@@ -344,7 +345,7 @@ class RAGPipeline:
         docs = state["documents"]
         if not docs:
             return state
-        doc_list = "\n\n".join(f"[{i}] {d.page_content[:400]}" for i, d in enumerate(docs))
+        doc_list = "\n\n".join(f"[{i}] {d.page_content}" for i, d in enumerate(docs))
         messages = GRADE_PROMPT.format_messages(
             question=state["standalone_q"],
             documents=doc_list,
@@ -352,13 +353,14 @@ class RAGPipeline:
         result = self.llm.invoke(messages).content.strip().lower()
         relevant = []
         if result != "none":
-            for part in result.split(","):
-                try:
-                    idx = int(part.strip())
-                    if 0 <= idx < len(docs):
-                        relevant.append(docs[idx])
-                except ValueError:
-                    pass
+            seen = set()
+            # Regex instead of a strict comma-split so a mis-formatted reply (e.g. "docs 0
+            # and 2") still yields usable indices instead of silently dropping everything.
+            for part in re.findall(r"\d+", result):
+                idx = int(part)
+                if 0 <= idx < len(docs) and idx not in seen:
+                    seen.add(idx)
+                    relevant.append(docs[idx])
         return {**state, "documents": relevant}
 
     def _rewrite_query_node(self, state: AgentState) -> AgentState:
