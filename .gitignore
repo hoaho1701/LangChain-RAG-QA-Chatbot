@@ -39,3 +39,12 @@ Thumbs.db
 # Personal working notes (not published)
 CLAUDE.md
 KNOWLEDGE.md
+notes/
+UPGRADE_PLAN.md
+
+frontend/node_modules/
+frontend/dist/
+mlruns/
+mlflow_data/
+.pytest_cache/
+.ruff_cache/
