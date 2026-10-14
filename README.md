@@ -68,7 +68,8 @@ LangChain-RAG-QA-Chatbot/
 ├── documents/               # Uploaded source files (gitignored)
 ├── vector_db/               # ChromaDB persistent storage (gitignored)
 ├── .env.example             # Template for optional LangSmith tracing keys
-├── requirements.txt
+├── pyproject.toml           # Dependencies (uv)
+├── uv.lock                  # Locked versions
 └── LICENSE
 ```
 
@@ -103,16 +104,13 @@ LangChain-RAG-QA-Chatbot/
    cd LangChain-RAG-QA-Chatbot
    ```
 
-3. **Create and activate a virtual environment:**
+3. **Install [uv](https://docs.astral.sh/uv/) and the dependencies:**
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   curl -LsSf https://astral.sh/uv/install.sh | sh   # or: brew install uv
+   uv sync                                            # creates .venv (Python 3.10) from uv.lock
    ```
 
-4. **Install the required libraries:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+4. **(Optional) Run commands without activating the venv:** use the `uv run` prefix, e.g. `uv run streamlit run app.py`.
 
 5. **(Optional) Enable LangSmith tracing:**
    ```bash
@@ -122,7 +120,7 @@ LangChain-RAG-QA-Chatbot/
 
 6. **Run the application:**
    ```bash
-   streamlit run app.py
+   uv run streamlit run app.py
    ```
 
 ---
