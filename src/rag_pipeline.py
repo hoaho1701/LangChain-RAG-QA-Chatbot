@@ -19,7 +19,7 @@ from langchain_core.messages import BaseMessage
 from langchain_core.output_parsers import StrOutputParser
 from langgraph.graph import StateGraph, END
 
-from src.config import (LLM_MODEL, EMBEDDING_MODEL, DOCUMENTS_PATH,
+from src.config import (LLM_MODEL, OLLAMA_BASE_URL, HF_LOCAL_FILES_ONLY, EMBEDDING_MODEL, DOCUMENTS_PATH,
                         VECTOR_DB_PATH, CHUNK_SIZE, CHUNK_OVERLAP,
                         RERANKER_MODEL, RETRIEVER_TOP_K, RERANKER_TOP_N,
                         MAX_REWRITE_ATTEMPTS)
@@ -188,12 +188,13 @@ class RAGPipeline:
         """Initialize the RAG pipeline components."""
 
         print(f"Loading LLM model: {LLM_MODEL}...")
-        self.llm = ChatOllama(model=LLM_MODEL, temperature=0, keep_alive="5m")
+        ollama_kwargs = {"base_url": OLLAMA_BASE_URL} if OLLAMA_BASE_URL else {}
+        self.llm = ChatOllama(model=LLM_MODEL, temperature=0, keep_alive="5m", **ollama_kwargs)
 
         print(f"Loading Embedding model: {EMBEDDING_MODEL}...")
         self.embeddings = HuggingFaceEmbeddings(
             model_name=EMBEDDING_MODEL,
-            model_kwargs={"device": "cpu", "local_files_only": True},
+            model_kwargs={"device": "cpu", "local_files_only": HF_LOCAL_FILES_ONLY},
             encode_kwargs={"normalize_embeddings": True}
         )
 
@@ -202,7 +203,7 @@ class RAGPipeline:
             RERANKER_MODEL,
             max_length=512,
             device="cpu",
-            local_files_only=True,
+            local_files_only=HF_LOCAL_FILES_ONLY,
         )
 
         print("Initializing ChromaDB Client...")
