@@ -19,10 +19,20 @@ from langchain_core.messages import BaseMessage
 from langchain_core.output_parsers import StrOutputParser
 from langgraph.graph import StateGraph, END
 
-from src.config import (LLM_MODEL, OLLAMA_BASE_URL, HF_LOCAL_FILES_ONLY, EMBEDDING_MODEL, DOCUMENTS_PATH,
-                        VECTOR_DB_PATH, CHUNK_SIZE, CHUNK_OVERLAP,
-                        RERANKER_MODEL, RETRIEVER_TOP_K, RERANKER_TOP_N,
-                        MAX_REWRITE_ATTEMPTS)
+from src.config import (
+    LLM_MODEL,
+    OLLAMA_BASE_URL,
+    HF_LOCAL_FILES_ONLY,
+    EMBEDDING_MODEL,
+    DOCUMENTS_PATH,
+    VECTOR_DB_PATH,
+    CHUNK_SIZE,
+    CHUNK_OVERLAP,
+    RERANKER_MODEL,
+    RETRIEVER_TOP_K,
+    RERANKER_TOP_N,
+    MAX_REWRITE_ATTEMPTS,
+)
 from src.prompts import CONTEXTUALIZE_Q_PROMPT, QA_PROMPT, GRADE_PROMPT, REWRITE_PROMPT
 
 
@@ -42,10 +52,12 @@ def _read_pdf(filepath: str) -> List[Document]:
         for page_num, page in enumerate(reader.pages):
             text = page.extract_text() or ""
             if text.strip():
-                docs.append(Document(
-                    page_content=text,
-                    metadata={"source": filepath, "page": page_num},
-                ))
+                docs.append(
+                    Document(
+                        page_content=text,
+                        metadata={"source": filepath, "page": page_num},
+                    )
+                )
     except Exception as e:
         print(f"Warning: could not read {os.path.basename(filepath)}: {e}")
     return docs
@@ -113,10 +125,12 @@ def _split_documents(docs: List[Document], chunk_size: int, chunk_overlap: int) 
         text = doc.page_content
         chunks = _recursive_split(text, chunk_size, chunk_overlap, separators)
         for i, chunk in enumerate(chunks):
-            splits.append(Document(
-                page_content=chunk,
-                metadata={**doc.metadata, "start_index": i},
-            ))
+            splits.append(
+                Document(
+                    page_content=chunk,
+                    metadata={**doc.metadata, "start_index": i},
+                )
+            )
     return splits
 
 
@@ -195,7 +209,7 @@ class RAGPipeline:
         self.embeddings = HuggingFaceEmbeddings(
             model_name=EMBEDDING_MODEL,
             model_kwargs={"device": "cpu", "local_files_only": HF_LOCAL_FILES_ONLY},
-            encode_kwargs={"normalize_embeddings": True}
+            encode_kwargs={"normalize_embeddings": True},
         )
 
         print(f"Loading Reranker model: {RERANKER_MODEL}...")
@@ -207,10 +221,7 @@ class RAGPipeline:
         )
 
         print("Initializing ChromaDB Client...")
-        self.client = chromadb.PersistentClient(
-            path=VECTOR_DB_PATH,
-            settings=Settings(allow_reset=True)
-        )
+        self.client = chromadb.PersistentClient(path=VECTOR_DB_PATH, settings=Settings(allow_reset=True))
 
         self.vector_store = None
         self.chain = None  # None = not ready; non-None = ready
@@ -241,9 +252,7 @@ class RAGPipeline:
 
         if self.vector_store is None:
             self.vector_store = Chroma(
-                embedding_function=self.embeddings,
-                client=self.client,
-                collection_name="paper_navigator_db"
+                embedding_function=self.embeddings, client=self.client, collection_name="paper_navigator_db"
             )
 
         # Remove existing chunks for the same sources to avoid duplicates on re-upload
@@ -291,9 +300,7 @@ class RAGPipeline:
 
         print("Loading existing ChromaDB index...")
         self.vector_store = Chroma(
-            embedding_function=self.embeddings,
-            client=self.client,
-            collection_name="paper_navigator_db"
+            embedding_function=self.embeddings, client=self.client, collection_name="paper_navigator_db"
         )
 
         self.setup_rag_chain()
@@ -304,10 +311,7 @@ class RAGPipeline:
         if not self.vector_store:
             raise ValueError("Vector store is not initialized.")
 
-        retriever = self.vector_store.as_retriever(
-            search_type="similarity",
-            search_kwargs={"k": RETRIEVER_TOP_K}
-        )
+        retriever = self.vector_store.as_retriever(search_type="similarity", search_kwargs={"k": RETRIEVER_TOP_K})
 
         def format_docs(docs: List[Document]) -> str:
             return "\n\n".join([doc.page_content for doc in docs])
@@ -317,8 +321,7 @@ class RAGPipeline:
             if not inputs.get("chat_history"):
                 return inputs["input"]
             messages = CONTEXTUALIZE_Q_PROMPT.format_messages(
-                input=inputs["input"],
-                chat_history=inputs["chat_history"]
+                input=inputs["input"], chat_history=inputs["chat_history"]
             )
             return self.llm.invoke(messages).content
 
@@ -410,24 +413,28 @@ class RAGPipeline:
             raise ValueError("RAG chain is not initialized.")
 
         # Run agentic graph: retrieve → grade → (rewrite → retrieve)* → final docs
-        final_state = self.graph.invoke({
-            "question": question,
-            "chat_history": chat_history,
-            "standalone_q": "",
-            "documents": [],
-            "attempts": 0,
-        })
+        final_state = self.graph.invoke(
+            {
+                "question": question,
+                "chat_history": chat_history,
+                "standalone_q": "",
+                "documents": [],
+                "attempts": 0,
+            }
+        )
         docs = final_state["documents"]
 
         # Yield source docs so the caller can display citations
         yield {"context": docs}
 
         # Stream the answer
-        for chunk in self._answer_chain.stream({
-            "context": self._format_docs(docs),
-            "chat_history": chat_history,
-            "input": question,
-        }):
+        for chunk in self._answer_chain.stream(
+            {
+                "context": self._format_docs(docs),
+                "chat_history": chat_history,
+                "input": question,
+            }
+        ):
             yield {"answer": chunk}
 
     def clear_workspace(self):

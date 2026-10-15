@@ -6,6 +6,7 @@ Usage:
 """
 
 import os
+
 # Must be set before any ML library is imported — see CLAUDE.md / app.py for why.
 os.environ["USE_TF"] = "0"
 os.environ["USE_JAX"] = "0"
@@ -13,6 +14,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["OMP_NUM_THREADS"] = "1"
 
 from dotenv import load_dotenv
+
 load_dotenv()
 
 import argparse
