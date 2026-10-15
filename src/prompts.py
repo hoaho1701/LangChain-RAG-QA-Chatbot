@@ -10,11 +10,13 @@ CONTEXTUALIZE_Q_SYSTEM_PROMPT = (
     "reformulate it if needed and otherwise return it as is."
 )
 
-CONTEXTUALIZE_Q_PROMPT = ChatPromptTemplate.from_messages([
-    ("system", CONTEXTUALIZE_Q_SYSTEM_PROMPT),
-    MessagesPlaceholder("chat_history"),
-    ("human", "{input}"),
-])
+CONTEXTUALIZE_Q_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        ("system", CONTEXTUALIZE_Q_SYSTEM_PROMPT),
+        MessagesPlaceholder("chat_history"),
+        ("human", "{input}"),
+    ]
+)
 
 # Main QA prompt with conversation history support
 QA_SYSTEM_PROMPT = (
@@ -34,11 +36,13 @@ QA_SYSTEM_PROMPT = (
     "Context:\n{context}"
 )
 
-QA_PROMPT = ChatPromptTemplate.from_messages([
-    ("system", QA_SYSTEM_PROMPT),
-    MessagesPlaceholder("chat_history"),
-    ("human", "{input}"),
-])
+QA_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        ("system", QA_SYSTEM_PROMPT),
+        MessagesPlaceholder("chat_history"),
+        ("human", "{input}"),
+    ]
+)
 
 # Agentic RAG — grade retrieved documents for relevance
 GRADE_SYSTEM_PROMPT = (
@@ -49,14 +53,16 @@ GRADE_SYSTEM_PROMPT = (
     "Be inclusive: if a document plausibly relates to the topic of the question, count it as "
     "relevant even if it doesn't fully answer it — a later synthesis step will pick the best parts.\n"
     "List the indices (comma-separated, 0-indexed) of every relevant document.\n"
-    "If none are relevant at all, output \"none\".\n"
-    "Output only the indices or \"none\", nothing else. Examples: \"0,2\" or \"1,3\" or \"none\"."
+    'If none are relevant at all, output "none".\n'
+    'Output only the indices or "none", nothing else. Examples: "0,2" or "1,3" or "none".'
 )
 
-GRADE_PROMPT = ChatPromptTemplate.from_messages([
-    ("system", GRADE_SYSTEM_PROMPT),
-    ("human", "Question: {question}\n\nDocuments:\n{documents}"),
-])
+GRADE_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        ("system", GRADE_SYSTEM_PROMPT),
+        ("human", "Question: {question}\n\nDocuments:\n{documents}"),
+    ]
+)
 
 # Agentic RAG — rewrite query when retrieved docs are not relevant
 REWRITE_SYSTEM_PROMPT = (
@@ -65,34 +71,40 @@ REWRITE_SYSTEM_PROMPT = (
     "Output only the rewritten question, nothing else."
 )
 
-REWRITE_PROMPT = ChatPromptTemplate.from_messages([
-    ("system", REWRITE_SYSTEM_PROMPT),
-    ("human", "{question}"),
-])
+REWRITE_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        ("system", REWRITE_SYSTEM_PROMPT),
+        ("human", "{question}"),
+    ]
+)
 
 # Evaluation — LLM-as-judge: does the generated answer match the reference answer?
 CORRECTNESS_SYSTEM_PROMPT = (
     "You are grading whether a generated answer is correct compared to a reference answer.\n"
-    "Reply \"yes\" if the generated answer conveys the same key facts as the reference answer, "
-    "even if worded differently. Reply \"no\" if it is missing key facts or contradicts it.\n"
-    "Output only \"yes\" or \"no\", nothing else."
+    'Reply "yes" if the generated answer conveys the same key facts as the reference answer, '
+    'even if worded differently. Reply "no" if it is missing key facts or contradicts it.\n'
+    'Output only "yes" or "no", nothing else.'
 )
 
-CORRECTNESS_JUDGE_PROMPT = ChatPromptTemplate.from_messages([
-    ("system", CORRECTNESS_SYSTEM_PROMPT),
-    ("human", "Question: {question}\n\nReference answer: {reference}\n\nGenerated answer: {answer}"),
-])
+CORRECTNESS_JUDGE_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        ("system", CORRECTNESS_SYSTEM_PROMPT),
+        ("human", "Question: {question}\n\nReference answer: {reference}\n\nGenerated answer: {answer}"),
+    ]
+)
 
 # Evaluation — LLM-as-judge: is the generated answer grounded in the retrieved context?
 FAITHFULNESS_SYSTEM_PROMPT = (
     "You are grading whether a generated answer is faithful to the provided context — "
     "i.e. every claim in the answer is supported by the context, with no fabricated information.\n"
-    "Reply \"yes\" if the answer is fully supported by the context, or \"no\" if it contains "
+    'Reply "yes" if the answer is fully supported by the context, or "no" if it contains '
     "unsupported or fabricated claims.\n"
-    "Output only \"yes\" or \"no\", nothing else."
+    'Output only "yes" or "no", nothing else.'
 )
 
-FAITHFULNESS_JUDGE_PROMPT = ChatPromptTemplate.from_messages([
-    ("system", FAITHFULNESS_SYSTEM_PROMPT),
-    ("human", "Context:\n{context}\n\nGenerated answer: {answer}"),
-])
+FAITHFULNESS_JUDGE_PROMPT = ChatPromptTemplate.from_messages(
+    [
+        ("system", FAITHFULNESS_SYSTEM_PROMPT),
+        ("human", "Context:\n{context}\n\nGenerated answer: {answer}"),
+    ]
+)
