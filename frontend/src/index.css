@@ -1,0 +1,171 @@
+/* Theme */
+:root {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #6b7280;
+  --user: #e8f0fe;
+  --assistant: #f3f4f6;
+  --error: #fde8e8;
+  --border: #e5e7eb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111418;
+    --fg: #e5e7eb;
+    --muted: #9ca3af;
+    --user: #1e3a5f;
+    --assistant: #1f2430;
+    --error: #4a1d1d;
+    --border: #2d3340;
+  }
+}
+
+/* Base */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, sans-serif;
+}
+
+/* Layout */
+.center {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  color: var(--muted);
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  max-width: 820px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Messages */
+.messages {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 0;
+  overflow-y: auto;
+}
+
+.message {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  overflow-wrap: anywhere;
+}
+
+.message.user {
+  align-self: flex-end;
+  background: var(--user);
+}
+
+.message.assistant {
+  align-self: flex-start;
+  background: var(--assistant);
+}
+
+.message.error {
+  background: var(--error);
+}
+
+.message p {
+  margin: 0.4em 0;
+}
+
+.message .plain {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.message pre {
+  overflow-x: auto;
+}
+
+.sources {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.cursor > :last-child::after {
+  content: '▌';
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* Input */
+.banner {
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--error);
+}
+
+form {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0 16px;
+}
+
+textarea {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  resize: none;
+}
+
+button {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--assistant);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

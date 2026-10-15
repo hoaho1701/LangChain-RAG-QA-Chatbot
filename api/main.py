@@ -11,6 +11,7 @@ os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["OMP_NUM_THREADS"] = "1"
 
 from dotenv import load_dotenv
+
 load_dotenv()  # load .env before any LangChain import so tracing vars are set in time
 
 import json
@@ -32,6 +33,7 @@ SNIPPET_LENGTH = 300
 def _default_factory():
     """Build the real pipeline. Imported lazily so tests never load torch or the models."""
     from src.rag_pipeline import RAGPipeline
+
     pipeline = RAGPipeline()
     pipeline.load_existing_index()
     return pipeline

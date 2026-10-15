@@ -15,7 +15,7 @@ class FakePipeline:
     """Same public surface that api/main.py uses on RAGPipeline."""
 
     def __init__(self):
-        self.chain = object()          # non-None = "ready", like RAGPipeline.chain
+        self.chain = object()  # non-None = "ready", like RAGPipeline.chain
         self.files = []
         self.last_history = None
 
@@ -27,7 +27,7 @@ class FakePipeline:
 
     def load_and_split_url(self, url):
         if "empty" in url:
-            return []                  # simulate a page with no extractable text
+            return []  # simulate a page with no extractable text
         return [Document(page_content="x", metadata={"source": url, "page": 0})]
 
     def embed_and_store_documents(self, splits):
@@ -76,11 +76,12 @@ def upload(client, name, content=b"hello", ctype="text/plain"):
 
 # ---------- health / list ----------
 
+
 def test_health_ready(client):
     body = client.get("/api/health").json()
     assert body["status"] == "ok"
     assert body["ready"] is True
-    assert body["tracing"]["project"]            # A5: LangSmith status
+    assert body["tracing"]["project"]  # LangSmith status shown in the UI
 
 
 def test_health_not_ready_without_documents(client):
@@ -89,6 +90,7 @@ def test_health_not_ready_without_documents(client):
 
 
 # ---------- upload ----------
+
 
 def test_upload_ok(client):
     r = upload(client, "notes.txt")
@@ -110,10 +112,13 @@ def test_upload_extension_check_is_case_insensitive(client):
 
 
 def test_upload_mixed_batch_keeps_good_files(client):
-    r = client.post("/api/documents", files=[
-        ("files", ("good.md", b"# hi", "text/markdown")),
-        ("files", ("bad.exe", b"x", "application/octet-stream")),
-    ])
+    r = client.post(
+        "/api/documents",
+        files=[
+            ("files", ("good.md", b"# hi", "text/markdown")),
+            ("files", ("bad.exe", b"x", "application/octet-stream")),
+        ],
+    )
     assert r.status_code == 200
     body = r.json()
     assert body["added"] == ["good.md"]
@@ -123,8 +128,8 @@ def test_upload_mixed_batch_keeps_good_files(client):
 def test_upload_blocks_path_traversal(client):
     r = upload(client, "../../evil.txt")
     assert r.status_code == 200
-    assert (client.docs_dir / "evil.txt").exists()                 # saved INSIDE the documents dir
-    assert not (client.docs_dir.parent / "evil.txt").exists()      # not above it
+    assert (client.docs_dir / "evil.txt").exists()  # saved INSIDE the documents dir
+    assert not (client.docs_dir.parent / "evil.txt").exists()  # not above it
     assert not (client.docs_dir.parent.parent / "evil.txt").exists()
 
 
@@ -138,6 +143,7 @@ def test_upload_empty_content_is_reported(client):
 def test_upload_pipeline_error_is_reported_not_500(client):
     def boom(path):
         raise RuntimeError("cannot parse")
+
     client.fake.load_and_split_file = boom
     r = upload(client, "broken.txt")
     assert r.status_code == 422
@@ -145,6 +151,7 @@ def test_upload_pipeline_error_is_reported_not_500(client):
 
 
 # ---------- url ----------
+
 
 def test_add_url_ok(client):
     r = client.post("/api/documents/url", json={"url": "https://example.com/page"})
@@ -158,6 +165,7 @@ def test_add_url_without_content(client):
 
 
 # ---------- delete / workspace ----------
+
 
 def test_delete_document_removes_index_entry_and_file(client):
     upload(client, "a.txt")
@@ -175,10 +183,10 @@ def test_delete_unknown_source_is_404(client):
 def test_delete_never_removes_files_outside_documents_dir(client):
     outside = client.docs_dir.parent / "keep.txt"
     outside.write_text("precious")
-    client.fake.files.append(str(outside))          # indexed, but lives outside DOCUMENTS_PATH
+    client.fake.files.append(str(outside))  # indexed, but lives outside DOCUMENTS_PATH
     r = client.delete("/api/documents", params={"source": str(outside)})
     assert r.status_code == 200
-    assert outside.exists()                         # index entry removed, file on disk untouched
+    assert outside.exists()  # index entry removed, file on disk untouched
 
 
 def test_delete_url_source_does_not_touch_disk(client):
@@ -198,6 +206,7 @@ def test_clear_workspace(client):
 
 # ---------- chat (SSE) ----------
 
+
 def test_chat_streams_sources_tokens_done(client):
     r = client.post("/api/chat", json={"question": "hi", "history": []})
     assert r.status_code == 200
@@ -207,7 +216,7 @@ def test_chat_streams_sources_tokens_done(client):
     assert [name for name, _ in events] == ["sources", "token", "token", "done"]
 
     sources = events[0][1]
-    assert sources == [{"file": "a.pdf", "page": 3, "snippet": "c"}]     # basename + page is 1-indexed (A11)
+    assert sources == [{"file": "a.pdf", "page": 3, "snippet": "c"}]  # basename + page is 1-indexed
     assert "".join(data for name, data in events if name == "token") == "Hello"
 
 
@@ -224,10 +233,11 @@ def test_chat_empty_question_is_422(client):
 def test_chat_error_becomes_error_event(client):
     def boom(question, history):
         raise RuntimeError("ollama down")
-        yield  # noqa: B901  (makes this a generator, like the real chat())
+        yield  # makes this a generator, like the real chat()
+
     client.fake.chat = boom
     r = client.post("/api/chat", json={"question": "hi", "history": []})
-    assert r.status_code == 200                      # headers were already sent; error travels in the stream
+    assert r.status_code == 200  # headers were already sent; error travels in the stream
     events = parse_sse(r.text)
     assert events[-1][0] == "error"
     assert "ollama down" in events[-1][1]["message"]
@@ -238,8 +248,8 @@ def test_chat_trims_history_and_maps_roles(client):
     client.post("/api/chat", json={"question": "hi", "history": history})
 
     received = client.fake.last_history
-    assert len(received) == 20                                   # MAX_CHAT_HISTORY_MESSAGES (A14)
-    assert received[0].content == "m30"                          # keeps the most recent ones
+    assert len(received) == 20  # MAX_CHAT_HISTORY_MESSAGES
+    assert received[0].content == "m30"  # keeps the most recent ones
     assert isinstance(received[0], HumanMessage)
     assert isinstance(received[1], AIMessage)
 
