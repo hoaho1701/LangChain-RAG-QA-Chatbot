@@ -63,19 +63,23 @@ def evaluate_retrieval(pipeline, dataset: List[EvalCase]) -> dict:
         for i, doc in enumerate(reranked, start=1):
             # start_index resets per source Document (e.g. per PDF page), so it's only
             # unique in combination with (source, page).
-            if (doc.metadata.get("source") == case["expected_source"]
-                    and doc.metadata.get("page") == case["expected_page"]
-                    and doc.metadata.get("start_index") == case["expected_chunk_index"]):
+            if (
+                doc.metadata.get("source") == case["expected_source"]
+                and doc.metadata.get("page") == case["expected_page"]
+                and doc.metadata.get("start_index") == case["expected_chunk_index"]
+            ):
                 rank = i
                 break
 
-        per_case.append({
-            "question": case["question"],
-            "language": case["language"],
-            "hit": rank is not None,
-            "rank": rank,
-            "reciprocal_rank": 1 / rank if rank else 0,
-        })
+        per_case.append(
+            {
+                "question": case["question"],
+                "language": case["language"],
+                "hit": rank is not None,
+                "rank": rank,
+                "reciprocal_rank": 1 / rank if rank else 0,
+            }
+        )
 
     return {
         "recall_at_k": _mean([1 if c["hit"] else 0 for c in per_case]),
@@ -102,21 +106,28 @@ def evaluate_generation(pipeline, dataset: List[EvalCase]) -> dict:
         context_text = pipeline._format_docs(docs)
 
         is_correct = _judge_yes(
-            pipeline.llm, CORRECTNESS_JUDGE_PROMPT,
-            question=case["question"], reference=case["expected_answer"], answer=answer,
+            pipeline.llm,
+            CORRECTNESS_JUDGE_PROMPT,
+            question=case["question"],
+            reference=case["expected_answer"],
+            answer=answer,
         )
         is_faithful = _judge_yes(
-            pipeline.llm, FAITHFULNESS_JUDGE_PROMPT,
-            context=context_text, answer=answer,
+            pipeline.llm,
+            FAITHFULNESS_JUDGE_PROMPT,
+            context=context_text,
+            answer=answer,
         )
 
-        per_case.append({
-            "question": case["question"],
-            "language": case["language"],
-            "answer": answer,
-            "correct": is_correct,
-            "faithful": is_faithful,
-        })
+        per_case.append(
+            {
+                "question": case["question"],
+                "language": case["language"],
+                "answer": answer,
+                "correct": is_correct,
+                "faithful": is_faithful,
+            }
+        )
 
     return {
         "correctness": _mean([1 if c["correct"] else 0 for c in per_case]),
