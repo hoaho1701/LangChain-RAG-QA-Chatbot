@@ -18,6 +18,7 @@ import json
 import shutil
 import threading
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import APIRouter, FastAPI, File, HTTPException, Query, Request, UploadFile
 from fastapi.responses import StreamingResponse
@@ -110,12 +111,14 @@ def upload_documents(request: Request, files: list[UploadFile] = File(...)):
         try:
             splits = pipeline.load_and_split_file(path)  # slow but read-only: kept outside the lock
             if not splits:
+                Path(path).unlink(missing_ok=True)
                 failed.append({"name": name, "reason": "No valid content"})
                 continue
             with lock:
                 pipeline.embed_and_store_documents(splits)
             added.append(name)
         except Exception as e:
+            Path(path).unlink(missing_ok=True)
             failed.append({"name": name, "reason": str(e)})
 
     if not added:
