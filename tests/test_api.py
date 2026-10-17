@@ -257,3 +257,36 @@ def test_chat_trims_history_and_maps_roles(client):
 def test_chat_rejects_unknown_role(client):
     r = client.post("/api/chat", json={"question": "hi", "history": [{"role": "system", "content": "x"}]})
     assert r.status_code == 422
+
+
+def test_upload_without_content_leaves_no_file(client):
+    client.fake.load_and_split_file = lambda path: []
+    r = upload(client, "empty.txt")
+    assert r.status_code == 422
+    assert not (client.docs_dir / "empty.txt").exists()
+
+
+def test_upload_error_leaves_no_file(client):
+    def boom(path):
+        raise RuntimeError("cannot parse")
+
+    client.fake.load_and_split_file = boom
+    r = upload(client, "broken.txt")
+    assert r.status_code == 422
+    assert not (client.docs_dir / "broken.txt").exists()
+
+
+def test_upload_failure_keeps_the_good_files(client):
+    load = client.fake.load_and_split_file
+    client.fake.load_and_split_file = lambda path: [] if path.endswith("empty.txt") else load(path)
+
+    r = client.post(
+        "/api/documents",
+        files=[
+            ("files", ("good.txt", b"hello", "text/plain")),
+            ("files", ("empty.txt", b"", "text/plain")),
+        ],
+    )
+    assert r.status_code == 200
+    assert (client.docs_dir / "good.txt").exists()
+    assert not (client.docs_dir / "empty.txt").exists()
