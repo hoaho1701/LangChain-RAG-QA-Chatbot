@@ -169,3 +169,139 @@ button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* Sidebar layout */
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  height: 100vh;
+}
+
+.layout > .app {
+  width: 100%;
+  min-width: 0;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.sidebar h3 {
+  margin: 10px 0 0;
+  font-size: 0.95rem;
+}
+
+.sidebar p {
+  margin: 0;
+}
+
+.sidebar input[type='text'] {
+  flex: 1;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.ok {
+  color: #15803d;
+  font-size: 0.85rem;
+}
+
+.docs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.docs li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.docs li span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.docs li button {
+  padding: 2px 8px;
+}
+
+button.danger {
+  border-color: #b91c1c;
+  color: #b91c1c;
+}
+
+/* Toast and confirm dialog */
+.toast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  max-width: 360px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--assistant);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.toast.success {
+  border-color: #15803d;
+}
+
+.toast.error {
+  border-color: #b91c1c;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.dialog {
+  max-width: 380px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg);
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

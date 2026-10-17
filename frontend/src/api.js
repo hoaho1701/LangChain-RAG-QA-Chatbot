@@ -3,15 +3,65 @@ async function errorMessage(res) {
   const detail = body?.detail
   if (typeof detail === 'string') return detail
   if (Array.isArray(detail)) return detail.map((e) => e.msg).join('; ')
+  // Upload failures come back as { added: [], failed: [{ name, reason }] }
+  if (Array.isArray(detail?.failed)) return detail.failed.map((e) => `${e.name}: ${e.reason}`).join('; ')
   return res.statusText || `HTTP ${res.status}`
 }
 
+async function request(url, options) {
+  const res = await fetch(url, options)
+  if (!res.ok) {
+    throw new Error(await errorMessage(res))
+  }
+  return res.json()
+}
+
+/** Backend status: { ready, indexed_files, tracing: { enabled, project } }. */
 export async function getHealth() {
   const res = await fetch('/api/health')
   if (!res.ok) throw new Error(await errorMessage(res))
   return res.json()
 }
 
+/** Indexed sources: file paths ("./documents/a.pdf") or URLs. */
+export async function listDocuments() {
+  const body = await request('/api/documents')
+  return body.documents
+}
+
+/** Uploads and indexes files. Resolves to { added: string[], failed: { name, reason }[] }. */
+export async function uploadFiles(files) {
+  const form = new FormData()
+  for (const file of files) {
+    form.append('files', file)
+  }
+  // No Content-Type: the browser sets it for FormData
+  return request('/api/documents', { method: 'POST', body: form })
+}
+
+/** Fetches a web page and indexes its text. */
+export function addUrl(url) {
+  return request('/api/documents/url', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url }),
+  })
+}
+
+/** Removes a source from the index, and its file from documents/ when it is a file. */
+export function deleteDocument(source) {
+  return request(`/api/documents?${new URLSearchParams({ source })}`, { method: 'DELETE' })
+}
+
+/** Deletes every uploaded file and the whole vector database. */
+export function clearWorkspace() {
+  return request('/api/workspace', { method: 'DELETE' })
+}
+
+/**
+ * Streams an answer over SSE and reports it through callbacks:
+ * onSources(sources), onToken(text), onError(message). Pass `signal` to cancel.
+ */
 export async function streamChat(question, history, { onSources, onToken, onError, signal }) {
   const res = await fetch('/api/chat', {
     method: 'POST',
@@ -19,7 +69,6 @@ export async function streamChat(question, history, { onSources, onToken, onErro
     body: JSON.stringify({ question, history }),
     signal,
   })
-  // Errors before the stream starts come back as a real status code (409, 422...)
   if (!res.ok) throw new Error(await errorMessage(res))
 
   const reader = res.body.getReader()
