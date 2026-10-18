@@ -3,7 +3,7 @@
 import os
 
 # Prevent transformers from auto-loading TensorFlow/JAX — causes C++ mutex deadlock on macOS
-# (TF is installed in this conda env but not needed; its C++ runtime conflicts with PyTorch)
+# (TF is not needed here; if it is installed, its C++ runtime conflicts with PyTorch)
 os.environ.setdefault("USE_TF", "0")
 os.environ.setdefault("USE_JAX", "0")
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
