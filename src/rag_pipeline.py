@@ -33,6 +33,7 @@ from src.config import (
     RERANKER_TOP_N,
     MAX_REWRITE_ATTEMPTS,
 )
+from src.index_state import has_indexed_chunks
 from src.prompts import CONTEXTUALIZE_Q_PROMPT, QA_PROMPT, GRADE_PROMPT, REWRITE_PROMPT
 
 
@@ -290,12 +291,8 @@ class RAGPipeline:
 
     def load_existing_index(self) -> bool:
         """Load existing vector database index if available."""
-        try:
-            collections = self.client.list_collections()
-            if not collections:
-                print("No existing collections found in DB.")
-                return False
-        except Exception:
+        if not has_indexed_chunks(self.client, "paper_navigator_db"):
+            print("No indexed chunks found in DB.")
             return False
 
         print("Loading existing ChromaDB index...")
