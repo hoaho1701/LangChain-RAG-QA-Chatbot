@@ -2,8 +2,8 @@
 FROM python:3.10-slim
 COPY --from=ghcr.io/astral-sh/uv:0.7.11 /uv /uvx /bin/
 
-# Same guards as api/main.py: keep TensorFlow/JAX out of the process
-ENV USE_TF=0 USE_JAX=0 TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 PYTHONUNBUFFERED=1 UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
+# Same thread settings as api/main.py
+ENV TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 PYTHONUNBUFFERED=1 UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 
 # Dependencies before code, so this layer stays cached when only code changes
 WORKDIR /app

@@ -3,10 +3,6 @@
 import os
 
 # Must be set before any ML library is imported.
-# USE_TF=0 prevents transformers from auto-loading TensorFlow, which causes a
-# C++ mutex deadlock on macOS when TF and PyTorch are both installed in the same env.
-os.environ["USE_TF"] = "0"
-os.environ["USE_JAX"] = "0"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["OMP_NUM_THREADS"] = "1"
 

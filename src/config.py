@@ -2,10 +2,7 @@
 
 import os
 
-# Prevent transformers from auto-loading TensorFlow/JAX — causes C++ mutex deadlock on macOS
-# (TF is not needed here; if it is installed, its C++ runtime conflicts with PyTorch)
-os.environ.setdefault("USE_TF", "0")
-os.environ.setdefault("USE_JAX", "0")
+# Avoid the HuggingFace tokenizers fork warning when this module is imported outside the entrypoints
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 # Ollama LLM model name
