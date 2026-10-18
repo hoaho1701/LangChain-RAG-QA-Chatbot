@@ -2,7 +2,7 @@
 """CLI: run the RAG evaluation harness against a Q&A dataset and print a report.
 
 Usage:
-    python evaluate.py [--dataset eval/dataset.json] [--report eval/last_report.md]
+    python evaluate.py [--dataset eval/dataset.json] [--report eval/last_report.md] [--mlflow]
 """
 
 import os
@@ -62,9 +62,11 @@ def render_report(report: dict) -> str:
 
 
 def main():
+    """Run the evaluation, write the Markdown report, and optionally log the run to MLflow."""
     parser = argparse.ArgumentParser(description="Evaluate the RAG pipeline against a Q&A dataset.")
     parser.add_argument("--dataset", default="eval/dataset.json", help="Path to the eval dataset JSON file.")
     parser.add_argument("--report", default="eval/last_report.md", help="Path to write the Markdown report to.")
+    parser.add_argument("--mlflow", action="store_true", help="Log params, metrics and the report to MLflow.")
     args = parser.parse_args()
 
     pipeline = RAGPipeline()
@@ -80,6 +82,12 @@ def main():
     with open(args.report, "w", encoding="utf-8") as f:
         f.write(rendered)
     print(f"Report saved to {args.report}")
+
+    if args.mlflow:
+        from src.tracking import log_evaluation  # lazy: mlflow is only needed with --mlflow
+
+        run_id = log_evaluation(report, rendered, args.dataset)
+        print(f"Logged to MLflow, run id: {run_id}")
 
 
 if __name__ == "__main__":
