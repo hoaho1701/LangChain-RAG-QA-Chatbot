@@ -12,7 +12,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 
 from dotenv import load_dotenv
 
-load_dotenv()  # load .env before any LangChain import so tracing vars are set in time
+load_dotenv()  # load .env before src.config reads the environment
 
 import json
 import shutil
@@ -69,17 +69,12 @@ router = APIRouter(prefix="/api")
 
 @router.get("/health")
 def health(request: Request):
-    """Report whether the pipeline is ready to answer, and whether LangSmith tracing is on."""
+    """Report whether the pipeline is ready to answer."""
     pipeline = request.app.state.pipeline
-    tracing_on = os.environ.get("LANGCHAIN_TRACING_V2", "false").lower() == "true"
     return {
         "status": "ok",
         "ready": pipeline.chain is not None,
         "indexed_files": len(pipeline.list_indexed_files()),
-        "tracing": {
-            "enabled": tracing_on,
-            "project": os.environ.get("LANGCHAIN_PROJECT", "default"),
-        },
     }
 
 

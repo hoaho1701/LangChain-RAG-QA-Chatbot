@@ -81,7 +81,7 @@ def test_health_ready(client):
     body = client.get("/api/health").json()
     assert body["status"] == "ok"
     assert body["ready"] is True
-    assert body["tracing"]["project"]  # LangSmith status shown in the UI
+    assert "tracing" not in body
 
 
 def test_health_not_ready_without_documents(client):
