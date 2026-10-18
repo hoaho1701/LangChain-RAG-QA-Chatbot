@@ -30,8 +30,6 @@ dependencies = [
     "python-multipart",
     # Ghi kết quả evaluate.py (client nhẹ)
     "mlflow-skinny==2.22.5",
-    # TODO: xóa ở Bước 7 khi bỏ app.py
-    "streamlit==1.51.0",
 ]
 
 [dependency-groups]
@@ -79,7 +77,6 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 # Các entrypoint BẮT BUỘC set os.environ (USE_TF=0...) TRƯỚC mọi import ML — xem CLAUDE.md (TF mutex deadlock)
 "api/main.py" = ["E402"]
-"app.py" = ["E402"]
 "evaluate.py" = ["E402"]
 
 [tool.pytest.ini_options]
