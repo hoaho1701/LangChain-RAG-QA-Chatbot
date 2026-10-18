@@ -91,6 +91,11 @@ export default function App() {
     setMemoryStart(0)
   }
 
+  function handleClearChat() {
+    clearChat()
+    notify('Chat history cleared!', 'success')
+  }
+
   // New documents start a fresh conversation for the LLM; old messages stay on screen
   async function documentsChanged() {
     setMemoryStart(messages.length)
@@ -117,8 +122,10 @@ export default function App() {
       await addUrl(url)
       notify('URL added', 'success')
       await documentsChanged()
+      return true
     } catch (e) {
       notify(e.message, 'error')
+      return false
     }
   }
 
@@ -156,12 +163,12 @@ export default function App() {
         onUpload={handleUpload}
         onAddUrl={handleAddUrl}
         onDelete={handleDelete}
-        onClearChat={clearChat}
+        onClearChat={handleClearChat}
         onClearWorkspace={handleClearWorkspace}
       />
       <div className="app">
         <header>
-          <h1>RAG QA Chatbot Assistant 📚</h1>
+          <h1>RAG QA Chatbot 📚</h1>
         </header>
         <Chat messages={messages} busy={busy} ready={health.ready} onSend={send} />
       </div>

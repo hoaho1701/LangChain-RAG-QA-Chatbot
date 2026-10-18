@@ -43,13 +43,14 @@ export default function Sidebar({
     e.preventDefault()
     const link = url.trim()
     if (!link) return
-    await onAddUrl(link)
-    setUrl('')
+    // Keep the text on failure so it can be corrected
+    const added = await onAddUrl(link)
+    if (added) setUrl('')
   }
 
   return (
     <aside className="sidebar">
-      <h2>📚 RAG QA Chatbot Assistant</h2>
+      <h2>📚 RAG QA Chatbot</h2>
       <p className="muted">Upload files or paste a URL to start asking questions.</p>
 
       <input
