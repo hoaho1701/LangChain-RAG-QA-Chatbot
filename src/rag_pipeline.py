@@ -295,6 +295,10 @@ class RAGPipeline:
             if not collections:
                 print("No existing collections found in DB.")
                 return False
+            # The collection outlives its last chunk, so an empty one must not make the pipeline report ready
+            if self.client.get_collection("paper_navigator_db").count() == 0:
+                print("The index is empty.")
+                return False
         except Exception:
             return False
 
