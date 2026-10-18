@@ -5,7 +5,7 @@ description = "Local RAG chatbot: upload documents, ask questions (LangChain + L
 readme = "README.md"
 requires-python = ">=3.10,<3.11"
 dependencies = [
-    # Giữ nguyên các phiên bản đã chạy ổn trong conda env cũ (xem CLAUDE.md)
+    # Giữ nguyên các phiên bản đã kiểm chứng (xem CLAUDE.md)
     "pypdf==6.3.0",
     "chromadb==1.3.4",
     "langchain-chroma==1.0.0",
@@ -30,8 +30,6 @@ dependencies = [
     "python-multipart",
     # Ghi kết quả evaluate.py (client nhẹ)
     "mlflow-skinny==2.22.5",
-    # TODO: xóa ở Bước 7 khi bỏ app.py
-    "streamlit==1.51.0",
 ]
 
 [dependency-groups]
@@ -79,7 +77,6 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 # Các entrypoint BẮT BUỘC set os.environ (USE_TF=0...) TRƯỚC mọi import ML — xem CLAUDE.md (TF mutex deadlock)
 "api/main.py" = ["E402"]
-"app.py" = ["E402"]
 "evaluate.py" = ["E402"]
 
 [tool.pytest.ini_options]

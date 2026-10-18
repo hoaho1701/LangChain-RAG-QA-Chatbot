@@ -226,11 +226,6 @@ button:disabled {
   font-size: 0.85rem;
 }
 
-.ok {
-  color: #15803d;
-  font-size: 0.85rem;
-}
-
 .docs {
   display: flex;
   flex-direction: column;
