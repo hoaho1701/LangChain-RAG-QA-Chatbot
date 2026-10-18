@@ -16,7 +16,7 @@ jobs:
           enable-cache: true
       - run: uv sync --only-group ci --frozen
       - run: uv run --no-sync ruff check .
-      - run: uv run --no-sync ruff format --check . --exclude app.py
+      - run: uv run --no-sync ruff format --check .
       - run: uv run --no-sync pytest -q
 
   frontend:

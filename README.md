@@ -2,7 +2,7 @@
 
 A local, privacy-first RAG (Retrieval-Augmented Generation) chatbot. Upload documents, ask questions in natural language, get answers grounded in your own files — with source citations, conversation memory, and a self-correcting **agentic retrieval loop**.
 
-Powered by LangChain (Core/LCEL), LangGraph, and Ollama, this project runs **100% locally**: no API keys required, no data leaves your machine, no usage costs.
+Powered by LangChain (Core/LCEL), LangGraph, and Ollama, with a FastAPI backend and a React frontend, this project runs **100% locally**: no API keys required, no data leaves your machine, no usage costs.
 
 ---
 
@@ -14,8 +14,9 @@ Powered by LangChain (Core/LCEL), LangGraph, and Ollama, this project runs **100
 - **Source Citations:** Every answer links back to the exact file and page it was derived from.
 - **Multi-Format Ingestion:** PDF, TXT, Markdown, DOCX, and direct URL scraping — all through one dispatcher.
 - **Multi-File Management:** Additive indexing — add or remove individual files without rebuilding the whole vector database.
-- **Streaming Responses:** Answers are streamed token-by-token for a responsive, ChatGPT-like UX.
-- **Evaluation Harness:** Retrieval metrics (Recall@k, MRR) and LLM-as-judge generation metrics (Correctness, Faithfulness), with a per-language breakdown to catch regressions instead of guessing.
+- **Streaming Responses:** The API streams answers token-by-token over Server-Sent Events, and the React UI renders them as Markdown.
+- **Evaluation Harness:** Retrieval metrics (Recall@k, MRR) and LLM-as-judge generation metrics (Correctness, Faithfulness), with a per-language breakdown. Runs can be logged to MLflow to compare configurations.
+- **CI/CD:** GitHub Actions lints and tests the backend, lints and builds the frontend, and publishes Docker images to GHCR from `main`.
 
 ---
 
@@ -28,12 +29,22 @@ Powered by LangChain (Core/LCEL), LangGraph, and Ollama, this project runs **100
 | **Embedding Model**   | HuggingFace (`BAAI/bge-m3`)                   |
 | **Reranker**          | Cross-Encoder (`BAAI/bge-reranker-v2-m3`)     |
 | **Vector Database**   | ChromaDB (persistent, local)                  |
-| **Interface**         | Streamlit                                     |
-| **Language**          | Python 3.10+                                  |
+| **Backend**           | FastAPI + Server-Sent Events                  |
+| **Frontend**          | React 19 + Vite, served by nginx              |
+| **Experiment Tracking** | MLflow                                      |
+| **Packaging / CI**    | uv, Docker Compose, GitHub Actions            |
+| **Language**          | Python 3.10, JavaScript                       |
 
 ---
 
 ### 🧠 How It Works
+
+```
+React (Vite / nginx) ──/api──▶ FastAPI ──▶ RAGPipeline
+                                  │           ├─ Ollama (runs on the host)
+                                  │           └─ ChromaDB (vector_db/)
+evaluate.py ──▶ MLflow server
+```
 
 ```
 User question
@@ -54,15 +65,24 @@ Answer streamed token-by-token, with source citations (file + page)
 
 ```
 LangChain-RAG-QA-Chatbot/
-├── app.py                  # Streamlit UI
-├── evaluate.py              # CLI: run the evaluation harness
+├── api/
+│   ├── main.py              # FastAPI app: documents, chat (SSE), health
+│   └── schemas.py           # Request models
+├── frontend/                # React + Vite app (Dockerfile + nginx.conf included)
 ├── src/
 │   ├── config.py            # Constants + env vars
-│   ├── prompts.py            # All ChatPromptTemplate definitions
-│   ├── rag_pipeline.py       # RAGPipeline: ingestion, retrieval, agentic graph
-│   └── evaluation.py         # Retrieval + generation evaluation metrics
+│   ├── prompts.py           # All ChatPromptTemplate definitions
+│   ├── rag_pipeline.py      # RAGPipeline: ingestion, retrieval, agentic graph
+│   ├── evaluation.py        # Retrieval + generation evaluation metrics
+│   └── tracking.py          # Logs an evaluation run to MLflow
+├── tests/                   # API tests (fake pipeline) + MLflow logging tests
 ├── eval/
-│   └── dataset.json          # Q&A ground truth used by evaluate.py
+│   ├── dataset.json         # Q&A ground truth used by evaluate.py
+│   └── Report.md            # Committed snapshot of a real evaluation run
+├── evaluate.py              # CLI: run the evaluation harness
+├── Dockerfile.api           # Backend image
+├── docker-compose.yml       # api + web + mlflow
+├── .github/workflows/ci.yml # Lint, test, build, publish
 ├── documents/               # Uploaded source files (gitignored)
 ├── vector_db/               # ChromaDB persistent storage (gitignored)
 ├── pyproject.toml           # Dependencies (uv)
@@ -70,84 +90,96 @@ LangChain-RAG-QA-Chatbot/
 └── LICENSE
 ```
 
-| File / Directory       | Description                                                          |
-| ----------------------- | --------------------------------------------------------------------- |
-| `app.py`                | Streamlit entry point — upload UI, chat UI, sidebar file management.  |
-| `evaluate.py`           | CLI to run the evaluation harness and print/save a report.            |
-| `src/config.py`         | Model names, chunking, retrieval/reranking parameters.                |
-| `src/prompts.py`        | Prompt templates: contextualize, QA, document grading, query rewrite, evaluation judges. |
-| `src/rag_pipeline.py`   | Ingestion (PDF/TXT/DOCX/URL), chunking, embeddings, ChromaDB, reranker, and the LangGraph agentic loop. |
-| `src/evaluation.py`     | Recall@k/MRR (retrieval) and LLM-as-judge Correctness/Faithfulness (generation). |
-| `eval/dataset.json`     | Hand-written Q&A ground truth, tagged by language, used to run `evaluate.py`. |
-
 ---
 
 ### 🚀 Installation and Setup
 
 **Prerequisites:**
-- Python 3.10+
 - [Ollama](https://ollama.com/) installed and running
+- [uv](https://docs.astral.sh/uv/) (installs Python 3.10 for you)
+- Node.js 22+ (only for the dev setup)
+- Docker Desktop (only for the Docker setup)
 
-**Steps:**
+**1. Pull the LLM and clone the repository**
+```bash
+ollama pull qwen2.5:7b-instruct
+git clone https://github.com/hoaho1701/LangChain-RAG-QA-Chatbot
+cd LangChain-RAG-QA-Chatbot
+```
 
-1. **Install Ollama and pull the model:**
-   ```bash
-   ollama pull qwen2.5:7b-instruct
-   ```
+**2a. Run for development** (two terminals)
+```bash
+uv sync                                   # creates .venv from uv.lock
 
-2. **Clone this repository:**
-   ```bash
-   git clone https://github.com/hoaho1701/LangChain-RAG-QA-Chatbot
-   cd LangChain-RAG-QA-Chatbot
-   ```
+# Terminal 1 — backend. The first start downloads the embedding and reranker
+# models (a few GB); later starts can run offline (HF_LOCAL_FILES_ONLY defaults to true).
+HF_LOCAL_FILES_ONLY=false uv run uvicorn api.main:app --port 8000
 
-3. **Install [uv](https://docs.astral.sh/uv/) and the dependencies:**
-   ```bash
-   curl -LsSf https://astral.sh/uv/install.sh | sh   # or: brew install uv
-   uv sync                                            # creates .venv (Python 3.10) from uv.lock
-   ```
+# Terminal 2 — frontend (proxies /api to port 8000)
+cd frontend && npm ci && npm run dev      # http://localhost:5173
+```
 
-4. **(Optional) Run commands without activating the venv:** use the `uv run` prefix, e.g. `uv run streamlit run app.py`.
+**2b. Run with Docker Compose**
+```bash
+docker compose up --build
+```
+- App: http://localhost:8080
+- MLflow: http://localhost:5001
 
-5. **Run the application:**
-   ```bash
-   uv run streamlit run app.py
-   ```
+Ollama keeps running on the host, and the containers reach it through `host.docker.internal`. The compose file mounts `~/.cache/huggingface`, so the models must already be in that cache (run the backend once as in 2a first).
 
 ---
 
 ### 📖 How to Use
 
-1. **Add content:** Upload PDF/TXT/MD/DOCX files, or paste a URL, from the sidebar and click **"Process Documents"** / **"Add URL"**.
-2. **Chat:** Ask a question in the chat box (e.g., *"Summarize the main methodology"*). Follow-up questions are understood in context.
+1. **Add content:** Choose PDF/TXT/MD/DOCX files and click **"Process Documents"**, or paste a URL and click **"Add URL"**.
+2. **Chat:** Ask a question in the chat box (Enter sends, Shift+Enter adds a new line). Follow-up questions are understood in context.
 3. **Check sources:** Expand **"Sources"** under any answer to see the exact file and page it came from.
-4. **Manage files:** Remove individual indexed files from the sidebar without affecting the rest of the database.
+4. **Manage files:** Remove individual indexed files with ✕ in the sidebar without affecting the rest of the database.
 5. **Reset:**
    - **Clear Chat History** — wipes the conversation only.
    - **Clear Workspace** — deletes all uploaded files and the vector database (requires confirmation).
+
+Adding or removing documents starts a fresh conversation for the model; earlier messages stay on screen.
 
 ---
 
 ### 📊 Evaluating the Pipeline
 
 ```bash
-python evaluate.py                          # uses eval/dataset.json by default
-python evaluate.py --dataset eval/other.json --report eval/other_report.md
+uv run python evaluate.py                          # uses eval/dataset.json by default
+uv run python evaluate.py --dataset eval/other.json --report eval/other_report.md
+uv run python evaluate.py --mlflow                 # also log the run to MLflow
 ```
 
 Runs every question in the dataset through the retriever+reranker (Recall@k, MRR) and the full
 agentic `chat()` pipeline (LLM-as-judge Correctness, Faithfulness), then prints a Markdown report
 — including a breakdown by language — and saves it to `eval/last_report.md`.
 
-See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run.
+With `--mlflow`, set `MLFLOW_TRACKING_URI` to the server (for example `http://localhost:5001` when the compose stack is up); without it the run is written to `./mlruns`.
+
+The dataset assumes the first 40 pages of two books are indexed, so run it against that index.
+See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run
+(Recall@5 95%, MRR 0.90, Correctness 80%, Faithfulness 80%).
+
+---
+
+### 🧪 Tests and CI
+
+```bash
+uv run pytest -q          # API tests run with a fake pipeline: no Ollama or models needed
+uv run ruff check . && uv run ruff format --check .
+```
+
+On every pull request GitHub Actions runs the backend lint and tests, the frontend lint, format check and build, and a trial build of both Docker images. Pushes to `main` also publish the images to GitHub Container Registry.
 
 ---
 
 ### 🔮 Future Development
 
 - [ ] **Multi-Modal:** Support asking questions about images/figures inside PDFs.
-- [ ] **Persistent Chat History:** Save conversations across app restarts (currently in-memory per session).
-- [ ] **Docker Support:** One-command containerized setup for Ollama + app.
+- [ ] **Persistent Chat History:** Keep conversations across page reloads.
+- [ ] **Answer language:** Reply in the language of the question, and measure it with out-of-document questions in the evaluation set.
 
 ---
 
@@ -163,4 +195,5 @@ This project would not have been possible without the amazing open-source tools 
 - [LangChain](https://www.langchain.com/) & [LangGraph](https://www.langchain.com/langgraph)
 - [Ollama](https://ollama.com/)
 - [ChromaDB](https://www.trychroma.com/)
-- [Streamlit](https://streamlit.io/)
+- [FastAPI](https://fastapi.tiangolo.com/) & [React](https://react.dev/)
+- [MLflow](https://mlflow.org/)
