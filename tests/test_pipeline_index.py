@@ -1,13 +1,14 @@
 """Tests for RAGPipeline.load_existing_index on a real Chroma store, without loading any model."""
 
-import chromadb
 import pytest
 
-# src.rag_pipeline imports torch-based packages at the top; skip where they are not installed (CI)
+# CI installs neither chromadb nor torch: skip before importing anything that needs them
+chromadb = pytest.importorskip("chromadb")
 pytest.importorskip("sentence_transformers")
 
 from src.rag_pipeline import RAGPipeline
 
+# Must match the name hard-coded in RAGPipeline
 COLLECTION = "paper_navigator_db"
 
 
@@ -16,9 +17,9 @@ def pipeline(tmp_path):
     """A RAGPipeline built without __init__ (no models) on a throwaway Chroma folder."""
     p = RAGPipeline.__new__(RAGPipeline)
     p.client = chromadb.PersistentClient(path=str(tmp_path / "chroma"))
-    p.embeddings = None
+    p.embeddings = None  # only handed to Chroma; nothing here embeds text
     p.chain = None
-    # The real method builds the LCEL chain from the LLM; here we only need to know that it was called.
+    # Stand-in for the real method, which needs the LLM; it only marks the chain as set
     p.setup_rag_chain = lambda: setattr(p, "chain", object())
     return p
 
