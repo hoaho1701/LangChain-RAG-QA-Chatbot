@@ -160,7 +160,7 @@ With `--mlflow`, set `MLFLOW_TRACKING_URI` to the server (for example `http://lo
 
 The dataset assumes the first 40 pages of two books are indexed, so run it against that index.
 See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run
-(Recall@5 95%, MRR 0.90, Correctness 80%, Faithfulness 80%).
+(Recall@5 95%, MRR 0.90, Correctness 80%, Faithfulness 85%).
 
 ---
 
