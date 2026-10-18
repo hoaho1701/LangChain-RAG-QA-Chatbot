@@ -16,7 +16,6 @@ dependencies = [
     "langgraph-checkpoint==3.0.1",
     "langgraph-prebuilt==1.0.5",
     "langgraph-sdk==0.2.9",
-    "langsmith==0.4.45",
     "sentence-transformers==5.1.2",
     "huggingface-hub==0.36.0",
     "python-docx==1.2.0",

@@ -158,7 +158,6 @@ export default function App() {
     <div className="layout">
       <Sidebar
         documents={documents}
-        health={health}
         busy={busy}
         onUpload={handleUpload}
         onAddUrl={handleAddUrl}
