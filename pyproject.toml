@@ -51,6 +51,7 @@ ci = [
     "langchain-core==1.0.7",
     "pytest",
     "ruff",
+    "mlflow-skinny==2.22.5",
 ]
 
 [tool.uv]
