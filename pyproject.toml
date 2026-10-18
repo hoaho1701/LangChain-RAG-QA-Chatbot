@@ -75,7 +75,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
-# Các entrypoint BẮT BUỘC set os.environ (USE_TF=0...) TRƯỚC mọi import ML — xem CLAUDE.md (TF mutex deadlock)
+# Các entrypoint set os.environ (TOKENIZERS_PARALLELISM, OMP_NUM_THREADS) TRƯỚC mọi import ML
 "api/main.py" = ["E402"]
 "evaluate.py" = ["E402"]
 
