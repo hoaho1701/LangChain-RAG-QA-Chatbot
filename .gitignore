@@ -9,7 +9,6 @@ venv/
 # ── Secrets ─────────────────────────────────────────────
 .env
 .env.*
-!.env.example
 
 # ── Runtime data ────────────────────────────────────────
 # Uploaded documents (PDF/TXT/DOCX ingested at runtime)
