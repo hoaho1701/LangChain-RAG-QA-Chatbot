@@ -33,6 +33,8 @@ QA_SYSTEM_PROMPT = (
     "not blend details from unrelated passages. "
     "If the context does not contain the answer, state that you cannot find "
     "the relevant information in the provided documents.\n\n"
+    "Answer in the same language as the user's question, even if the context is in another language. "
+    "Never start the answer with a label such as 'CONTEXT:' and never paste the context passage in quotation marks.\n\n"
     "Context:\n{context}"
 )
 
