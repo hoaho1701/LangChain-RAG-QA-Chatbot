@@ -1,41 +1,46 @@
-# Virtual environment
-venv/
-.venv/
-
-# Python cache directories
+# ── Python ──────────────────────────────────────────────
 __pycache__/
 *.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
 
-# Environment files
+# ── Secrets ─────────────────────────────────────────────
 .env
-*.env.*
+.env.*
+!.env.example
 
-# Vector database directory
-vector_db/
-
-# User-uploaded documents (PDF/TXT/DOCX ingested at runtime)
+# ── Runtime data ────────────────────────────────────────
+# Uploaded documents (PDF/TXT/DOCX ingested at runtime)
 documents/
+# ChromaDB persistent storage
+vector_db/
+# MLflow local runs and server data
+mlruns/
+mlflow_data/
 
-# Claude Code local state
-.claude/
-
-# IDE settings
-.vscode/
-.idea/
-
-# Logs
+# ── Generated files ─────────────────────────────────────
+# Regenerate with `uv run python evaluate.py`
+eval/last_report.md
 *.log
 
-# Generated evaluation report (regenerate with `python evaluate.py`)
-eval/last_report.md
+# ── Frontend ────────────────────────────────────────────
+frontend/node_modules/
+frontend/dist/
 
-# macOS system files
+# ── Editors and tools ───────────────────────────────────
+.vscode/
+.idea/
+.claude/
+
+# ── OS files ────────────────────────────────────────────
 .DS_Store
 **/.DS_Store
-
-# Windows system files
 Thumbs.db
 
-# Personal working notes (not published)
+# ── Personal working notes (not published) ──────────────
 CLAUDE.md
 KNOWLEDGE.md
+UPGRADE_PLAN.md
+notes/
