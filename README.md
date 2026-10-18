@@ -132,6 +132,8 @@ docker compose up --build
 
 Ollama keeps running on the host, and the containers reach it through `host.docker.internal`. The compose file mounts `~/.cache/huggingface`, so the models must already be in that cache (run the backend once as in 2a first).
 
+The images published to GHCR are `linux/amd64` only. `docker compose up --build` builds for your own architecture; to run the published images on Apple Silicon, add `--platform linux/amd64` (they then run under emulation, which is slow).
+
 ---
 
 ### 📖 How to Use
