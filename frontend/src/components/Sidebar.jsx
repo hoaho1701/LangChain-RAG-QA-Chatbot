@@ -6,16 +6,7 @@ import ConfirmDialog from './ConfirmDialog'
  * Left column: file upload, URL ingestion, the indexed sources and settings.
  * The document actions (onUpload, onAddUrl, onDelete, onClearWorkspace) are handled by the parent.
  */
-export default function Sidebar({
-  documents,
-  health,
-  busy,
-  onUpload,
-  onAddUrl,
-  onDelete,
-  onClearChat,
-  onClearWorkspace,
-}) {
+export default function Sidebar({ documents, busy, onUpload, onAddUrl, onDelete, onClearChat, onClearWorkspace }) {
   const [picked, setPicked] = useState([])
   // Bump to clear the file input
   const [inputKey, setInputKey] = useState(0)
@@ -24,9 +15,6 @@ export default function Sidebar({
   const [confirming, setConfirming] = useState(false)
 
   const locked = busy || uploading
-
-  const tracingOn = health.tracing.enabled
-  const project = health.tracing.project
 
   async function processFiles() {
     setUploading(true)
@@ -100,14 +88,6 @@ export default function Sidebar({
       )}
 
       <h3>Settings</h3>
-      {tracingOn ? (
-        <p className="ok">
-          🔍 LangSmith tracing active — project: <code>{project}</code>
-        </p>
-      ) : (
-        <p className="muted">🔍 LangSmith tracing: off — see .env.example to enable</p>
-      )}
-
       <button onClick={onClearChat} disabled={busy}>
         Clear Chat History
       </button>

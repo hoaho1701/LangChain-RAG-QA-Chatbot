@@ -15,7 +15,6 @@ Powered by LangChain (Core/LCEL), LangGraph, and Ollama, this project runs **100
 - **Multi-Format Ingestion:** PDF, TXT, Markdown, DOCX, and direct URL scraping — all through one dispatcher.
 - **Multi-File Management:** Additive indexing — add or remove individual files without rebuilding the whole vector database.
 - **Streaming Responses:** Answers are streamed token-by-token for a responsive, ChatGPT-like UX.
-- **LangSmith Tracing (optional):** Full pipeline observability with zero code changes — just set environment variables.
 - **Evaluation Harness:** Retrieval metrics (Recall@k, MRR) and LLM-as-judge generation metrics (Correctness, Faithfulness), with a per-language breakdown to catch regressions instead of guessing.
 
 ---
@@ -30,7 +29,6 @@ Powered by LangChain (Core/LCEL), LangGraph, and Ollama, this project runs **100
 | **Reranker**          | Cross-Encoder (`BAAI/bge-reranker-v2-m3`)     |
 | **Vector Database**   | ChromaDB (persistent, local)                  |
 | **Interface**         | Streamlit                                     |
-| **Tracing (optional)**| LangSmith                                     |
 | **Language**          | Python 3.10+                                  |
 
 ---
@@ -67,7 +65,6 @@ LangChain-RAG-QA-Chatbot/
 │   └── dataset.json          # Q&A ground truth used by evaluate.py
 ├── documents/               # Uploaded source files (gitignored)
 ├── vector_db/               # ChromaDB persistent storage (gitignored)
-├── .env.example             # Template for optional LangSmith tracing keys
 ├── pyproject.toml           # Dependencies (uv)
 ├── uv.lock                  # Locked versions
 └── LICENSE
@@ -112,13 +109,7 @@ LangChain-RAG-QA-Chatbot/
 
 4. **(Optional) Run commands without activating the venv:** use the `uv run` prefix, e.g. `uv run streamlit run app.py`.
 
-5. **(Optional) Enable LangSmith tracing:**
-   ```bash
-   cp .env.example .env
-   # then fill in your LANGCHAIN_API_KEY
-   ```
-
-6. **Run the application:**
+5. **Run the application:**
    ```bash
    uv run streamlit run app.py
    ```
