@@ -1,5 +1,7 @@
 # LangChain-RAG-QA-Chatbot
 
+[![CI](https://github.com/hoaho1701/LangChain-RAG-QA-Chatbot/actions/workflows/ci.yml/badge.svg)](https://github.com/hoaho1701/LangChain-RAG-QA-Chatbot/actions/workflows/ci.yml)
+
 A local, privacy-first RAG (Retrieval-Augmented Generation) chatbot. Upload documents, ask questions in natural language, get answers grounded in your own files — with source citations, conversation memory, and a self-correcting **agentic retrieval loop**.
 
 Powered by LangChain (Core/LCEL), LangGraph, and Ollama, with a FastAPI backend and a React frontend, this project runs **100% locally**: no API keys required, no data leaves your machine, no usage costs.
