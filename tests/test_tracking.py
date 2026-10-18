@@ -44,11 +44,11 @@ def dataset_file(tmp_path):
 
 
 def test_logs_config_and_case_count_as_params(report, dataset_file):
-    """All 8 params are logged; MLflow reads params back as strings."""
+    """All 9 params are logged; MLflow reads params back as strings."""
     run = mlflow.get_run(log_evaluation(report, "# md", dataset_file))
 
     params = run.data.params
-    assert len(params) == 8
+    assert len(params) == 9
     assert params["n_cases"] == "20"
     assert params["chunk_size"] == str(config.CHUNK_SIZE)
     assert params["embedding_model"] == config.EMBEDDING_MODEL
@@ -71,4 +71,15 @@ def test_logs_report_and_the_dataset_that_was_passed(report, dataset_file):
     run_id = log_evaluation(report, "# md", dataset_file)
 
     names = {a.path for a in mlflow.MlflowClient().list_artifacts(run_id)}
-    assert names == {"report.md", "other.json"}
+    assert names == {"report.md", "qa_prompt.txt", "other.json"}
+
+
+def test_logs_a_hash_of_the_qa_prompt_and_its_text(report, dataset_file, monkeypatch):
+    """Runs can be compared by prompt: the hash changes with the prompt and the full text is an artifact."""
+    first = mlflow.get_run(log_evaluation(report, "# md", dataset_file))
+    monkeypatch.setattr("src.tracking.QA_SYSTEM_PROMPT", "a different prompt")
+    second_id = log_evaluation(report, "# md", dataset_file)
+    second = mlflow.get_run(second_id)
+
+    assert first.data.params["qa_prompt_hash"] != second.data.params["qa_prompt_hash"]
+    assert mlflow.artifacts.load_text(f"runs:/{second_id}/qa_prompt.txt") == "a different prompt"
