@@ -1,0 +1,38 @@
+services:
+  # Not published: the browser reaches the API through web (nginx)
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    environment:
+      # Ollama runs on the host, not in Docker
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - MLFLOW_TRACKING_URI=http://mlflow:5000
+      - HF_LOCAL_FILES_ONLY=true
+    volumes:
+      - ./documents:/app/documents
+      - ./vector_db:/app/vector_db
+      - ${HOME}/.cache/huggingface:/root/.cache/huggingface
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    env_file:
+      - path: .env
+        required: false
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 15s
+      start_period: 180s # models are loaded at startup
+
+  mlflow:
+    # GHCR has no v2.22.5; v2.22.4 works with the 2.22.5 client
+    image: ghcr.io/mlflow/mlflow:v2.22.4
+    command: mlflow server --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:////mlflow/mlflow.db --artifacts-destination /mlflow/artifacts --serve-artifacts
+    ports:
+      - 5001:5000 # host port 5000 is taken by macOS Control Center
+    volumes:
+      - ./mlflow_data:/mlflow
+
+  web:
+    build: ./frontend
+    ports: ["8080:80"]
+    depends_on: [api]

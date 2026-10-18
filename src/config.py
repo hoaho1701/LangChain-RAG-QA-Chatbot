@@ -11,14 +11,22 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 # Ollama LLM model name
 LLM_MODEL = "qwen2.5:7b-instruct"
 
+# Ollama server URL. Empty = ollama client default (localhost:11434, or OLLAMA_HOST).
+# In Docker, point this at the host: http://host.docker.internal:11434
+OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "")
+
+# Load HF models from the local cache only (no network). Set HF_LOCAL_FILES_ONLY=false
+# to let the first run download them (e.g. into the Docker HF cache volume).
+HF_LOCAL_FILES_ONLY = os.environ.get("HF_LOCAL_FILES_ONLY", "true").lower() != "false"
+
 # HuggingFace embedding model name
 EMBEDDING_MODEL = "BAAI/bge-m3"
 
 # Path to the directory containing documents
-DOCUMENTS_PATH = "./documents"
+DOCUMENTS_PATH = os.environ.get("DOCUMENTS_PATH", "./documents")
 
 # Path to the directory for the vector database
-VECTOR_DB_PATH = "./vector_db"
+VECTOR_DB_PATH = os.environ.get("VECTOR_DB_PATH", "./vector_db")
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
