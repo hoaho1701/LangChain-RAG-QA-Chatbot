@@ -9,7 +9,7 @@ by hand (copy from `eval/last_report.md`) if you want to refresh the snapshot.
 # Evaluation report (20 questions)
 
 - Retrieval — Recall@5: **95%**, MRR: **0.90**
-- Generation — Correctness: **80%**, Faithfulness: **80%**
+- Generation — Correctness: **80%**, Faithfulness: **85%**
 
 ## Breakdown by language
 
@@ -17,14 +17,14 @@ English questions are asked against the English document, Vietnamese questions a
 
 | Language | Recall@k | MRR | Correctness | Faithfulness |
 |---|---|---|---|---|
-| en | 100% | 1.00 | 90% | 90% |
+| en | 100% | 1.00 | 90% | 100% |
 | vi | 90% | 0.80 | 70% | 70% |
 
 | # | Language | Question | Retrieved | Rank | Correct | Faithful |
 |---|---|---|---|---|---|---|
 | 1 | en | According to Hands-On Large Language Models, which AI model was the first system able to write articles indistinguishable from those written by humans? | yes | 1 | yes | yes |
 | 2 | en | According to Hands-On Large Language Models, what term does the book use to encompass technologies that may not technically be LLMs but still significantly impact the field? | yes | 1 | yes | yes |
-| 3 | en | According to Hands-On Large Language Models, what was the first technique in the history of Language AI used to represent unstructured text, and around what decade was it first mentioned? | yes | 1 | no | no |
+| 3 | en | According to Hands-On Large Language Models, what was the first technique in the history of Language AI used to represent unstructured text, and around what decade was it first mentioned? | yes | 1 | no | yes |
 | 4 | en | According to Hands-On Large Language Models, which 2013 model was one of the first successful attempts at capturing the meaning of text in embeddings? | yes | 1 | yes | yes |
 | 5 | en | According to Hands-On Large Language Models, why is the word "bank" used as an example of a limitation of word2vec's static embeddings? | yes | 1 | yes | yes |
 | 6 | en | According to Hands-On Large Language Models, what term describes an architecture where generating the next word requires consuming all previously generated words? | yes | 1 | yes | yes |
