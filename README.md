@@ -4,6 +4,8 @@ A local, privacy-first RAG (Retrieval-Augmented Generation) chatbot. Upload docu
 
 Powered by LangChain (Core/LCEL), LangGraph, and Ollama, with a FastAPI backend and a React frontend, this project runs **100% locally**: no API keys required, no data leaves your machine, no usage costs.
 
+![RAG QA Chatbot UI](docs/ui.png)
+
 ---
 
 ### ✨ Key Features
