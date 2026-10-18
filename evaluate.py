@@ -2,7 +2,7 @@
 """CLI: run the RAG evaluation harness against a Q&A dataset and print a report.
 
 Usage:
-    python evaluate.py [--dataset eval/dataset.json] [--report eval/last_report.md] [--mlflow]
+    python evaluate.py [--dataset eval/dataset.json] [--report eval/last_report.md] [--mlflow] [--judge-model NAME]
 """
 
 import os
@@ -17,7 +17,7 @@ load_dotenv()
 
 import argparse
 
-from src.config import RERANKER_TOP_N
+from src.config import OLLAMA_BASE_URL, RERANKER_TOP_N
 from src.rag_pipeline import RAGPipeline
 from src.evaluation import run_evaluation
 
@@ -65,14 +65,22 @@ def main():
     parser.add_argument("--dataset", default="eval/dataset.json", help="Path to the eval dataset JSON file.")
     parser.add_argument("--report", default="eval/last_report.md", help="Path to write the Markdown report to.")
     parser.add_argument("--mlflow", action="store_true", help="Log params, metrics and the report to MLflow.")
+    parser.add_argument("--judge-model", help="Ollama model that grades the answers (default: the answering model).")
     args = parser.parse_args()
 
     pipeline = RAGPipeline()
     if not pipeline.load_existing_index():
         raise SystemExit("No indexed documents found in vector_db/. Upload documents via the app first.")
 
+    judge = None
+    if args.judge_model:
+        from langchain_ollama import ChatOllama  # lazy: only needed for a separate judge
+
+        ollama_kwargs = {"base_url": OLLAMA_BASE_URL} if OLLAMA_BASE_URL else {}
+        judge = ChatOllama(model=args.judge_model, temperature=0, **ollama_kwargs)
+
     print(f"Running evaluation on {args.dataset}...")
-    report = run_evaluation(pipeline, args.dataset)
+    report = run_evaluation(pipeline, args.dataset, judge)
 
     rendered = render_report(report)
     print("\n" + rendered)

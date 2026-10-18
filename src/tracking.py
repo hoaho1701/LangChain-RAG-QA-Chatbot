@@ -26,6 +26,7 @@ def log_evaluation(report: dict, report_md: str, dataset_path: str, experiment: 
                 "retriever_top_k": config.RETRIEVER_TOP_K,
                 "reranker_top_n": config.RERANKER_TOP_N,
                 "n_cases": report["n_cases"],
+                "judge_model": report.get("judge_model", config.LLM_MODEL),
                 "qa_prompt_hash": hashlib.sha256(QA_SYSTEM_PROMPT.encode()).hexdigest()[:12],
             }
         )
