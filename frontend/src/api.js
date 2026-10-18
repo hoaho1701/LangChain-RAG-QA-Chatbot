@@ -16,7 +16,7 @@ async function request(url, options) {
   return res.json()
 }
 
-/** Backend status: { ready, indexed_files, tracing: { enabled, project } }. */
+/** Backend status: { ready, indexed_files }. */
 export async function getHealth() {
   const res = await fetch('/api/health')
   if (!res.ok) throw new Error(await errorMessage(res))
