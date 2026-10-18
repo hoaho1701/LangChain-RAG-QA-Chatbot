@@ -7,7 +7,7 @@ Usage:
 
 import os
 
-# Must be set before any ML library is imported — see CLAUDE.md / app.py for why.
+# Must be set before any ML library is imported — see CLAUDE.md for why.
 os.environ["USE_TF"] = "0"
 os.environ["USE_JAX"] = "0"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
