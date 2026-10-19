@@ -90,8 +90,9 @@ def evaluate_retrieval(pipeline, dataset: List[EvalCase]) -> dict:
     }
 
 
-def evaluate_generation(pipeline, dataset: List[EvalCase]) -> dict:
-    """LLM-as-judge correctness + faithfulness of the full chat() pipeline."""
+def evaluate_generation(pipeline, dataset: List[EvalCase], judge=None) -> dict:
+    """LLM-as-judge correctness + faithfulness of the full chat() pipeline; the judge defaults to pipeline.llm."""
+    judge = judge or pipeline.llm
     per_case = []
 
     for case in dataset:
@@ -106,14 +107,14 @@ def evaluate_generation(pipeline, dataset: List[EvalCase]) -> dict:
         context_text = pipeline._format_docs(docs)
 
         is_correct = _judge_yes(
-            pipeline.llm,
+            judge,
             CORRECTNESS_JUDGE_PROMPT,
             question=case["question"],
             reference=case["expected_answer"],
             answer=answer,
         )
         is_faithful = _judge_yes(
-            pipeline.llm,
+            judge,
             FAITHFULNESS_JUDGE_PROMPT,
             context=context_text,
             answer=answer,
@@ -138,11 +139,12 @@ def evaluate_generation(pipeline, dataset: List[EvalCase]) -> dict:
     }
 
 
-def run_evaluation(pipeline, dataset_path: str) -> dict:
+def run_evaluation(pipeline, dataset_path: str, judge=None) -> dict:
     """Run both retrieval and generation evaluation and return a combined report."""
     dataset = load_dataset(dataset_path)
     return {
         "n_cases": len(dataset),
+        "judge_model": getattr(judge or pipeline.llm, "model", "unknown"),
         "retrieval": evaluate_retrieval(pipeline, dataset),
-        "generation": evaluate_generation(pipeline, dataset),
+        "generation": evaluate_generation(pipeline, dataset, judge),
     }

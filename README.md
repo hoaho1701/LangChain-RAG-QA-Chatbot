@@ -156,11 +156,14 @@ Adding or removing documents starts a fresh conversation for the model; earlier 
 uv run python evaluate.py                          # uses eval/dataset.json by default
 uv run python evaluate.py --dataset eval/other.json --report eval/other_report.md
 uv run python evaluate.py --mlflow                 # also log the run to MLflow
+uv run python evaluate.py --judge-model llama3:8b   # grade with another Ollama model (default: the answering model)
 ```
 
 Runs every question in the dataset through the retriever+reranker (Recall@k, MRR) and the full
 agentic `chat()` pipeline (LLM-as-judge Correctness, Faithfulness), then prints a Markdown report
 — including a breakdown by language — and saves it to `eval/last_report.md`.
+
+By default the answering model also grades its own answers; `--judge-model` lets another Ollama model grade instead, so the scores can be cross-checked, and the judge is logged to MLflow next to the prompt hash.
 
 With `--mlflow`, set `MLFLOW_TRACKING_URI` to the server (for example `http://localhost:5001` when the compose stack is up); without it the run is written to `./mlruns`.
 

@@ -44,11 +44,11 @@ def dataset_file(tmp_path):
 
 
 def test_logs_config_and_case_count_as_params(report, dataset_file):
-    """All 9 params are logged; MLflow reads params back as strings."""
+    """All 10 params are logged; MLflow reads params back as strings."""
     run = mlflow.get_run(log_evaluation(report, "# md", dataset_file))
 
     params = run.data.params
-    assert len(params) == 9
+    assert len(params) == 10
     assert params["n_cases"] == "20"
     assert params["chunk_size"] == str(config.CHUNK_SIZE)
     assert params["embedding_model"] == config.EMBEDDING_MODEL
@@ -83,3 +83,12 @@ def test_logs_a_hash_of_the_qa_prompt_and_its_text(report, dataset_file, monkeyp
 
     assert first.data.params["qa_prompt_hash"] != second.data.params["qa_prompt_hash"]
     assert mlflow.artifacts.load_text(f"runs:/{second_id}/qa_prompt.txt") == "a different prompt"
+
+
+def test_logs_the_judge_model_and_defaults_to_the_answering_model(report, dataset_file):
+    """Reports from before the judge existed still log a value."""
+    default = mlflow.get_run(log_evaluation(report, "# md", dataset_file))
+    named = mlflow.get_run(log_evaluation({**report, "judge_model": "llama3:8b"}, "# md", dataset_file))
+
+    assert default.data.params["judge_model"] == config.LLM_MODEL
+    assert named.data.params["judge_model"] == "llama3:8b"
