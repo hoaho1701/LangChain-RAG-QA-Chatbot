@@ -204,7 +204,8 @@ class RAGPipeline:
 
         print(f"Loading LLM model: {LLM_MODEL}...")
         ollama_kwargs = {"base_url": OLLAMA_BASE_URL} if OLLAMA_BASE_URL else {}
-        self.llm = ChatOllama(model=LLM_MODEL, temperature=0, keep_alive="5m", **ollama_kwargs)
+        # Thinking off: a thinking model burns tokens and time on reasoning first (empty reply under a token cap).
+        self.llm = ChatOllama(model=LLM_MODEL, temperature=0, reasoning=False, keep_alive="5m", **ollama_kwargs)
 
         print(f"Loading Embedding model: {EMBEDDING_MODEL}...")
         self.embeddings = HuggingFaceEmbeddings(

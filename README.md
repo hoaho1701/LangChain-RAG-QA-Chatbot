@@ -29,7 +29,7 @@ Powered by LangChain (Core/LCEL), LangGraph, and Ollama, with a FastAPI backend 
 | Component            | Technology                                  |
 | --------------------- | -------------------------------------------- |
 | **Orchestration**     | LangChain Core (LCEL) + LangGraph            |
-| **LLM**               | Ollama (`qwen2.5:7b-instruct`)                |
+| **LLM**               | Ollama (`qwen3.5:9b`)                         |
 | **Embedding Model**   | HuggingFace (`BAAI/bge-m3`)                   |
 | **Reranker**          | Cross-Encoder (`BAAI/bge-reranker-v2-m3`)     |
 | **Vector Database**   | ChromaDB (persistent, local)                  |
@@ -106,7 +106,7 @@ LangChain-RAG-QA-Chatbot/
 
 **1. Pull the LLM and clone the repository**
 ```bash
-ollama pull qwen2.5:7b-instruct
+ollama pull qwen3.5:9b
 git clone https://github.com/hoaho1701/LangChain-RAG-QA-Chatbot
 cd LangChain-RAG-QA-Chatbot
 ```
