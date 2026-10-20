@@ -8,6 +8,10 @@ os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 # Ollama LLM model name
 LLM_MODEL = "qwen2.5:7b-instruct"
 
+# Ollama model that grades evaluation answers; keep it a different family than LLM_MODEL.
+# Empty = the answering model grades itself.
+JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "gemma4:12b")
+
 # Ollama server URL. Empty = ollama client default (localhost:11434, or OLLAMA_HOST).
 # In Docker, point this at the host: http://host.docker.internal:11434
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "")

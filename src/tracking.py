@@ -4,7 +4,7 @@ import hashlib
 import os
 
 from src import config
-from src.prompts import QA_SYSTEM_PROMPT
+from src.prompts import CORRECTNESS_SYSTEM_PROMPT, FAITHFULNESS_SYSTEM_PROMPT, QA_SYSTEM_PROMPT
 
 
 def log_evaluation(report: dict, report_md: str, dataset_path: str, experiment: str = "rag-eval") -> str:
@@ -15,6 +15,8 @@ def log_evaluation(report: dict, report_md: str, dataset_path: str, experiment: 
     mlflow.set_experiment(experiment)
 
     r, g = report["retrieval"], report["generation"]
+    # Logged like the QA prompt: runs graded with different judge wording must be told apart.
+    judge_prompts = CORRECTNESS_SYSTEM_PROMPT + "\n\n" + FAITHFULNESS_SYSTEM_PROMPT
     with mlflow.start_run() as run:
         mlflow.log_params(
             {
@@ -28,6 +30,7 @@ def log_evaluation(report: dict, report_md: str, dataset_path: str, experiment: 
                 "n_cases": report["n_cases"],
                 "judge_model": report.get("judge_model", config.LLM_MODEL),
                 "qa_prompt_hash": hashlib.sha256(QA_SYSTEM_PROMPT.encode()).hexdigest()[:12],
+                "judge_prompt_hash": hashlib.sha256(judge_prompts.encode()).hexdigest()[:12],
             }
         )
         mlflow.log_metrics(
@@ -52,5 +55,6 @@ def log_evaluation(report: dict, report_md: str, dataset_path: str, experiment: 
 
         mlflow.log_text(report_md, "report.md")
         mlflow.log_text(QA_SYSTEM_PROMPT, "qa_prompt.txt")
+        mlflow.log_text(judge_prompts, "judge_prompts.txt")
         mlflow.log_artifact(dataset_path)
         return run.info.run_id

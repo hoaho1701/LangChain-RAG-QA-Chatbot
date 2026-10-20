@@ -96,11 +96,14 @@ CORRECTNESS_JUDGE_PROMPT = ChatPromptTemplate.from_messages(
 )
 
 # Evaluation — LLM-as-judge: is the generated answer grounded in the retrieved context?
+# A refusal ("cannot be found") claims nothing, so it counts as faithful; without that line judges mark it unfaithful.
 FAITHFULNESS_SYSTEM_PROMPT = (
     "You are grading whether a generated answer is faithful to the provided context — "
     "i.e. every claim in the answer is supported by the context, with no fabricated information.\n"
     'Reply "yes" if the answer is fully supported by the context, or "no" if it contains '
     "unsupported or fabricated claims.\n"
+    "An answer that says the requested information cannot be found in the provided context "
+    'makes no unsupported claim, so reply "yes" to it.\n'
     'Output only "yes" or "no", nothing else.'
 )
 

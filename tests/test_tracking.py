@@ -44,11 +44,11 @@ def dataset_file(tmp_path):
 
 
 def test_logs_config_and_case_count_as_params(report, dataset_file):
-    """All 10 params are logged; MLflow reads params back as strings."""
+    """All 11 params are logged; MLflow reads params back as strings."""
     run = mlflow.get_run(log_evaluation(report, "# md", dataset_file))
 
     params = run.data.params
-    assert len(params) == 10
+    assert len(params) == 11
     assert params["n_cases"] == "20"
     assert params["chunk_size"] == str(config.CHUNK_SIZE)
     assert params["embedding_model"] == config.EMBEDDING_MODEL
@@ -71,7 +71,7 @@ def test_logs_report_and_the_dataset_that_was_passed(report, dataset_file):
     run_id = log_evaluation(report, "# md", dataset_file)
 
     names = {a.path for a in mlflow.MlflowClient().list_artifacts(run_id)}
-    assert names == {"report.md", "qa_prompt.txt", "other.json"}
+    assert names == {"report.md", "qa_prompt.txt", "judge_prompts.txt", "other.json"}
 
 
 def test_logs_a_hash_of_the_qa_prompt_and_its_text(report, dataset_file, monkeypatch):
@@ -92,3 +92,14 @@ def test_logs_the_judge_model_and_defaults_to_the_answering_model(report, datase
 
     assert default.data.params["judge_model"] == config.LLM_MODEL
     assert named.data.params["judge_model"] == "llama3:8b"
+
+
+def test_logs_a_hash_of_the_judge_prompts_and_their_text(report, dataset_file, monkeypatch):
+    """A change to the grading prompts shows up as a different hash, and the prompts are stored with the run."""
+    first = mlflow.get_run(log_evaluation(report, "# md", dataset_file))
+    monkeypatch.setattr("src.tracking.FAITHFULNESS_SYSTEM_PROMPT", "a different judge prompt")
+    second_id = log_evaluation(report, "# md", dataset_file)
+    second = mlflow.get_run(second_id)
+
+    assert first.data.params["judge_prompt_hash"] != second.data.params["judge_prompt_hash"]
+    assert "a different judge prompt" in mlflow.artifacts.load_text(f"runs:/{second_id}/judge_prompts.txt")
