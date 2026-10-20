@@ -6,7 +6,7 @@ import os
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 
 # Ollama LLM model name
-LLM_MODEL = "qwen2.5:7b-instruct"
+LLM_MODEL = "qwen3.5:9b"
 
 # Ollama model that grades evaluation answers; keep it a different family than LLM_MODEL.
 # Empty = the answering model grades itself.
