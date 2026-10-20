@@ -14,8 +14,10 @@ performs end-to-end in one language vs. the other.
 """
 
 import json
+import re
 from typing import List, TypedDict
 
+from src.config import OLLAMA_BASE_URL
 from src.prompts import CORRECTNESS_JUDGE_PROMPT, FAITHFULNESS_JUDGE_PROMPT
 
 
@@ -33,10 +35,18 @@ def load_dataset(path: str) -> List[EvalCase]:
         return json.load(f)
 
 
+def make_judge(model: str):
+    """Build the grading LLM: deterministic, short replies, thinking off (thinking models burn the token budget)."""
+    from langchain_ollama import ChatOllama  # lazy: only needed when a separate judge grades
+
+    ollama_kwargs = {"base_url": OLLAMA_BASE_URL} if OLLAMA_BASE_URL else {}
+    return ChatOllama(model=model, temperature=0, num_predict=32, reasoning=False, **ollama_kwargs)
+
+
 def _judge_yes(llm, prompt, **kwargs) -> bool:
     messages = prompt.format_messages(**kwargs)
     reply = llm.invoke(messages).content.strip().lower()
-    return reply.startswith("yes")
+    return re.sub(r"^[^a-z]+", "", reply).startswith("yes")  # tolerate leading markdown such as "**Yes**"
 
 
 def _mean(values: List[float]) -> float:

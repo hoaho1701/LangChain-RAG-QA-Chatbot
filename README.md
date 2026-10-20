@@ -156,20 +156,20 @@ Adding or removing documents starts a fresh conversation for the model; earlier 
 uv run python evaluate.py                          # uses eval/dataset.json by default
 uv run python evaluate.py --dataset eval/other.json --report eval/other_report.md
 uv run python evaluate.py --mlflow                 # also log the run to MLflow
-uv run python evaluate.py --judge-model llama3:8b   # grade with another Ollama model (default: the answering model)
+uv run python evaluate.py --judge-model phi4:14b    # grade with another Ollama model (default: JUDGE_MODEL = gemma4:12b)
 ```
 
 Runs every question in the dataset through the retriever+reranker (Recall@k, MRR) and the full
 agentic `chat()` pipeline (LLM-as-judge Correctness, Faithfulness), then prints a Markdown report
 — including a breakdown by language — and saves it to `eval/last_report.md`.
 
-By default the answering model also grades its own answers; `--judge-model` lets another Ollama model grade instead, so the scores can be cross-checked, and the judge is logged to MLflow next to the prompt hash.
+A separate judge model (`JUDGE_MODEL`, `gemma4:12b` by default; run `ollama pull gemma4:12b` first) grades the answers, so the answering model never grades itself. `--judge-model` picks another Ollama model for a cross-check, and an empty value makes the answering model grade itself. The judge and a hash of the judge prompts are logged to MLflow next to the QA prompt hash.
 
 With `--mlflow`, set `MLFLOW_TRACKING_URI` to the server (for example `http://localhost:5001` when the compose stack is up); without it the run is written to `./mlruns`.
 
 The dataset assumes the first 40 pages of two books are indexed, so run it against that index.
 See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run
-(Recall@5 95%, MRR 0.90, Correctness 80%, Faithfulness 85%).
+(Recall@5 95%, MRR 0.90, Correctness 80%, Faithfulness 85%), graded by the answering model itself, before the separate judge existed.
 
 ---
 
