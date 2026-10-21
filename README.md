@@ -174,6 +174,8 @@ re-chunking; `evaluate.py` stops if a snippet is in no indexed chunk.
 
 A separate judge model (`JUDGE_MODEL`, `gemma4:12b` by default; run `ollama pull gemma4:12b` first) grades the answers, so the answering model never grades itself. `--judge-model` picks another Ollama model for a cross-check, and an empty value makes the answering model grade itself. The judge and a hash of the judge prompts are logged to MLflow next to the QA prompt hash.
 
+To compare two runs, save each with `--per-case-json` and run `uv run python eval/compare.py before.json after.json`. The questions are paired by id; for every metric the table gives the change, a 95% interval from a paired bootstrap, and how many questions got better or worse. An interval that contains 0 means the two runs cannot be told apart on this many questions.
+
 With `--mlflow`, a hash of the dataset file and the split that ran are logged too, so runs on different questions are not compared by mistake. Set `MLFLOW_TRACKING_URI` to the server (for example `http://localhost:5001` when the compose stack is up); without it the run is written to `./mlruns`.
 
 The dataset assumes the first 40 pages of two books are indexed, so run it against that index.
