@@ -3,6 +3,7 @@
 
 Usage:
     python evaluate.py [--dataset eval/dataset.json] [--report eval/last_report.md] [--mlflow] [--judge-model NAME]
+                       [--split dev|test|all] [--per-case-json PATH]
 """
 
 import os
@@ -16,50 +17,65 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import argparse
+import json
+from typing import List
 
 from src.config import JUDGE_MODEL, RERANKER_TOP_N
 from src.rag_pipeline import RAGPipeline
-from src.evaluation import load_dataset, make_judge, missing_evidence, run_evaluation
+from src.evaluation import load_dataset, make_judge, missing_evidence, run_evaluation, per_case_results
+
+
+def _breakdown(group: str, r: dict, g: dict) -> List[str]:
+    """One table of metrics per value of `group` (language, type or split)."""
+    # Names come from the generation metrics: a value such as type "out_of_doc" has no retrieval metric and is missing
+    # from the retrieval dicts, so its Recall@k and MRR cells show "-".
+    lines = [
+        "",
+        f"## By {group}",
+        "",
+        f"| {group.capitalize()} | Recall@k | MRR | Correctness | Faithfulness |",
+        "|---|---|---|---|---|",
+    ]
+    recall = r[f"recall_at_k_by_{group}"]
+    mrr = r[f"mrr_by_{group}"]
+    for name in sorted(g[f"correctness_by_{group}"]):
+        has_retrieval = name in recall
+        recall_cell = f"{recall[name]:.0%}" if has_retrieval else "-"
+        mrr_cell = f"{mrr[name]:.2f}" if has_retrieval else "-"
+        correctness = g[f"correctness_by_{group}"][name]
+        faithfulness = g[f"faithfulness_by_{group}"][name]
+        lines.append(f"| {name} | {recall_cell} | {mrr_cell} | {correctness:.0%} | {faithfulness:.0%} |")
+
+    return lines
 
 
 def render_report(report: dict) -> str:
     r, g = report["retrieval"], report["generation"]
     lines = [
-        f"# Evaluation report ({report['n_cases']} questions)",
+        f"# Evaluation report ({report['n_cases']} questions, {report['split']} split)",
         "",
-        f"- Retrieval — Recall@{RERANKER_TOP_N}: **{r['recall_at_k']:.0%}**, MRR: **{r['mrr']:.2f}**",
-        f"- Generation — Correctness: **{g['correctness']:.0%}**, Faithfulness: **{g['faithfulness']:.0%}**",
+        f"- Retrieval — Recall@{RERANKER_TOP_N}: **{r['recall_at_k']:.0%}**, MRR: **{r['mrr']:.2f}** "
+        f"({len(r['per_case'])} questions that have evidence)",
+        f"- Generation — Correctness: **{g['correctness']:.0%}**, Faithfulness: **{g['faithfulness']:.0%}**, "
+        f"median {g['median_seconds']:.0f} s per answer",
         "",
-        "## Breakdown by language",
-        "",
-        "English questions are asked against the English document, Vietnamese questions against "
-        "the Vietnamese document (independent question sets, not translations of each other) — "
-        "this compares how well the pipeline performs end-to-end when working entirely in one "
-        "language vs. the other.",
-        "",
-        "| Language | Recall@k | MRR | Correctness | Faithfulness |",
-        "|---|---|---|---|---|",
     ]
-    languages = sorted(r["recall_at_k_by_language"])
-    for lang in languages:
-        lines.append(
-            f"| {lang} | {r['recall_at_k_by_language'][lang]:.0%} | {r['mrr_by_language'][lang]:.2f} "
-            f"| {g['correctness_by_language'][lang]:.0%} | {g['faithfulness_by_language'][lang]:.0%} |"
-        )
+    for group in ("language", "type", "split"):
+        lines += _breakdown(group, r, g)
     lines += [
         "",
-        "| # | Language | Question | Retrieved | Rank | Correct | Faithful |",
-        "|---|---|---|---|---|---|---|",
+        "English questions are asked against the English document, Vietnamese questions against the Vietnamese",
+        "document (independent question sets, not translations of each other).",
+        "",
+        "| # | Id | Question | Retrieved | Rank | Correct | Faithful | Seconds |",
+        "|---|---|---|---|---|---|---|---|",
     ]
-    # Retrieval skips out-of-document questions, so the two lists differ in length: look retrieval up by id
-    # instead of zipping, and show "-" when a question has no retrieval record.
-    retrieval_by_id = {rc["id"]: rc for rc in r["per_case"]}
-    for i, gc in enumerate(g["per_case"], start=1):
-        rc = retrieval_by_id.get(gc["id"])
-        retrieved = "-" if rc is None else ("yes" if rc["hit"] else "no")
+    # hit is None when the question has no retrieval record (out-of-document): show "-", not "no".
+    for i, c in enumerate(per_case_results(report), start=1):
+        retrieved = "-" if c["hit"] is None else ("yes" if c["hit"] else "no")
         lines.append(
-            f"| {i} | {gc['language']} | {gc['question']} | {retrieved} | {(rc and rc['rank']) or '-'} "
-            f"| {'yes' if gc['correct'] else 'no'} | {'yes' if gc['faithful'] else 'no'} |"
+            f"| {i} | {c['id']} | {c['question']} | {retrieved} | {c['rank'] or '-'} "
+            f"| {'yes' if c['correct'] else 'no'} | {'yes' if c['faithful'] else 'no'} | {c['seconds']} |"
         )
     return "\n".join(lines) + "\n"
 
@@ -74,6 +90,15 @@ def main():
         "--judge-model",
         default=JUDGE_MODEL,
         help="Ollama model that grades the answers (default: JUDGE_MODEL; empty = the answering model).",
+    )
+    parser.add_argument(
+        "--split",
+        choices=["dev", "test", "all"],
+        default="dev",
+        help="Questions to run: dev to iterate on (default), test to confirm once, all for the final report.",
+    )
+    parser.add_argument(
+        "--per-case-json", help="Also write one JSON record per question, to compare two runs case by case."
     )
     args = parser.parse_args()
 
@@ -91,8 +116,8 @@ def main():
         )
     judge = make_judge(args.judge_model) if args.judge_model else None  # empty value: the answering model grades itself
 
-    print(f"Running evaluation on {args.dataset}...")
-    report = run_evaluation(pipeline, args.dataset, judge)
+    print(f"Running evaluation on {args.dataset} ({args.split} split)...")
+    report = run_evaluation(pipeline, args.dataset, judge, args.split)
 
     rendered = render_report(report)
     print("\n" + rendered)
@@ -100,6 +125,16 @@ def main():
     with open(args.report, "w", encoding="utf-8") as f:
         f.write(rendered)
     print(f"Report saved to {args.report}")
+
+    if args.per_case_json:
+        with open(args.per_case_json, "w", encoding="utf-8") as f:
+            json.dump(
+                {"judge_model": report["judge_model"], "split": report["split"], "cases": per_case_results(report)},
+                f,
+                ensure_ascii=False,
+                indent=2,
+            )
+        print(f"Per-question results saved to {args.per_case_json}")
 
     if args.mlflow:
         from src.tracking import log_evaluation  # lazy: mlflow is only needed with --mlflow
