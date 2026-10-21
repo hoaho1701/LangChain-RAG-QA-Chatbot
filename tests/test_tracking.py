@@ -44,11 +44,11 @@ def dataset_file(tmp_path):
 
 
 def test_logs_config_and_case_count_as_params(report, dataset_file):
-    """All 11 params are logged; MLflow reads params back as strings."""
+    """All 13 params are logged; MLflow reads params back as strings."""
     run = mlflow.get_run(log_evaluation(report, "# md", dataset_file))
 
     params = run.data.params
-    assert len(params) == 11
+    assert len(params) == 13
     assert params["n_cases"] == "20"
     assert params["chunk_size"] == str(config.CHUNK_SIZE)
     assert params["embedding_model"] == config.EMBEDDING_MODEL
@@ -103,3 +103,16 @@ def test_logs_a_hash_of_the_judge_prompts_and_their_text(report, dataset_file, m
 
     assert first.data.params["judge_prompt_hash"] != second.data.params["judge_prompt_hash"]
     assert "a different judge prompt" in mlflow.artifacts.load_text(f"runs:/{second_id}/judge_prompts.txt")
+
+
+def test_logs_a_hash_of_the_dataset_file_and_the_split_that_ran(report, tmp_path):
+    """Runs on different questions or on a different split cannot be compared, so both are recorded."""
+    first_file, second_file = tmp_path / "a.json", tmp_path / "b.json"
+    first_file.write_text(json.dumps([{"id": "x"}]))
+    second_file.write_text(json.dumps([{"id": "y"}]))
+
+    first = mlflow.get_run(log_evaluation({**report, "split": "dev"}, "# md", str(first_file)))
+    second = mlflow.get_run(log_evaluation(report, "# md", str(second_file)))
+
+    assert first.data.params["dataset_hash"] != second.data.params["dataset_hash"]
+    assert (first.data.params["eval_split"], second.data.params["eval_split"]) == ("dev", "all")

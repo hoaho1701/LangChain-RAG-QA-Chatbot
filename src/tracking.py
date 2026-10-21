@@ -14,6 +14,9 @@ def log_evaluation(report: dict, report_md: str, dataset_path: str, experiment: 
     mlflow.set_tracking_uri(os.environ.get("MLFLOW_TRACKING_URI", "./mlruns"))
     mlflow.set_experiment(experiment)
 
+    # Runs on different questions must not be compared: the hash tells two versions of the dataset file apart.
+    with open(dataset_path, "rb") as f:
+        dataset_hash = hashlib.sha256(f.read()).hexdigest()[:12]
     r, g = report["retrieval"], report["generation"]
     # Logged like the QA prompt: runs graded with different judge wording must be told apart.
     judge_prompts = CORRECTNESS_SYSTEM_PROMPT + "\n\n" + FAITHFULNESS_SYSTEM_PROMPT
@@ -28,6 +31,8 @@ def log_evaluation(report: dict, report_md: str, dataset_path: str, experiment: 
                 "retriever_top_k": config.RETRIEVER_TOP_K,
                 "reranker_top_n": config.RERANKER_TOP_N,
                 "n_cases": report["n_cases"],
+                "eval_split": report.get("split", "all"),
+                "dataset_hash": dataset_hash,
                 "judge_model": report.get("judge_model", config.LLM_MODEL),
                 "qa_prompt_hash": hashlib.sha256(QA_SYSTEM_PROMPT.encode()).hexdigest()[:12],
                 "judge_prompt_hash": hashlib.sha256(judge_prompts.encode()).hexdigest()[:12],

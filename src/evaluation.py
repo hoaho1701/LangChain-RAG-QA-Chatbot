@@ -20,6 +20,8 @@ Each case carries:
 
 import json
 import re
+import statistics
+import time
 from typing import List, TypedDict
 
 from langchain_core.messages import AIMessage, HumanMessage
@@ -27,6 +29,8 @@ from langchain_core.messages import AIMessage, HumanMessage
 from src.config import OLLAMA_BASE_URL
 from src.prompts import CORRECTNESS_JUDGE_PROMPT, FAITHFULNESS_JUDGE_PROMPT
 
+# The tags a metric is broken down by in the report.
+GROUPS = ("language", "type", "split")
 # PDF text marks a hyphenated line break with U+2010 (hyphen) or U+00AD (soft hyphen). Code points, not the characters
 # themselves, because U+00AD is invisible and `ruff format` rewrites escapes into the literal character.
 PDF_HYPHENS: dict = {0x2010: "-", 0x00AD: None}
@@ -93,12 +97,24 @@ def _mean(values: List[float]) -> float:
     return sum(values) / len(values) if values else 0.0
 
 
-def _grouped_mean(per_case: List[dict], value_key: str) -> dict:
-    """Average `value_key` per distinct `language`, e.g. {"en": 0.8, "vi": 0.5}."""
+def _grouped_mean(per_case: List[dict], value_key: str, group_key: str = "language") -> dict:
+    """Average `value_key` per distinct `group_key`, e.g. {"en": 0.8, "vi": 0.5}."""
     groups: dict = {}
     for c in per_case:
-        groups.setdefault(c["language"], []).append(c[value_key])
-    return {lang: _mean(vals) for lang, vals in groups.items()}
+        groups.setdefault(c[group_key], []).append(c[value_key])
+    return {name: _mean(vals) for name, vals in groups.items()}
+
+
+def _breakdowns(per_case: List[dict], metrics: dict) -> dict:
+    """{"<metric>_by_<group>": {...}} for every metric and every group in GROUPS.
+
+    `metrics` maps a metric name to the per-case key holding its value, e.g. {"mrr": "reciprocal_rank"}.
+    """
+    return {
+        f"{metric_name}_by_{group}": _grouped_mean(per_case, metric_key, group)
+        for metric_name, metric_key in metrics.items()
+        for group in GROUPS
+    }
 
 
 def evaluate_retrieval(pipeline, dataset: List[EvalCase]) -> dict:
@@ -141,8 +157,7 @@ def evaluate_retrieval(pipeline, dataset: List[EvalCase]) -> dict:
     return {
         "recall_at_k": _mean([1 if c["hit"] else 0 for c in per_case]),
         "mrr": _mean([c["reciprocal_rank"] for c in per_case]),
-        "recall_at_k_by_language": _grouped_mean(per_case, "hit"),
-        "mrr_by_language": _grouped_mean(per_case, "reciprocal_rank"),
+        **_breakdowns(per_case, {"recall_at_k": "hit", "mrr": "reciprocal_rank"}),
         "per_case": per_case,
     }
 
@@ -153,6 +168,8 @@ def evaluate_generation(pipeline, dataset: List[EvalCase], judge=None) -> dict:
     per_case = []
 
     for case in dataset:
+        # Time the pipeline only: the grading below is not part of how long the chatbot takes to answer.
+        start_time = time.perf_counter()
         docs = []
         answer = ""
         for chunk in pipeline.chat(case["question"], _history_messages(case)):
@@ -160,6 +177,7 @@ def evaluate_generation(pipeline, dataset: List[EvalCase], judge=None) -> dict:
                 docs = chunk["context"]
             if "answer" in chunk:
                 answer += chunk["answer"]
+        elapsed_seconds = time.perf_counter() - start_time
 
         context_text = pipeline._format_docs(docs)
 
@@ -187,14 +205,15 @@ def evaluate_generation(pipeline, dataset: List[EvalCase], judge=None) -> dict:
                 "answer": answer,
                 "correct": is_correct,
                 "faithful": is_faithful,
+                "seconds": round(elapsed_seconds, 1),
             }
         )
 
     return {
         "correctness": _mean([1 if c["correct"] else 0 for c in per_case]),
         "faithfulness": _mean([1 if c["faithful"] else 0 for c in per_case]),
-        "correctness_by_language": _grouped_mean(per_case, "correct"),
-        "faithfulness_by_language": _grouped_mean(per_case, "faithful"),
+        **_breakdowns(per_case, {"correctness": "correct", "faithfulness": "faithful"}),
+        "median_seconds": statistics.median([c["seconds"] for c in per_case]) if per_case else 0.0,
         "per_case": per_case,
     }
 
@@ -209,3 +228,28 @@ def run_evaluation(pipeline, dataset_path: str, judge=None, split: str = "all") 
         "retrieval": evaluate_retrieval(pipeline, dataset),
         "generation": evaluate_generation(pipeline, dataset, judge),
     }
+
+
+def per_case_results(report: dict) -> List[dict]:
+    """One record per question with its retrieval and generation results side by side, for paired comparisons."""
+    # Out-of-document questions have no retrieval record: their hit and rank are None, not False, so a table can
+    # tell "nothing to retrieve" from "retrieved nothing".
+    retrieval_cases = {c["id"]: c for c in report.get("retrieval", {}).get("per_case", [])}
+
+    results = []
+    for g in report.get("generation", {}).get("per_case", []):
+        case_id = g["id"]
+        ret_case = retrieval_cases.get(case_id)
+
+        hit = ret_case["hit"] if ret_case else None
+        rank = ret_case["rank"] if ret_case else None
+
+        results.append(
+            {
+                **g,
+                "hit": hit,
+                "rank": rank,
+            }
+        )
+
+    return results

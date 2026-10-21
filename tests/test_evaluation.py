@@ -14,6 +14,7 @@ from src.evaluation import (
     load_dataset,
     make_judge,
     missing_evidence,
+    per_case_results,
     run_evaluation,
 )
 from src.prompts import FAITHFULNESS_JUDGE_PROMPT, FAITHFULNESS_SYSTEM_PROMPT
@@ -185,10 +186,40 @@ def test_the_history_reaches_the_pipeline_as_chat_messages():
     assert pipeline.histories == [[HumanMessage("first"), AIMessage("reply")]]
 
 
-def test_every_generation_result_names_its_case():
+def test_every_generation_result_names_its_case_and_how_long_the_answer_took():
     result = evaluate_generation(FakePipeline(FakeLLM("yes")), [CASE])["per_case"][0]
 
     assert (result["id"], result["type"], result["split"]) == ("c1", "factoid", "dev")
+    assert result["seconds"] >= 0
+
+
+def test_metrics_are_broken_down_by_language_type_and_split():
+    cases = [
+        make_case(id="a", type="factoid", language="en", split="dev"),
+        make_case(id="b", type="hard", language="vi", split="test"),
+    ]
+    pipeline = FakePipeline(FakeLLM("yes"), ["the evidence"])
+
+    retrieval, generation = evaluate_retrieval(pipeline, cases), evaluate_generation(pipeline, cases)
+
+    assert set(retrieval["recall_at_k_by_type"]) == {"factoid", "hard"}
+    assert set(retrieval["mrr_by_split"]) == {"dev", "test"}
+    assert set(generation["correctness_by_language"]) == {"en", "vi"}
+    assert set(generation["faithfulness_by_type"]) == {"factoid", "hard"}
+
+
+def test_per_case_results_put_retrieval_and_generation_side_by_side():
+    cases = [make_case(id="a"), make_case(id="b", type="out_of_doc", evidence=[])]
+    report = {
+        "retrieval": evaluate_retrieval(FakePipeline(FakeLLM("yes"), ["the evidence"]), cases),
+        "generation": evaluate_generation(FakePipeline(FakeLLM("yes"), ["the evidence"]), cases),
+    }
+
+    results = {r["id"]: r for r in per_case_results(report)}
+
+    assert (results["a"]["hit"], results["a"]["rank"]) == (True, 1)
+    assert (results["b"]["hit"], results["b"]["rank"]) == (None, None)
+    assert results["b"]["correct"] is True
 
 
 @pytest.mark.parametrize("reply", ["yes", "Yes.", "**Yes**", "- yes", '"yes"', "\n yes, it is"])
