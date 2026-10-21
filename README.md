@@ -163,13 +163,20 @@ Runs every question in the dataset through the retriever+reranker (Recall@k, MRR
 agentic `chat()` pipeline (LLM-as-judge Correctness, Faithfulness), then prints a Markdown report
 — including a breakdown by language — and saves it to `eval/last_report.md`.
 
+The dataset holds 72 questions, 36 English and 36 Vietnamese, of seven types: factoid, synthesis, hard,
+paraphrase (worded unlike the book), distractor (a neighbouring passage holds a similar fact), follow-up (needs
+the chat history) and out-of-document (the right answer is a refusal; these have no retrieval metric). Each
+question belongs to the `dev` split, to iterate on, or the `test` split, to confirm once. What a retrieved chunk
+must contain is stored as verbatim snippets rather than chunk positions, so Recall@k still works after
+re-chunking; `evaluate.py` stops if a snippet is in no indexed chunk.
+
 A separate judge model (`JUDGE_MODEL`, `gemma4:12b` by default; run `ollama pull gemma4:12b` first) grades the answers, so the answering model never grades itself. `--judge-model` picks another Ollama model for a cross-check, and an empty value makes the answering model grade itself. The judge and a hash of the judge prompts are logged to MLflow next to the QA prompt hash.
 
 With `--mlflow`, set `MLFLOW_TRACKING_URI` to the server (for example `http://localhost:5001` when the compose stack is up); without it the run is written to `./mlruns`.
 
 The dataset assumes the first 40 pages of two books are indexed, so run it against that index.
 See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run
-(Recall@5 95%, MRR 0.90, Correctness 80%, Faithfulness 85%), graded by the answering model itself, before the separate judge existed.
+(Recall@5 95%, MRR 0.90, Correctness 80%, Faithfulness 85%), graded by the answering model itself on the original 20 questions, before the separate judge and the current dataset existed.
 
 ---
 

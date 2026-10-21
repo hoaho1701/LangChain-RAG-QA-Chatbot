@@ -19,7 +19,7 @@ import argparse
 
 from src.config import JUDGE_MODEL, RERANKER_TOP_N
 from src.rag_pipeline import RAGPipeline
-from src.evaluation import make_judge, run_evaluation
+from src.evaluation import load_dataset, make_judge, missing_evidence, run_evaluation
 
 
 def render_report(report: dict) -> str:
@@ -51,9 +51,14 @@ def render_report(report: dict) -> str:
         "| # | Language | Question | Retrieved | Rank | Correct | Faithful |",
         "|---|---|---|---|---|---|---|",
     ]
-    for i, (rc, gc) in enumerate(zip(r["per_case"], g["per_case"]), start=1):
+    # Retrieval skips out-of-document questions, so the two lists differ in length: look retrieval up by id
+    # instead of zipping, and show "-" when a question has no retrieval record.
+    retrieval_by_id = {rc["id"]: rc for rc in r["per_case"]}
+    for i, gc in enumerate(g["per_case"], start=1):
+        rc = retrieval_by_id.get(gc["id"])
+        retrieved = "-" if rc is None else ("yes" if rc["hit"] else "no")
         lines.append(
-            f"| {i} | {rc['language']} | {rc['question']} | {'yes' if rc['hit'] else 'no'} | {rc['rank'] or '-'} "
+            f"| {i} | {gc['language']} | {gc['question']} | {retrieved} | {(rc and rc['rank']) or '-'} "
             f"| {'yes' if gc['correct'] else 'no'} | {'yes' if gc['faithful'] else 'no'} |"
         )
     return "\n".join(lines) + "\n"
@@ -76,6 +81,14 @@ def main():
     if not pipeline.load_existing_index():
         raise SystemExit("No indexed documents found in vector_db/. Upload documents via the app first.")
 
+    # Stop before the slow grading if the dataset does not match the index: a snippet found in no chunk would be
+    # scored as a retrieval miss and blamed on the retriever.
+    missing = missing_evidence(load_dataset(args.dataset), pipeline.vector_store.get()["documents"])
+    if missing:
+        raise SystemExit(
+            "These evidence snippets are in no indexed chunk, so the dataset does not match the index:\n"
+            + "\n".join(missing)
+        )
     judge = make_judge(args.judge_model) if args.judge_model else None  # empty value: the answering model grades itself
 
     print(f"Running evaluation on {args.dataset}...")

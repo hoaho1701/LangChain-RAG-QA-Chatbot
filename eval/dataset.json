@@ -1,162 +1,924 @@
 [
   {
+    "id": "factoid-en-01",
+    "type": "factoid",
+    "language": "en",
+    "split": "dev",
     "question": "According to Hands-On Large Language Models, which AI model was the first system able to write articles indistinguishable from those written by humans?",
-    "language": "en",
+    "history": [],
     "expected_answer": "GPT-2 (Generative Pre-trained Transformer 2).",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 24,
-    "expected_chunk_index": 0
+    "evidence": [
+      "This system was an AI model called Generative Pre-trained Transformer 2, or GPT-2"
+    ]
   },
   {
+    "id": "factoid-en-02",
+    "type": "factoid",
+    "language": "en",
+    "split": "dev",
     "question": "According to Hands-On Large Language Models, what term does the book use to encompass technologies that may not technically be LLMs but still significantly impact the field?",
-    "language": "en",
+    "history": [],
     "expected_answer": "Language AI.",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 26,
-    "expected_chunk_index": 0
+    "evidence": [
+      "We use the term Language AI to encompass technologies that technically might not be LLMs"
+    ]
   },
   {
+    "id": "factoid-en-03",
+    "type": "factoid",
+    "language": "en",
+    "split": "test",
     "question": "According to Hands-On Large Language Models, what was the first technique in the history of Language AI used to represent unstructured text, and around what decade was it first mentioned?",
-    "language": "en",
+    "history": [],
     "expected_answer": "Bag-of-words, first mentioned around the 1950s.",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 27,
-    "expected_chunk_index": 0
+    "evidence": [
+      "It was first mentioned around the 1950s but became popular around the 2000s"
+    ]
   },
   {
+    "id": "factoid-en-04",
+    "type": "factoid",
+    "language": "en",
+    "split": "dev",
     "question": "According to Hands-On Large Language Models, which 2013 model was one of the first successful attempts at capturing the meaning of text in embeddings?",
-    "language": "en",
+    "history": [],
     "expected_answer": "word2vec.",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 29,
-    "expected_chunk_index": 0
+    "evidence": [
+      "Released in 2013, word2vec was one of the first successful attempts at capturing the meaning of text in embeddings"
+    ]
   },
   {
+    "id": "factoid-en-05",
+    "type": "factoid",
+    "language": "en",
+    "split": "dev",
     "question": "According to Hands-On Large Language Models, why is the word \"bank\" used as an example of a limitation of word2vec's static embeddings?",
-    "language": "en",
+    "history": [],
     "expected_answer": "Because word2vec always gives \"bank\" the same embedding regardless of context, even though it can mean a financial bank or the bank of a river — its meaning (and embedding) should change depending on context, which static embeddings can't do.",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 32,
-    "expected_chunk_index": 0
+    "evidence": [
+      "will always have the same embedding regardless of the context in which it is used"
+    ]
   },
   {
+    "id": "factoid-en-06",
+    "type": "factoid",
+    "language": "en",
+    "split": "test",
     "question": "According to Hands-On Large Language Models, what term describes an architecture where generating the next word requires consuming all previously generated words?",
-    "language": "en",
+    "history": [],
     "expected_answer": "Autoregressive.",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 33,
-    "expected_chunk_index": 0
+    "evidence": [
+      "Each step in this architecture is autoregressive"
+    ]
   },
   {
+    "id": "factoid-en-07",
+    "type": "factoid",
+    "language": "en",
+    "split": "dev",
     "question": "According to Hands-On Large Language Models, in what year was the solution called \"attention\" introduced to address the difficulty of handling longer sentences with a single context embedding?",
-    "language": "en",
+    "history": [],
     "expected_answer": "2014.",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 34,
-    "expected_chunk_index": 0
+    "evidence": [
+      "In 2014, a solution called attention was introduced"
+    ]
   },
   {
+    "id": "factoid-en-08",
+    "type": "factoid",
+    "language": "en",
+    "split": "dev",
     "question": "According to Hands-On Large Language Models, which 2017 paper introduced the Transformer architecture?",
-    "language": "en",
+    "history": [],
     "expected_answer": "\"Attention Is All You Need\" (2017).",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 36,
-    "expected_chunk_index": 0
+    "evidence": [
+      "The authors proposed a network architecture called the Transformer"
+    ]
   },
   {
+    "id": "factoid-en-09",
+    "type": "factoid",
+    "language": "en",
+    "split": "test",
     "question": "According to Hands-On Large Language Models, why does the self-attention layer in the Transformer's decoder mask future positions?",
-    "language": "en",
+    "history": [],
     "expected_answer": "To prevent leaking information when generating the output — it should only attend to earlier positions, not \"look into the future.\"",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 38,
-    "expected_chunk_index": 0
+    "evidence": [
+      "so it only attends to earlier positions to prevent leaking information when generating the output"
+    ]
   },
   {
-    "question": "According to Hands-On Large Language Models, in what year was BERT introduced?",
+    "id": "factoid-en-10",
+    "type": "factoid",
     "language": "en",
+    "split": "dev",
+    "question": "According to Hands-On Large Language Models, in what year was BERT introduced?",
+    "history": [],
     "expected_answer": "2018.",
-    "expected_source": "./documents/1. Hands-On Large Language Models.pdf",
-    "expected_page": 39,
-    "expected_chunk_index": 0
+    "evidence": [
+      "In 2018, a new architecture called Bidirectional Encoder Representations from"
+    ]
   },
   {
+    "id": "factoid-vi-01",
+    "type": "factoid",
+    "language": "vi",
+    "split": "dev",
     "question": "Theo sách Machine Learning cơ bản, Phần I của cuốn sách có tiêu đề là gì?",
-    "language": "vi",
+    "history": [],
     "expected_answer": "Kiến thức toán cơ bản cho machine learning.",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 22,
-    "expected_chunk_index": 0
+    "evidence": [
+      "Kiến thức toán cơ bản cho machine learning"
+    ]
   },
   {
+    "id": "factoid-vi-02",
+    "type": "factoid",
+    "language": "vi",
+    "split": "dev",
     "question": "Theo sách Machine Learning cơ bản, ký hiệu nào được dùng để biểu diễn phép chuyển vị (transpose) của một vector hoặc ma trận?",
-    "language": "vi",
+    "history": [],
     "expected_answer": "Chữ T (ví dụ x^T, A^T).",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 24,
-    "expected_chunk_index": 0
+    "evidence": [
+      "Trong cuốn sách này, chúng ta sẽ sử dụng"
+    ]
   },
   {
+    "id": "factoid-vi-03",
+    "type": "factoid",
+    "language": "vi",
+    "split": "test",
     "question": "Theo sách Machine Learning cơ bản, phép nhân ma trận có tính chất giao hoán hay không?",
-    "language": "vi",
+    "history": [],
     "expected_answer": "Không — phép nhân ma trận không có tính chất giao hoán (thông thường AB khác BA).",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 25,
-    "expected_chunk_index": 0
+    "evidence": [
+      "Phép nhân ma trận không có tính chất giao hoán"
+    ]
   },
   {
+    "id": "factoid-vi-04",
+    "type": "factoid",
+    "language": "vi",
+    "split": "dev",
     "question": "Theo sách Machine Learning cơ bản, tập hợp tất cả các vector biểu diễn được dưới dạng tổ hợp tuyến tính của các cột một ma trận được gọi là gì?",
-    "language": "vi",
+    "history": [],
     "expected_answer": "Không gian sinh (span).",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 29,
-    "expected_chunk_index": 0
+    "evidence": [
+      "Tập hợp tất cả các vector có thể biểu diễn được dưới dạng một tổ hợp tuyến tính của các cột của một ma trận được gọi"
+    ]
   },
   {
+    "id": "factoid-vi-05",
+    "type": "factoid",
+    "language": "vi",
+    "split": "dev",
     "question": "Theo sách Machine Learning cơ bản, một hệ vector được gọi là \"cơ sở\" (basis) của một không gian vector khi thoả mãn những điều kiện nào?",
-    "language": "vi",
+    "history": [],
     "expected_answer": "Hệ vector đó phải sinh ra (span) toàn bộ không gian, và là một hệ độc lập tuyến tính.",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 30,
-    "expected_chunk_index": 0
+    "evidence": [
+      "nếu hai điều kiện sau được thoả mãn"
+    ]
   },
   {
+    "id": "factoid-vi-06",
+    "type": "factoid",
+    "language": "vi",
+    "split": "test",
     "question": "Theo sách Machine Learning cơ bản, hạng (rank) của một ma trận có bằng với hạng của ma trận chuyển vị của nó không?",
-    "language": "vi",
+    "history": [],
     "expected_answer": "Có — rank(A) = rank(A^T).",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 31,
-    "expected_chunk_index": 0
+    "evidence": [
+      "Hạng của một ma trận bằng hạng của ma trận chuyển vị"
+    ]
   },
   {
+    "id": "factoid-vi-07",
+    "type": "factoid",
+    "language": "vi",
+    "split": "dev",
     "question": "Theo sách Machine Learning cơ bản, một ma trận U thoả mãn UU^T = U^T U = I được gọi là ma trận gì?",
-    "language": "vi",
+    "history": [],
     "expected_answer": "Ma trận trực giao (orthogonal matrix).",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 32,
-    "expected_chunk_index": 0
+    "evidence": [
+      "ta gọi nó là ma trận trực giao"
+    ]
   },
   {
+    "id": "factoid-vi-08",
+    "type": "factoid",
+    "language": "vi",
+    "split": "dev",
     "question": "Theo sách Machine Learning cơ bản, cách biểu diễn một ma trận A dưới dạng A = XΛX^-1 được gọi là gì?",
-    "language": "vi",
+    "history": [],
     "expected_answer": "Eigendecomposition (chéo hoá ma trận, dựa trên vector riêng và trị riêng).",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 35,
-    "expected_chunk_index": 0
+    "evidence": [
+      "Cách biểu diễn một ma trận như (1.28) được gọi"
+    ]
   },
   {
+    "id": "factoid-vi-09",
+    "type": "factoid",
+    "language": "vi",
+    "split": "test",
     "question": "Theo sách Machine Learning cơ bản, mọi ma trận Hermitian nửa xác định dương có thể biểu diễn duy nhất dưới dạng A = LL^H — đây là phép khai triển gì?",
-    "language": "vi",
+    "history": [],
     "expected_answer": "Khai triển Cholesky (Cholesky decomposition).",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 37,
-    "expected_chunk_index": 0
+    "evidence": [
+      "Khai triển Cholesky (Cholesky decomposition)"
+    ]
   },
   {
-    "question": "Theo sách Machine Learning cơ bản, chuẩn l1 (l1 norm) của một vector x được tính như thế nào?",
+    "id": "factoid-vi-10",
+    "type": "factoid",
     "language": "vi",
+    "split": "dev",
+    "question": "Theo sách Machine Learning cơ bản, chuẩn l1 (l1 norm) của một vector x được tính như thế nào?",
+    "history": [],
     "expected_answer": "Là tổng các trị tuyệt đối của từng phần tử của x: ||x||1 = |x1| + |x2| + ... + |xn|.",
-    "expected_source": "./documents/book_ML_color.pdf",
-    "expected_page": 39,
-    "expected_chunk_index": 0
+    "evidence": [
+      "là tổng các trị tuyệt đối của từng phần tử"
+    ]
+  },
+  {
+    "id": "synthesis-en-01",
+    "type": "synthesis",
+    "language": "en",
+    "split": "dev",
+    "question": "How does a bag-of-words model turn sentences into numerical representations, according to the book?",
+    "history": [],
+    "expected_answer": "After tokenization, the unique words from all sentences are combined into a vocabulary; then the model counts how often each vocabulary word appears in each sentence, producing a vector (a bag of words) for every sentence.",
+    "evidence": [
+      "we simply count how often a word in each sentence appears, quite literally creating a bag of words"
+    ]
+  },
+  {
+    "id": "synthesis-en-02",
+    "type": "synthesis",
+    "language": "en",
+    "split": "dev",
+    "question": "What is the difference between the embeddings that bag-of-words and word2vec create?",
+    "history": [],
+    "expected_answer": "Bag-of-words creates embeddings at the document level, since it represents the entire document, whereas word2vec generates embeddings for words only.",
+    "evidence": [
+      "In contrast, word2vec generates embeddings for words only."
+    ]
+  },
+  {
+    "id": "synthesis-en-03",
+    "type": "synthesis",
+    "language": "en",
+    "split": "test",
+    "question": "What are the two parts of a Transformer encoder block, and how does self-attention differ from the earlier attention?",
+    "history": [],
+    "expected_answer": "An encoder block consists of self-attention and a feedforward neural network. Self-attention can attend to different positions within a single sequence and look at the entire sequence in one go, instead of processing one token at a time.",
+    "evidence": [
+      "The encoder block in the Transformer consists of two parts, self-attention and a feedforward neural network",
+      "Instead of processing one token at a time, it can be used to look at the entire sequence in one go."
+    ]
+  },
+  {
+    "id": "synthesis-en-04",
+    "type": "synthesis",
+    "language": "en",
+    "split": "dev",
+    "question": "What is the [CLS] token in BERT and how is it used?",
+    "history": [],
+    "expected_answer": "It is an additional classification token in the input that is used as the representation for the entire input; it is often used as the input embedding when fine-tuning the model on tasks such as classification.",
+    "evidence": [
+      "the [CLS] or classification token, which is used as the representation for the entire input"
+    ]
+  },
+  {
+    "id": "synthesis-en-05",
+    "type": "synthesis",
+    "language": "en",
+    "split": "dev",
+    "question": "What happened in 2022 and 2023 that changed Language AI, according to the book?",
+    "history": [],
+    "expected_answer": "ChatGPT was released in 2022 and reached one million active users in five days and one hundred million in two months, which popularized research on LLMs; the authors call 2023 the year that drastically changed the field of Language AI.",
+    "evidence": [
+      "Reaching one million active users in five days",
+      "2023 will always be known, at least to us, as the year that drastically changed our field"
+    ]
+  },
+  {
+    "id": "synthesis-vi-01",
+    "type": "synthesis",
+    "language": "vi",
+    "split": "dev",
+    "question": "Tích của hai ma trận vuông khả nghịch có khả nghịch không, và nghịch đảo của tích được tính thế nào?",
+    "history": [],
+    "expected_answer": "Có, tích của hai ma trận vuông khả nghịch cũng khả nghịch và (AB)^-1 = B^-1 A^-1.",
+    "evidence": [
+      "tích của chúng cũng khả nghịch"
+    ]
+  },
+  {
+    "id": "synthesis-vi-02",
+    "type": "synthesis",
+    "language": "vi",
+    "split": "dev",
+    "question": "Điều kiện nào về định thức cho biết một ma trận là khả nghịch, và định thức của ma trận nghịch đảo bằng bao nhiêu?",
+    "history": [],
+    "expected_answer": "Một ma trận là khả nghịch khi và chỉ khi định thức của nó khác 0. Khi đó định thức của ma trận nghịch đảo bằng nghịch đảo định thức: det(A^-1) = 1/det(A).",
+    "evidence": [
+      "Một ma trận là khả nghịch khi và chỉ khi định thức của nó khác 0"
+    ]
+  },
+  {
+    "id": "synthesis-vi-03",
+    "type": "synthesis",
+    "language": "vi",
+    "split": "test",
+    "question": "Trị riêng của ma trận vuông liên hệ với đa thức đặc trưng như thế nào, và tập hợp các trị riêng được gọi là gì?",
+    "history": [],
+    "expected_answer": "Nếu λ là trị riêng thì A - λI không khả nghịch, tức det(A - λI) = 0, nên λ là nghiệm của phương trình det(A - tI) = 0. Định thức này là đa thức bậc n của t, gọi là đa thức đặc trưng của A. Tập hợp tất cả các trị riêng được gọi là phổ (spectrum) của ma trận.",
+    "evidence": [
+      "Tập hợp tất cả các trị riêng của một ma trận vuông"
+    ]
+  },
+  {
+    "id": "synthesis-vi-04",
+    "type": "synthesis",
+    "language": "vi",
+    "split": "dev",
+    "question": "Trị riêng của ma trận đối xứng (Hermitian) có đặc điểm gì và vì sao?",
+    "history": [],
+    "expected_answer": "Tất cả các trị riêng của ma trận đối xứng (hoặc Hermitian) đều là số thực. Lý do: từ Ax = λx suy ra λ̄ x^H x = λ x^H x, tức (λ - λ̄) x^H x = 0; vì x ≠ 0 nên x^H x ≠ 0, do đó λ̄ = λ, nghĩa là λ là số thực.",
+    "evidence": [
+      "tất cả các trị riêng của nó đều là các số thực"
+    ]
+  },
+  {
+    "id": "synthesis-vi-05",
+    "type": "synthesis",
+    "language": "vi",
+    "split": "dev",
+    "question": "Ma trận A = [[1, -1], [-1, 1]] có xác định dương không? Giải thích.",
+    "history": [],
+    "expected_answer": "Ma trận này là nửa xác định dương (không phải xác định dương) vì với mọi x = [u; v], x^T A x = u^2 + v^2 - 2uv = (u - v)^2 ≥ 0, và bằng 0 khi u = v.",
+    "evidence": [
+      "là nửa xác định dương vì với mọi vector"
+    ]
+  },
+  {
+    "id": "follow-up-en-01",
+    "type": "follow_up",
+    "language": "en",
+    "split": "dev",
+    "question": "How does it learn those embeddings?",
+    "history": [
+      [
+        "human",
+        "Which 2013 model was one of the first successful attempts at capturing the meaning of text in embeddings?"
+      ],
+      [
+        "ai",
+        "word2vec."
+      ]
+    ],
+    "expected_answer": "Every word gets a vector (for example 50 random values). In each training step the model takes pairs of words from the training data and predicts whether they are likely to be neighbors in a sentence, and the embeddings are updated accordingly. Words that tend to have the same neighbors end up with closer embeddings.",
+    "evidence": [
+      "take pairs of words from the training data and a model attempts to predict whether or not they are likely to be neighbors in a sentence"
+    ]
+  },
+  {
+    "id": "follow-up-en-02",
+    "type": "follow_up",
+    "language": "en",
+    "split": "dev",
+    "question": "And how do its embeddings differ from those of word2vec?",
+    "history": [
+      [
+        "human",
+        "What is bag-of-words?"
+      ],
+      [
+        "ai",
+        "It is a classic method for representing unstructured text as numbers by counting how often each word appears."
+      ]
+    ],
+    "expected_answer": "Bag-of-words creates embeddings at the document level, since it represents the entire document, whereas word2vec generates embeddings for words only.",
+    "evidence": [
+      "In contrast, word2vec generates embeddings for words only."
+    ]
+  },
+  {
+    "id": "follow-up-en-03",
+    "type": "follow_up",
+    "language": "en",
+    "split": "test",
+    "question": "What are the two parts of its encoder block?",
+    "history": [
+      [
+        "human",
+        "What is the Transformer?"
+      ],
+      [
+        "ai",
+        "It is a network architecture based solely on the attention mechanism, introduced in 2017."
+      ]
+    ],
+    "expected_answer": "The encoder block consists of two parts: self-attention and a feedforward neural network.",
+    "evidence": [
+      "The encoder block in the Transformer consists of two parts, self-attention and a feedforward neural network"
+    ]
+  },
+  {
+    "id": "follow-up-en-04",
+    "type": "follow_up",
+    "language": "en",
+    "split": "dev",
+    "question": "What does its [CLS] token do?",
+    "history": [
+      [
+        "human",
+        "What is BERT?"
+      ],
+      [
+        "ai",
+        "It is an encoder-only architecture introduced in 2018."
+      ]
+    ],
+    "expected_answer": "The [CLS] (classification) token is an additional input token that is used as the representation for the entire input; it is often used as the input embedding when fine-tuning on tasks like classification.",
+    "evidence": [
+      "the [CLS] or classification token, which is used as the representation for the entire input"
+    ]
+  },
+  {
+    "id": "follow-up-vi-01",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "dev",
+    "question": "Nó thường được dùng để làm gì?",
+    "history": [
+      [
+        "human",
+        "Ma trận nghịch đảo là gì?"
+      ],
+      [
+        "ai",
+        "Với ma trận vuông A, nếu tồn tại ma trận vuông B sao cho AB = I thì B là ma trận nghịch đảo của A, ký hiệu A^-1."
+      ]
+    ],
+    "expected_answer": "Ma trận nghịch đảo thường được dùng để giải hệ phương trình tuyến tính: nếu A khả nghịch thì Ax = b có nghiệm duy nhất x = A^-1 b.",
+    "evidence": [
+      "Ma trận nghịch đảo thường được sử dụng để giải hệ phương trình tuyến tính"
+    ]
+  },
+  {
+    "id": "follow-up-vi-02",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "dev",
+    "question": "Ma trận đơn vị có phải là ma trận đường chéo không?",
+    "history": [
+      [
+        "human",
+        "Ma trận đường chéo là gì?"
+      ],
+      [
+        "ai",
+        "Là ma trận chỉ có các thành phần trên đường chéo chính là khác không."
+      ]
+    ],
+    "expected_answer": "Có. Ma trận không (tất cả phần tử bằng 0) và ma trận đơn vị đều là các ma trận đường chéo.",
+    "evidence": [
+      "Ma trận đường chéo(diagonal matrix) là ma trận chỉ có các thành phần trên đường chéo chính là khác không"
+    ]
+  },
+  {
+    "id": "follow-up-vi-03",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "test",
+    "question": "Còn tổng của tất cả các trị riêng thì sao?",
+    "history": [
+      [
+        "human",
+        "Nêu một tính chất của trị riêng liên quan đến định thức của ma trận."
+      ],
+      [
+        "ai",
+        "Tích của tất cả các trị riêng của một ma trận bằng định thức của ma trận đó."
+      ]
+    ],
+    "expected_answer": "Tổng tất cả các trị riêng của một ma trận bằng tổng các phần tử trên đường chéo chính của ma trận đó.",
+    "evidence": [
+      "Tổng tất cả các trị riêng của một ma trận bằng tổng các phần tử trên đường chéo của ma trận đó"
+    ]
+  },
+  {
+    "id": "follow-up-vi-04",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "dev",
+    "question": "Vậy định thức của ma trận nghịch đảo của nó bằng bao nhiêu?",
+    "history": [
+      [
+        "human",
+        "Xét theo định thức, một ma trận khả nghịch khi nào?"
+      ],
+      [
+        "ai",
+        "Khi định thức của nó khác 0."
+      ]
+    ],
+    "expected_answer": "Định thức của ma trận nghịch đảo bằng nghịch đảo của định thức: det(A^-1) = 1/det(A).",
+    "evidence": [
+      "Nếu một ma trận khả nghịch, định thức của ma trận nghịch đảo của nó bằng nghịch đảo định thức của nó"
+    ]
+  },
+  {
+    "id": "out-of-doc-en-01",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "dev",
+    "question": "According to the book, how many encoder blocks does the BERT large model have?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-en-02",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "dev",
+    "question": "What is the capital of France?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-en-03",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "test",
+    "question": "What dropout rate does the book use when training a Transformer?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-en-04",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "dev",
+    "question": "In which year was GPT-4 released, according to the book?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-en-05",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "dev",
+    "question": "Which optimizer does the book use to train neural networks, such as SGD?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-en-06",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "test",
+    "question": "How many parameters does GPT-2 have?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-vi-01",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "dev",
+    "question": "Thủ đô của nước Pháp là gì?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-vi-02",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "dev",
+    "question": "Định lý Cayley-Hamilton phát biểu điều gì?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-vi-03",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "test",
+    "question": "Dropout được dùng để làm gì trong mạng neural?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-vi-04",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "dev",
+    "question": "Ma trận Jordan là gì?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-vi-05",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "dev",
+    "question": "Thuật toán k-means hoạt động như thế nào?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": []
+  },
+  {
+    "id": "out-of-doc-vi-06",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "test",
+    "question": "Phương pháp bình phương tối thiểu dùng để làm gì?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": []
+  },
+  {
+    "id": "hard-en-01",
+    "type": "hard",
+    "language": "en",
+    "split": "dev",
+    "question": "Why does the book say bag-of-words is not completely obsolete, and what flaw of it did word2vec address?",
+    "history": [],
+    "expected_answer": "Bag-of-words is by no means completely obsolete because it can still be used to complement more recent language models (explored in Chapter 5). Its flaw is that it treats language as a bag of words and ignores the semantic nature, or meaning, of text, which word2vec addressed by capturing meaning in embeddings.",
+    "evidence": [
+      "by no means completely obsolete",
+      "ignores the semantic nature, or meaning, of text"
+    ]
+  },
+  {
+    "id": "hard-en-02",
+    "type": "hard",
+    "language": "en",
+    "split": "dev",
+    "question": "In the book's description of word2vec training, how many values does each word's initial embedding have in the example, how are they initialised, and what prediction task is the network trained on?",
+    "history": [],
+    "expected_answer": "In the example each word gets a vector of, say, 50 values initialised with random values. In each training step the model takes pairs of words from the training data and predicts whether they are likely to be neighbors in a sentence.",
+    "evidence": [
+      "say of 50 values for each word initialized with random values"
+    ]
+  },
+  {
+    "id": "hard-en-03",
+    "type": "hard",
+    "language": "en",
+    "split": "test",
+    "question": "Which use cases of embeddings does the book mention, and in which chapters are they covered?",
+    "history": [],
+    "expected_answer": "Classification (Chapter 4), clustering (Chapter 5), and semantic search and retrieval-augmented generation (Chapter 8).",
+    "evidence": [
+      "classification (see Chapter 4), clustering (see Chapter 5), and semantic search and retrieval-augmented generation (see Chapter 8)"
+    ]
+  },
+  {
+    "id": "hard-en-04",
+    "type": "hard",
+    "language": "en",
+    "split": "dev",
+    "question": "In the book's Dutch translation example, why is the attention between 'lama's' and 'llamas' high while the attention between 'lama's' and 'I' is lower?",
+    "history": [],
+    "expected_answer": "Because 'lama's' is Dutch for 'llamas', so the two words correspond and attention between them is high, whereas 'lama's' and 'I' are not as related and therefore have lower attention.",
+    "evidence": [
+      "have lower attention since they"
+    ]
+  },
+  {
+    "id": "hard-en-05",
+    "type": "hard",
+    "language": "en",
+    "split": "dev",
+    "question": "Why does the book say smaller models are still relevant even though LLMs got almost all the attention?",
+    "history": [],
+    "expected_answer": "Because LLMs have been around for a while and smaller models are still relevant to this day; LLMs are much more than a single model and there are many other techniques and models in the field of Language AI worth exploring.",
+    "evidence": [
+      "LLMs have been around for a while now"
+    ]
+  },
+  {
+    "id": "hard-en-06",
+    "type": "hard",
+    "language": "en",
+    "split": "test",
+    "question": "A colleague says the Transformer processes tokens strictly one at a time, like an RNN. According to the book, is that right?",
+    "history": [],
+    "expected_answer": "No. Self-attention in the Transformer's encoder can look at the entire sequence in one go instead of processing one token at a time, and the Transformer could be trained in parallel, unlike the recurrence network whose sequential nature precludes parallelisation.",
+    "evidence": [
+      "Instead of processing one token at a time, it can be used to look at the entire sequence in one go.",
+      "the Transformer could be trained in parallel"
+    ]
+  },
+  {
+    "id": "hard-vi-01",
+    "type": "hard",
+    "language": "vi",
+    "split": "dev",
+    "question": "Nếu ma trận hệ số A không khả nghịch, thậm chí không vuông, thì phương trình Ax = b có thể có những khả năng nào về nghiệm?",
+    "history": [],
+    "expected_answer": "Phương trình có thể không có nghiệm hoặc có vô số nghiệm (chỉ khi A khả nghịch mới có nghiệm duy nhất x = A^-1 b).",
+    "evidence": [
+      "có thể không có nghiệm hoặc có vô số nghiệm"
+    ]
+  },
+  {
+    "id": "hard-vi-02",
+    "type": "hard",
+    "language": "vi",
+    "split": "dev",
+    "question": "Định thức bằng 0 trong trường hợp nào theo cuốn sách, và điều đó cho biết gì về tính khả nghịch của ma trận?",
+    "history": [],
+    "expected_answer": "Nếu một ma trận có một hàng hoặc một cột là vector 0 thì định thức của nó bằng 0. Vì một ma trận khả nghịch khi và chỉ khi định thức của nó khác 0, nên ma trận như vậy không khả nghịch.",
+    "evidence": [
+      "thì định thức của nó bằng 0",
+      "khả nghịch khi và chỉ khi định thức của nó khác 0"
+    ]
+  },
+  {
+    "id": "hard-vi-03",
+    "type": "hard",
+    "language": "vi",
+    "split": "test",
+    "question": "Range của ma trận A là gì và số chiều của nó bằng bao nhiêu?",
+    "history": [],
+    "expected_answer": "Range của A là tập các y sao cho tồn tại x với Ax = y, tức là tập hợp các tổ hợp tuyến tính của các cột của A (không gian sinh của các cột). Nó là một không gian con của R^m với số chiều bằng số lượng lớn nhất các cột của A độc lập tuyến tính.",
+    "evidence": [
+      "là tập hợp các điểm là tổ hợp tuyến tính của các cột",
+      "với số chiều chính bằng"
+    ]
+  },
+  {
+    "id": "hard-vi-04",
+    "type": "hard",
+    "language": "vi",
+    "split": "dev",
+    "question": "Nêu các tính chất của nghịch đảo và định thức của ma trận trực giao.",
+    "history": [],
+    "expected_answer": "Nghịch đảo của một ma trận trực giao chính là chuyển vị của nó (U^-1 = U^T); chuyển vị của ma trận trực giao cũng là ma trận trực giao; định thức của ma trận trực giao bằng 1 hoặc -1.",
+    "evidence": [
+      "nghịch đảo của một ma trận trực giao chính là chuyển vị của nó",
+      "Định thức của ma trận trực giao bằng"
+    ]
+  },
+  {
+    "id": "hard-vi-05",
+    "type": "hard",
+    "language": "vi",
+    "split": "dev",
+    "question": "Nếu (λ, x) là một cặp trị riêng, vector riêng của ma trận khả nghịch A thì A^-1 có cặp trị riêng, vector riêng nào?",
+    "history": [],
+    "expected_answer": "(1/λ, x) là một cặp trị riêng, vector riêng của A^-1, vì Ax = λx suy ra (1/λ)x = A^-1 x.",
+    "evidence": [
+      "là một cặp trị riêng, vector riêng củaA"
+    ]
+  },
+  {
+    "id": "hard-vi-06",
+    "type": "hard",
+    "language": "vi",
+    "split": "test",
+    "question": "Một bạn nói rằng định thức của một ma trận khả nghịch có thể bằng 0. Theo cuốn sách, điều đó có đúng không?",
+    "history": [],
+    "expected_answer": "Không đúng. Theo cuốn sách, một ma trận là khả nghịch khi và chỉ khi định thức của nó khác 0 (và định thức của ma trận nghịch đảo bằng 1/det(A)).",
+    "evidence": [
+      "khả nghịch khi và chỉ khi định thức của nó khác 0"
+    ]
+  },
+  {
+    "id": "paraphrase-en-01",
+    "type": "paraphrase",
+    "language": "en",
+    "split": "dev",
+    "question": "What kind of numeric vector does a model assign to a word so that words appearing in similar surroundings end up close together?",
+    "history": [],
+    "expected_answer": "An embedding (as learned by word2vec): if two words tend to have the same neighbors, their embeddings will be closer to one another.",
+    "evidence": [
+      "If the two words tend to have the same neighbors, their embeddings will be closer"
+    ]
+  },
+  {
+    "id": "paraphrase-en-02",
+    "type": "paraphrase",
+    "language": "en",
+    "split": "dev",
+    "question": "What single fixed summary of the whole input sentence caused trouble for long sentences in the early encoder-decoder networks?",
+    "history": [],
+    "expected_answer": "The context embedding: it is merely a single embedding representing the entire input, which makes it difficult to deal with longer sentences.",
+    "evidence": [
+      "makes it difficult to deal with longer sentences since it is merely a single embedding representing the entire input"
+    ]
+  },
+  {
+    "id": "distractor-en-01",
+    "type": "distractor",
+    "language": "en",
+    "split": "dev",
+    "question": "Around which decade did bag-of-words become popular, as opposed to when it was first mentioned?",
+    "history": [],
+    "expected_answer": "Bag-of-words became popular around the 2000s (it was first mentioned around the 1950s).",
+    "evidence": [
+      "became popular around the 2000s"
+    ]
+  },
+  {
+    "id": "distractor-en-02",
+    "type": "distractor",
+    "language": "en",
+    "split": "dev",
+    "question": "In which chapter does the book say retrieval-augmented generation is covered, and in which chapters are classification and clustering covered?",
+    "history": [],
+    "expected_answer": "Semantic search and retrieval-augmented generation are covered in Chapter 8; classification in Chapter 4 and clustering in Chapter 5.",
+    "evidence": [
+      "classification (see Chapter 4), clustering (see Chapter 5), and semantic search and retrieval-augmented generation (see Chapter 8)"
+    ]
+  },
+  {
+    "id": "distractor-en-03",
+    "type": "distractor",
+    "language": "en",
+    "split": "test",
+    "question": "Where does the book say it will go in depth about tokenization, and where does it say it will take its first deep dive into token embeddings?",
+    "history": [],
+    "expected_answer": "It goes in depth about tokenization in the next chapter (Chapter 2), and Chapter 2 is also where it takes its first deep dive into token embeddings.",
+    "evidence": [
+      "go in depth about tokenization",
+      "In Chapter 2, we will take our first deep dive into token embeddings"
+    ]
+  },
+  {
+    "id": "paraphrase-vi-01",
+    "type": "paraphrase",
+    "language": "vi",
+    "split": "dev",
+    "question": "Có cách nào giải hệ phương trình có ma trận hệ số dạng tam giác mà không cần tính ma trận nghịch đảo không?",
+    "history": [],
+    "expected_answer": "Có. Giải x_n từ phương trình cuối cùng, thay vào phương trình gần cuối để tìm x_{n-1}, và tiếp tục như vậy; quá trình giải từ cuối lên đầu này gọi là back substitution và có chi phí tính toán thấp.",
+    "evidence": [
+      "quá trình tính ma trận nghịch đảo thường tốn khá nhiều thời gian"
+    ]
+  },
+  {
+    "id": "paraphrase-vi-02",
+    "type": "paraphrase",
+    "language": "vi",
+    "split": "dev",
+    "question": "Với ma trận vuông A, khi nào phương trình Ax = b chắc chắn có nghiệm duy nhất với mọi b, và nghiệm đó viết thế nào?",
+    "history": [],
+    "expected_answer": "Khi A khả nghịch thì phương trình Ax = b có nghiệm duy nhất x = A^-1 b, với mọi vector b.",
+    "evidence": [
+      "có nghiệm duy nhất làx"
+    ]
+  },
+  {
+    "id": "distractor-vi-01",
+    "type": "distractor",
+    "language": "vi",
+    "split": "dev",
+    "question": "Trị riêng của ma trận xác định dương khác gì so với trị riêng của ma trận đối xứng nói chung?",
+    "history": [],
+    "expected_answer": "Ma trận đối xứng (Hermitian) có mọi trị riêng là số thực, còn mọi trị riêng của ma trận xác định dương đều là số thực dương.",
+    "evidence": [
+      "Mọi trị riêng của một ma trận xác định dương đều là một số thực dương",
+      "tất cả các trị riêng của nó đều là các số thực"
+    ]
+  },
+  {
+    "id": "distractor-vi-02",
+    "type": "distractor",
+    "language": "vi",
+    "split": "dev",
+    "question": "Chuẩn ℓ2 khác chuẩn ℓ1 thế nào về công thức và cách diễn giải khoảng cách?",
+    "history": [],
+    "expected_answer": "ℓ2 norm (độ dài Euclid) là căn bậc hai của tổng bình phương các phần tử, tương ứng đường chim bay giữa hai điểm; bình phương của nó chính là tích vô hướng x^T x. ℓ1 norm là tổng các trị tuyệt đối của các phần tử, diễn giải như đường đi trong thành phố có đường phố hình bàn cờ.",
+    "evidence": [
+      "chính là tích vô hướng của một vector với chính nó",
+      "tổng các trị tuyệt đối"
+    ]
+  },
+  {
+    "id": "distractor-vi-03",
+    "type": "distractor",
+    "language": "vi",
+    "split": "test",
+    "question": "Theo mục về chuẩn, để xác định khoảng cách giữa hai vector y và z người ta làm thế nào?",
+    "history": [],
+    "expected_answer": "Người ta thường áp dụng một hàm số (norm) lên vector hiệu x = y - z.",
+    "evidence": [
+      "người ta thường áp dụng một hàm số lên vector hiệu"
+    ]
   }
 ]
