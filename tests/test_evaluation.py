@@ -4,9 +4,18 @@ import json
 import sys
 
 import pytest
+from langchain_core.messages import AIMessage, HumanMessage
 
 from src import config
-from src.evaluation import _judge_yes, evaluate_generation, make_judge, run_evaluation
+from src.evaluation import (
+    _judge_yes,
+    evaluate_generation,
+    evaluate_retrieval,
+    load_dataset,
+    make_judge,
+    missing_evidence,
+    run_evaluation,
+)
 from src.prompts import FAITHFULNESS_JUDGE_PROMPT, FAITHFULNESS_SYSTEM_PROMPT
 
 
@@ -28,30 +37,59 @@ class FakeLLM:
         return Reply(self.reply)
 
 
+class Doc:
+    def __init__(self, text):
+        self.page_content = text
+
+
+class FakeRetriever:
+    def __init__(self, pipeline):
+        self.pipeline = pipeline
+
+    def invoke(self, question):
+        self.pipeline.searched_for.append(question)
+        return self.pipeline.docs
+
+
 class FakePipeline:
-    def __init__(self, llm):
+    """Retrieves the same `chunks` for every question and answers "some answer"."""
+
+    def __init__(self, llm, chunks=()):
         self.llm = llm
-        self._retriever = type("R", (), {"invoke": staticmethod(lambda q: [])})()
+        self.docs = [Doc(t) for t in chunks]
+        self.searched_for = []
+        self.histories = []
+        self._retriever = FakeRetriever(self)
+
+    def _contextualize_fn(self, inputs):
+        return f"standalone: {inputs['input']}" if inputs["chat_history"] else inputs["input"]
 
     def _rerank(self, question, docs):
-        return []
+        return docs
 
     def _format_docs(self, docs):
-        return ""
+        return "\n\n".join(d.page_content for d in docs)
 
     def chat(self, question, history):
-        yield {"context": []}
+        self.histories.append(history)
+        yield {"context": self.docs}
         yield {"answer": "some answer"}
 
 
 CASE = {
-    "question": "q",
+    "id": "c1",
+    "type": "factoid",
     "language": "en",
+    "split": "dev",
+    "question": "q",
+    "history": [],
     "expected_answer": "a",
-    "expected_source": "s",
-    "expected_page": 0,
-    "expected_chunk_index": 0,
+    "evidence": ["the evidence"],
 }
+
+
+def make_case(**changes):
+    return {**CASE, **changes}
 
 
 @pytest.fixture
@@ -83,6 +121,74 @@ def test_the_report_names_the_judge_model(dataset_path):
 
     assert run_evaluation(pipeline, dataset_path)["judge_model"] == "answering"
     assert run_evaluation(pipeline, dataset_path, FakeLLM("yes", "judge"))["judge_model"] == "judge"
+
+
+def test_load_dataset_keeps_only_the_requested_split(tmp_path):
+    path = tmp_path / "cases.json"
+    path.write_text(json.dumps([make_case(id="a", split="dev"), make_case(id="b", split="test")]))
+
+    assert [c["id"] for c in load_dataset(str(path), "dev")] == ["a"]
+    assert [c["id"] for c in load_dataset(str(path), "test")] == ["b"]
+    assert [c["id"] for c in load_dataset(str(path), "all")] == ["a", "b"]
+
+
+def test_missing_evidence_names_the_snippets_that_are_in_no_chunk():
+    dataset = [make_case(id="a", evidence=["found"]), make_case(id="b", evidence=["lost"])]
+
+    assert missing_evidence(dataset, ["some text that was found here"]) == ["b: lost"]
+
+
+def test_evidence_matches_across_line_breaks_and_pdf_hyphens():
+    dataset = [make_case(evidence=["Pre-trained models learn", "a split sentence"])]
+
+    assert missing_evidence(dataset, ["Pre\u2010trained models\nlearn from a split\n sentence"]) == []
+
+
+def test_retrieval_is_a_hit_only_when_every_evidence_snippet_is_retrieved():
+    case = make_case(evidence=["first fact", "second fact"])
+
+    partial = evaluate_retrieval(FakePipeline(FakeLLM("x"), ["the first fact"]), [case])["per_case"][0]
+    full = evaluate_retrieval(FakePipeline(FakeLLM("x"), ["the first fact", "the second fact"]), [case])["per_case"][0]
+
+    assert (partial["hit"], partial["rank"]) == (False, 1)
+    assert (full["hit"], full["rank"]) == (True, 1)
+
+
+def test_retrieval_rank_is_the_best_chunk_that_holds_the_evidence():
+    result = evaluate_retrieval(FakePipeline(FakeLLM("x"), ["noise", "noise", "the evidence"]), [CASE])
+
+    assert result["per_case"][0]["rank"] == 3
+    assert result["mrr"] == pytest.approx(1 / 3)
+
+
+def test_retrieval_skips_questions_without_evidence():
+    result = evaluate_retrieval(FakePipeline(FakeLLM("x"), ["anything"]), [make_case(type="out_of_doc", evidence=[])])
+
+    assert result["per_case"] == []
+
+
+def test_retrieval_searches_with_the_standalone_version_of_a_follow_up():
+    pipeline = FakePipeline(FakeLLM("x"), ["the evidence"])
+    follow_up = make_case(history=[["human", "first"], ["ai", "reply"]], question="and then?")
+
+    evaluate_retrieval(pipeline, [follow_up])
+
+    assert pipeline.searched_for == ["standalone: and then?"]
+
+
+def test_the_history_reaches_the_pipeline_as_chat_messages():
+    pipeline = FakePipeline(FakeLLM("yes"))
+    follow_up = make_case(history=[["human", "first"], ["ai", "reply"]])
+
+    evaluate_generation(pipeline, [follow_up])
+
+    assert pipeline.histories == [[HumanMessage("first"), AIMessage("reply")]]
+
+
+def test_every_generation_result_names_its_case():
+    result = evaluate_generation(FakePipeline(FakeLLM("yes")), [CASE])["per_case"][0]
+
+    assert (result["id"], result["type"], result["split"]) == ("c1", "factoid", "dev")
 
 
 @pytest.mark.parametrize("reply", ["yes", "Yes.", "**Yes**", "- yes", '"yes"', "\n yes, it is"])
