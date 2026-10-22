@@ -10,7 +10,8 @@ import os
 
 # Must be set before any ML library is imported.
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
-os.environ["OMP_NUM_THREADS"] = "1"
+# 4 threads make the reranker about 1.5x faster than 1; more than the CPU has would only compete with each other.
+os.environ["OMP_NUM_THREADS"] = str(min(4, os.cpu_count() or 1))
 
 from dotenv import load_dotenv
 
