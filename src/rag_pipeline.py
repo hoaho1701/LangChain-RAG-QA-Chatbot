@@ -35,6 +35,7 @@ from src.config import (
 )
 from src.index_state import has_indexed_chunks
 from src.prompts import CONTEXTUALIZE_Q_PROMPT, QA_PROMPT, GRADE_PROMPT, REWRITE_PROMPT
+from src.refusal import no_context_reply
 
 
 class AgentState(TypedDict):
@@ -424,6 +425,12 @@ class RAGPipeline:
 
         # Yield source docs so the caller can display citations
         yield {"context": docs}
+
+        # Nothing in the index helps: reply with a fixed refusal in the question's language instead of calling the model
+        # on an empty context (it is slower and may invent an answer).
+        if not docs:
+            yield {"answer": no_context_reply(question)}
+            return
 
         # Stream the answer
         for chunk in self._answer_chain.stream(
