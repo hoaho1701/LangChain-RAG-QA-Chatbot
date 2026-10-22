@@ -59,6 +59,21 @@ The same 72 answers were graded again by `phi4:14b` (another model family). The 
 
 The two judges agree on 71 of 72 questions for correctness and on 69 of 72 for faithfulness (the disagreements are one question for correctness and three for faithfulness).
 
+## How much these numbers can move
+
+With so few questions a percentage is only an estimate. The table gives a 95% confidence interval (Wilson) for the main results of the run graded by `gemma4:12b`: the range in which the true rate, over many similar questions, most likely lies. The `test` rows are the widest because the split has only 20 questions.
+
+| Metric | Result | 95% interval |
+|---|---|---|
+| Correctness, all 72 | 97% (70/72) | 90% to 99% |
+| Faithfulness, all 72 | 96% (69/72) | 88% to 99% |
+| Recall@5, 60 questions with evidence | 97% (58/60) | 89% to 99% |
+| Correctness, test (20) | 95% (19/20) | 76% to 99% |
+| Faithfulness, test (20) | 95% (19/20) | 76% to 99% |
+| Recall@5, test (16 with evidence) | 94% (15/16) | 72% to 99% |
+
+Two results whose intervals overlap, such as 95% and 97% here, cannot be told apart on this many questions.
+
 ## How to read these numbers
 
 - The questions and reference answers were written with an AI assistant, not by independent human annotators, and the judges are language models.
