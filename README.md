@@ -58,7 +58,7 @@ User question
     ├── retrieve  → contextualize (if chat history) → top-20 → rerank → top-5
     ├── grade     → LLM checks which docs are actually relevant
     └── decide    ├── relevant docs found        → generate answer
-                  └── none found (retry < 2)      → rewrite query → retrieve again
+                  └── none found (retry < 1)      → rewrite query → retrieve again
     ▼
 Answer streamed token-by-token, with source citations (file + page)
 ```

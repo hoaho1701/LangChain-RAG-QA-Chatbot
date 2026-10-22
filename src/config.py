@@ -36,7 +36,7 @@ CHUNK_OVERLAP = 200
 MAX_CHAT_HISTORY_MESSAGES = 20
 
 # Max times the agent may rewrite query and retry retrieval before giving up
-MAX_REWRITE_ATTEMPTS = 2
+MAX_REWRITE_ATTEMPTS = 1
 
 # Reranker model name
 RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
