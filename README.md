@@ -179,8 +179,9 @@ To compare two runs, save each with `--per-case-json` and run `uv run python eva
 With `--mlflow`, a hash of the dataset file and the split that ran are logged too, so runs on different questions are not compared by mistake. Set `MLFLOW_TRACKING_URI` to the server (for example `http://localhost:5001` when the compose stack is up); without it the run is written to `./mlruns`.
 
 The dataset assumes the first 40 pages of two books are indexed, so run it against that index.
-See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run
-(Recall@5 95%, MRR 0.90, Correctness 80%, Faithfulness 85%), graded by the answering model itself on the original 20 questions, before the separate judge and the current dataset existed.
+See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run on all 72 questions
+(Recall@5 97%, MRR 0.89, Correctness 97%, Faithfulness 96%; on the 20 `test` questions Correctness 95% and Faithfulness 95%),
+graded by `gemma4:12b` and cross-checked with `phi4:14b`. The questions were written with an AI assistant and the set is small, so differences of a point or two are noise.
 
 ---
 
