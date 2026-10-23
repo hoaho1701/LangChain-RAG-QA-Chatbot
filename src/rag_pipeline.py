@@ -19,6 +19,7 @@ from langchain_core.messages import BaseMessage
 from langchain_core.output_parsers import StrOutputParser
 from langgraph.graph import StateGraph, END
 
+from src.chunking import split_documents
 from src.config import (
     LLM_MODEL,
     OLLAMA_BASE_URL,
@@ -118,87 +119,6 @@ def _read_file(filepath: str) -> List[Document]:
     return []
 
 
-def _split_documents(docs: List[Document], chunk_size: int, chunk_overlap: int) -> List[Document]:
-    """Split documents into overlapping chunks on natural text boundaries."""
-    separators = ["\n\n", "\n", ". ", " ", ""]
-    splits = []
-
-    for doc in docs:
-        text = doc.page_content
-        chunks = _recursive_split(text, chunk_size, chunk_overlap, separators)
-        for i, chunk in enumerate(chunks):
-            splits.append(
-                Document(
-                    page_content=chunk,
-                    metadata={**doc.metadata, "start_index": i},
-                )
-            )
-    return splits
-
-
-def _recursive_split(text: str, chunk_size: int, chunk_overlap: int, separators: List[str]) -> List[str]:
-    """Recursively split text on decreasing separators until chunks fit chunk_size."""
-    if len(text) <= chunk_size:
-        return [text] if text.strip() else []
-
-    sep = ""
-    remaining = list(separators)
-    while remaining:
-        candidate = remaining.pop(0)
-        if candidate and candidate in text:
-            sep = candidate
-            break
-
-    if not sep:
-        # Fall back to hard character split
-        return _hard_split(text, chunk_size, chunk_overlap)
-
-    parts = text.split(sep)
-    chunks: List[str] = []
-    current = ""
-
-    for part in parts:
-        candidate = (current + sep + part).lstrip(sep) if current else part
-        if len(candidate) <= chunk_size:
-            current = candidate
-        else:
-            if current:
-                chunks.append(current)
-            if len(part) > chunk_size:
-                chunks.extend(_recursive_split(part, chunk_size, chunk_overlap, remaining[:]))
-                current = ""
-            else:
-                current = part
-
-    if current:
-        chunks.append(current)
-
-    # Apply overlap: prepend tail of previous chunk to next
-    if chunk_overlap <= 0 or len(chunks) <= 1:
-        return [c for c in chunks if c.strip()]
-
-    overlapped: List[str] = [chunks[0]]
-    for i in range(1, len(chunks)):
-        prev_tail = chunks[i - 1][-chunk_overlap:]
-        merged = prev_tail + sep + chunks[i]
-        overlapped.append(merged if len(merged) <= chunk_size * 1.2 else chunks[i])
-
-    return [c for c in overlapped if c.strip()]
-
-
-def _hard_split(text: str, chunk_size: int, chunk_overlap: int) -> List[str]:
-    """Simple sliding-window character split when no separator works."""
-    chunks = []
-    start = 0
-    while start < len(text):
-        end = min(start + chunk_size, len(text))
-        chunks.append(text[start:end])
-        if end == len(text):
-            break
-        start = end - chunk_overlap
-    return chunks
-
-
 class RAGPipeline:
     def __init__(self):
         """Initialize the RAG pipeline components."""
@@ -234,7 +154,7 @@ class RAGPipeline:
         docs = _read_file(filepath)
         if not docs:
             return []
-        splits = _split_documents(docs, CHUNK_SIZE, CHUNK_OVERLAP)
+        splits = split_documents(docs, CHUNK_SIZE, CHUNK_OVERLAP)
         print(f"Loaded {len(splits)} chunks from {os.path.basename(filepath)}.")
         return splits
 
@@ -243,7 +163,7 @@ class RAGPipeline:
         docs = _read_url(url)
         if not docs:
             return []
-        splits = _split_documents(docs, CHUNK_SIZE, CHUNK_OVERLAP)
+        splits = split_documents(docs, CHUNK_SIZE, CHUNK_OVERLAP)
         print(f"Loaded {len(splits)} chunks from {url}.")
         return splits
 
