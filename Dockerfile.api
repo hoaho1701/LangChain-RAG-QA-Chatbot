@@ -14,7 +14,6 @@ ENV PATH="/app/.venv/bin:$PATH"
 # COPY of a directory copies its contents, so each one needs its own destination
 COPY src ./src
 COPY api ./api
-COPY eval ./eval
 
 EXPOSE 8000
 # 0.0.0.0 so other containers can reach it (the default is 127.0.0.1)

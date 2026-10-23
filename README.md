@@ -238,7 +238,6 @@ On every pull request GitHub Actions runs the backend lint and tests, the fronte
 
 - [ ] **Multi-Modal:** Support asking questions about images/figures inside PDFs.
 - [ ] **Persistent Chat History:** Keep conversations across page reloads.
-- [ ] **Answer language:** Reply in the language of the question, and measure it with out-of-document questions in the evaluation set.
 
 ---
 

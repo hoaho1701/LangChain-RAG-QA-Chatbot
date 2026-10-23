@@ -13,12 +13,8 @@ venv/
 # ── Runtime data ────────────────────────────────────────
 # Everything the app and the evaluation write: uploaded documents, ChromaDB, MLflow runs, the evaluation index
 data/
-# The documents of the evaluation set (the books are copyrighted); also ignores a leftover documents/ at the root
-documents/
-# The same data in the folders used before data/ existed, still ignored while they exist on a machine
-vector_db/
-mlruns/
-mlflow_data/
+# The documents of the evaluation set (the books are copyrighted)
+eval/documents/
 
 # ── Generated files ─────────────────────────────────────
 # Regenerate with `uv run python -m eval.evaluate`
