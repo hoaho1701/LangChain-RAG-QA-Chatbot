@@ -190,9 +190,10 @@ graded by `gemma4:12b` and cross-checked with `phi4:14b`. The questions were wri
 ```bash
 uv run pytest -q          # API tests run with a fake pipeline: no Ollama or models needed
 uv run ruff check . && uv run ruff format --check .
+cd frontend && npm test   # Vitest + Testing Library: the API client (SSE streaming, error messages) and the chat, sidebar and app behaviour, with the backend mocked
 ```
 
-On every pull request GitHub Actions runs the backend lint and tests, the frontend lint, format check and build, and a trial build of both Docker images. Pushes to `main` also publish the images to GitHub Container Registry.
+On every pull request GitHub Actions runs the backend lint and tests, the frontend lint, format check, tests and build, and a trial build of both Docker images. Pushes to `main` also publish the images to GitHub Container Registry.
 
 ---
 
