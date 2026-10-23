@@ -215,10 +215,10 @@ To compare two runs, save each with `--per-case-json` and run `uv run python -m 
 
 With `--mlflow`, a hash of the dataset file and the split that ran are logged too, so runs on different questions are not compared by mistake. Set `MLFLOW_TRACKING_URI` to the server (for example `http://localhost:5001` when the compose stack is up); without it the run is written to `./data/mlruns`.
 
-See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run, on an earlier version of the question set
-(72 questions about the first 80 book pages; it will be replaced by a run on the questions above)
-(Recall@5 97%, MRR 0.89, Correctness 97%, Faithfulness 96%; on the 20 `test` questions Correctness 95% and Faithfulness 95%),
-graded by `gemma4:12b` and cross-checked with `phi4:14b`. The questions were written with an AI assistant and the set is small, so differences of a point or two are noise.
+See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run on the 150 questions above
+(Recall@5 96%, MRR 0.90, Correctness 96%, Faithfulness 97%), graded by `gemma4:12b` and cross-checked with `phi4:14b`
+(Correctness 95%, Faithfulness 97%; the two judges agree on 94% of the verdicts). The weakest group is short questions with typos or without
+Vietnamese diacritics (Recall@5 62%, 8 questions). The questions were written with an AI assistant and a group of questions is small, so differences of a point or two are noise.
 
 ---
 
