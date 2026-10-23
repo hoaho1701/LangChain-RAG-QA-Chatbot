@@ -11,11 +11,12 @@ venv/
 .env.*
 
 # ── Runtime data ────────────────────────────────────────
-# Uploaded documents (PDF/TXT/DOCX ingested at runtime)
+# Everything the app and the evaluation write: uploaded documents, ChromaDB, MLflow runs, the evaluation index
+data/
+# The documents of the evaluation set (the books are copyrighted); also ignores a leftover documents/ at the root
 documents/
-# ChromaDB persistent storage
+# The same data in the folders used before data/ existed, still ignored while they exist on a machine
 vector_db/
-# MLflow local runs and server data
 mlruns/
 mlflow_data/
 
@@ -44,5 +45,3 @@ KNOWLEDGE.md
 UPGRADE_PLAN.md
 notes/
 
-# Index built for the evaluation set by eval.build_index
-eval_index/

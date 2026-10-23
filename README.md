@@ -46,7 +46,7 @@ Powered by LangChain (Core/LCEL), LangGraph, and Ollama, with a FastAPI backend 
 ```
 React (Vite / nginx) ──/api──▶ FastAPI ──▶ RAGPipeline
                                   │           ├─ Ollama (runs on the host)
-                                  │           └─ ChromaDB (vector_db/)
+                                  │           └─ ChromaDB (data/vector_db/)
 eval.evaluate ──▶ MLflow server
 ```
 
@@ -83,15 +83,18 @@ LangChain-RAG-QA-Chatbot/
 ├── eval/
 │   ├── dataset.json         # 150 Q&A cases used by the evaluation
 │   ├── evaluate.py          # CLI: run the evaluation harness (python -m eval.evaluate)
-│   ├── build_index.py       # CLI: build the index the evaluation set expects (eval_index/)
+│   ├── build_index.py       # CLI: build the index the evaluation set expects (data/eval_index/)
 │   ├── compare.py           # CLI: compare two evaluation runs question by question
 │   ├── Report.md            # Committed snapshot of a real evaluation run
 │   └── documents/           # The four documents of the evaluation set (gitignored)
 ├── Dockerfile.api           # Backend image
 ├── docker-compose.yml       # api + web + mlflow
 ├── .github/workflows/ci.yml # Lint, test, build, publish
-├── documents/               # Uploaded source files (gitignored)
-├── vector_db/               # ChromaDB persistent storage (gitignored)
+├── data/                    # Everything the app and the evaluation write (gitignored)
+│   ├── documents/           #   uploaded source files
+│   ├── vector_db/           #   ChromaDB persistent storage
+│   ├── eval_index/          #   index of the evaluation set (python -m eval.build_index)
+│   └── mlruns/              #   MLflow runs of a local evaluation
 ├── pyproject.toml           # Dependencies (uv)
 ├── uv.lock                  # Locked versions
 └── LICENSE
@@ -200,17 +203,17 @@ license. Build the index the questions expect in a folder of its own, so the ind
 the evaluation at it:
 
 ```bash
-uv run python -m eval.build_index                         # creates eval_index/ (about 2000 chunks, ~8 min on a CPU)
-VECTOR_DB_PATH=eval_index uv run python -m eval.evaluate --split all
+uv run python -m eval.build_index                         # creates data/eval_index/ (about 2000 chunks, ~8 min on a CPU)
+VECTOR_DB_PATH=data/eval_index uv run python -m eval.evaluate --split all
 ```
 
-`eval.build_index` refuses to write into `vector_db/` or into a folder that already exists.
+`eval.build_index` refuses to write into the vector database of the app or into a folder that already exists.
 
 A separate judge model (`JUDGE_MODEL`, `gemma4:12b` by default; run `ollama pull gemma4:12b` first) grades the answers, so the answering model never grades itself. `--judge-model` picks another Ollama model for a cross-check, and an empty value makes the answering model grade itself. The judge and a hash of the judge prompts are logged to MLflow next to the QA prompt hash.
 
 To compare two runs, save each with `--per-case-json` and run `uv run python -m eval.compare before.json after.json`. The questions are paired by id; for every metric the table gives the change, a 95% interval from a paired bootstrap, and how many questions got better or worse. An interval that contains 0 means the two runs cannot be told apart on this many questions.
 
-With `--mlflow`, a hash of the dataset file and the split that ran are logged too, so runs on different questions are not compared by mistake. Set `MLFLOW_TRACKING_URI` to the server (for example `http://localhost:5001` when the compose stack is up); without it the run is written to `./mlruns`.
+With `--mlflow`, a hash of the dataset file and the split that ran are logged too, so runs on different questions are not compared by mistake. Set `MLFLOW_TRACKING_URI` to the server (for example `http://localhost:5001` when the compose stack is up); without it the run is written to `./data/mlruns`.
 
 See [`eval/Report.md`](eval/Report.md) for a committed snapshot of a real run, on an earlier version of the question set
 (72 questions about the first 80 book pages; it will be replaced by a run on the questions above)

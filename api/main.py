@@ -95,7 +95,7 @@ def upload_documents(request: Request, files: list[UploadFile] = File(...)):
             failed.append({"name": name or "(no name)", "reason": "Unsupported file type"})
             continue
 
-        # Keeps metadata "source" as "./documents/<name>", which eval/dataset.json relies on
+        # The "source" metadata of the chunks is this path, e.g. "./data/documents/<name>"
         path = os.path.join(DOCUMENTS_PATH, name)
         with open(path, "wb") as out:
             shutil.copyfileobj(upload.file, out)
