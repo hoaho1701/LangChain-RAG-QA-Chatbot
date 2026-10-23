@@ -4,10 +4,10 @@
 __pycache__
 .pytest_cache
 .ruff_cache
+data
 vector_db
 documents
 eval/documents
-eval_index
 frontend/node_modules
 frontend/dist
 mlruns

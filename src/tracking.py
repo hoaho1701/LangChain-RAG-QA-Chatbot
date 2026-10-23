@@ -11,7 +11,7 @@ def log_evaluation(report: dict, report_md: str, dataset_path: str, experiment: 
     """Log one evaluation run (params, metrics, report) to MLflow and return its run id."""
     import mlflow  # lazy: eval.evaluate must still work without --mlflow
 
-    mlflow.set_tracking_uri(os.environ.get("MLFLOW_TRACKING_URI", "./mlruns"))
+    mlflow.set_tracking_uri(os.environ.get("MLFLOW_TRACKING_URI", "./data/mlruns"))
     mlflow.set_experiment(experiment)
 
     # Runs on different questions must not be compared: the hash tells two versions of the dataset file apart.

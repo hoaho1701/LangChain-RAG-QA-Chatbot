@@ -23,11 +23,12 @@ HF_LOCAL_FILES_ONLY = os.environ.get("HF_LOCAL_FILES_ONLY", "true").lower() != "
 # HuggingFace embedding model name
 EMBEDDING_MODEL = "BAAI/bge-m3"
 
+# Everything the app writes (uploaded files, vector database, MLflow runs) lives in data/
 # Path to the directory containing documents
-DOCUMENTS_PATH = os.environ.get("DOCUMENTS_PATH", "./documents")
+DOCUMENTS_PATH = os.environ.get("DOCUMENTS_PATH", "./data/documents")
 
 # Path to the directory for the vector database
-VECTOR_DB_PATH = os.environ.get("VECTOR_DB_PATH", "./vector_db")
+VECTOR_DB_PATH = os.environ.get("VECTOR_DB_PATH", "./data/vector_db")
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200

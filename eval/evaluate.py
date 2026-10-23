@@ -105,7 +105,7 @@ def main():
 
     pipeline = RAGPipeline()
     if not pipeline.load_existing_index():
-        raise SystemExit("No indexed documents found in vector_db/. Upload documents via the app first.")
+        raise SystemExit("No indexed documents found in the vector database. Upload documents via the app first.")
 
     # Stop before the slow grading if the dataset does not match the index: a snippet found in no chunk would be
     # scored as a retrieval miss and blamed on the retriever.
