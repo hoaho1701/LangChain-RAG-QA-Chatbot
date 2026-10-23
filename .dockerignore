@@ -6,6 +6,8 @@ __pycache__
 .ruff_cache
 vector_db
 documents
+eval/documents
+eval_index
 frontend/node_modules
 frontend/dist
 mlruns

@@ -20,7 +20,7 @@ mlruns/
 mlflow_data/
 
 # ── Generated files ─────────────────────────────────────
-# Regenerate with `uv run python evaluate.py`
+# Regenerate with `uv run python -m eval.evaluate`
 eval/last_report.md
 *.log
 
@@ -43,3 +43,6 @@ CLAUDE.md
 KNOWLEDGE.md
 UPGRADE_PLAN.md
 notes/
+
+# Index built for the evaluation set by eval.build_index
+eval_index/

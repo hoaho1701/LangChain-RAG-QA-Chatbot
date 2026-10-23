@@ -1,924 +1,2403 @@
 [
   {
-    "id": "factoid-en-01",
+    "id": "factoid-01",
     "type": "factoid",
     "language": "en",
     "split": "dev",
-    "question": "According to Hands-On Large Language Models, which AI model was the first system able to write articles indistinguishable from those written by humans?",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "What vocabulary sizes are commonly used for an LLM tokenizer, according to the book?",
     "history": [],
-    "expected_answer": "GPT-2 (Generative Pre-trained Transformer 2).",
+    "expected_answer": "30K and 50K tokens are often used, and larger sizes such as 100K are increasingly common.",
     "evidence": [
-      "This system was an AI model called Generative Pre-trained Transformer 2, or GPT-2"
+      "30K and 50K are often\nused as vocabulary size values, but more and more we’re seeing larger sizes like\n100K"
     ]
   },
   {
-    "id": "factoid-en-02",
-    "type": "factoid",
-    "language": "en",
-    "split": "dev",
-    "question": "According to Hands-On Large Language Models, what term does the book use to encompass technologies that may not technically be LLMs but still significantly impact the field?",
-    "history": [],
-    "expected_answer": "Language AI.",
-    "evidence": [
-      "We use the term Language AI to encompass technologies that technically might not be LLMs"
-    ]
-  },
-  {
-    "id": "factoid-en-03",
+    "id": "factoid-02",
     "type": "factoid",
     "language": "en",
     "split": "test",
-    "question": "According to Hands-On Large Language Models, what was the first technique in the history of Language AI used to represent unstructured text, and around what decade was it first mentioned?",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which embedding model does the book's clustering example use instead of all-mpnet-base-v2, and why?",
     "history": [],
-    "expected_answer": "Bag-of-words, first mentioned around the 1950s.",
+    "expected_answer": "It uses thenlper/gte-small, a more recent model that outperforms the previous one on clustering tasks and is faster for inference because it is small.",
     "evidence": [
-      "It was first mentioned around the 1950s but became popular around the 2000s"
+      "we use the “thenlper/gte-small” model instead"
     ]
   },
   {
-    "id": "factoid-en-04",
-    "type": "factoid",
-    "language": "en",
-    "split": "dev",
-    "question": "According to Hands-On Large Language Models, which 2013 model was one of the first successful attempts at capturing the meaning of text in embeddings?",
-    "history": [],
-    "expected_answer": "word2vec.",
-    "evidence": [
-      "Released in 2013, word2vec was one of the first successful attempts at capturing the meaning of text in embeddings"
-    ]
-  },
-  {
-    "id": "factoid-en-05",
-    "type": "factoid",
-    "language": "en",
-    "split": "dev",
-    "question": "According to Hands-On Large Language Models, why is the word \"bank\" used as an example of a limitation of word2vec's static embeddings?",
-    "history": [],
-    "expected_answer": "Because word2vec always gives \"bank\" the same embedding regardless of context, even though it can mean a financial bank or the bank of a river — its meaning (and embedding) should change depending on context, which static embeddings can't do.",
-    "evidence": [
-      "will always have the same embedding regardless of the context in which it is used"
-    ]
-  },
-  {
-    "id": "factoid-en-06",
+    "id": "factoid-03",
     "type": "factoid",
     "language": "en",
     "split": "test",
-    "question": "According to Hands-On Large Language Models, what term describes an architecture where generating the next word requires consuming all previously generated words?",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "In the book's word2vec example, what window size is used and what does it mean?",
     "history": [],
-    "expected_answer": "Autoregressive.",
+    "expected_answer": "A window size of two, meaning that two neighbors on each side of a central word are considered.",
     "evidence": [
-      "Each step in this architecture is autoregressive"
+      "We can, for example, have a window size two, meaning that we consider two neighbors on each side of a central word."
     ]
   },
   {
-    "id": "factoid-en-07",
-    "type": "factoid",
-    "language": "en",
-    "split": "dev",
-    "question": "According to Hands-On Large Language Models, in what year was the solution called \"attention\" introduced to address the difficulty of handling longer sentences with a single context embedding?",
-    "history": [],
-    "expected_answer": "2014.",
-    "evidence": [
-      "In 2014, a solution called attention was introduced"
-    ]
-  },
-  {
-    "id": "factoid-en-08",
-    "type": "factoid",
-    "language": "en",
-    "split": "dev",
-    "question": "According to Hands-On Large Language Models, which 2017 paper introduced the Transformer architecture?",
-    "history": [],
-    "expected_answer": "\"Attention Is All You Need\" (2017).",
-    "evidence": [
-      "The authors proposed a network architecture called the Transformer"
-    ]
-  },
-  {
-    "id": "factoid-en-09",
+    "id": "factoid-04",
     "type": "factoid",
     "language": "en",
     "split": "test",
-    "question": "According to Hands-On Large Language Models, why does the self-attention layer in the Transformer's decoder mask future positions?",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "When a named entity is split into several tokens, which label does the first token get and which label do the following tokens get?",
     "history": [],
-    "expected_answer": "To prevent leaking information when generating the output — it should only attend to earlier positions, not \"look into the future.\"",
+    "expected_answer": "The first token gets B (for beginning) and the following tokens get I (for inner); for example 'Ma' gets B-PER and '##arte' and '##n' get I-PER.",
     "evidence": [
-      "so it only attends to earlier positions to prevent leaking information when generating the output"
+      "Whenever\nan entity is split into tokens, the first token should have B (for beginning) and the\nfollowing should be I (for inner)."
     ]
   },
   {
-    "id": "factoid-en-10",
+    "id": "factoid-05",
     "type": "factoid",
     "language": "en",
     "split": "dev",
-    "question": "According to Hands-On Large Language Models, in what year was BERT introduced?",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "What does text clustering aim to do, according to the book?",
     "history": [],
-    "expected_answer": "2018.",
+    "expected_answer": "It aims to group similar texts based on their semantic content, meaning and relationships.",
     "evidence": [
-      "In 2018, a new architecture called Bidirectional Encoder Representations from"
+      "Text clustering aims to group similar texts based on their semantic content, meaning,\nand relationships."
     ]
   },
   {
-    "id": "factoid-vi-01",
+    "id": "factoid-06",
     "type": "factoid",
-    "language": "vi",
-    "split": "dev",
-    "question": "Theo sách Machine Learning cơ bản, Phần I của cuốn sách có tiêu đề là gì?",
-    "history": [],
-    "expected_answer": "Kiến thức toán cơ bản cho machine learning.",
-    "evidence": [
-      "Kiến thức toán cơ bản cho machine learning"
-    ]
-  },
-  {
-    "id": "factoid-vi-02",
-    "type": "factoid",
-    "language": "vi",
-    "split": "dev",
-    "question": "Theo sách Machine Learning cơ bản, ký hiệu nào được dùng để biểu diễn phép chuyển vị (transpose) của một vector hoặc ma trận?",
-    "history": [],
-    "expected_answer": "Chữ T (ví dụ x^T, A^T).",
-    "evidence": [
-      "Trong cuốn sách này, chúng ta sẽ sử dụng"
-    ]
-  },
-  {
-    "id": "factoid-vi-03",
-    "type": "factoid",
-    "language": "vi",
+    "language": "en",
     "split": "test",
-    "question": "Theo sách Machine Learning cơ bản, phép nhân ma trận có tính chất giao hoán hay không?",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "What is the most common way to tokenize text in the bag-of-words model?",
     "history": [],
-    "expected_answer": "Không — phép nhân ma trận không có tính chất giao hoán (thông thường AB khác BA).",
+    "expected_answer": "Splitting on a whitespace to create individual words.",
     "evidence": [
-      "Phép nhân ma trận không có tính chất giao hoán"
+      "The most common method for tokenization is by splitting on a whitespace to create\nindividual words."
     ]
   },
   {
-    "id": "factoid-vi-04",
+    "id": "factoid-07",
     "type": "factoid",
-    "language": "vi",
-    "split": "dev",
-    "question": "Theo sách Machine Learning cơ bản, tập hợp tất cả các vector biểu diễn được dưới dạng tổ hợp tuyến tính của các cột một ma trận được gọi là gì?",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "How does full fine-tuning differ from pretraining in the data it uses?",
     "history": [],
-    "expected_answer": "Không gian sinh (span).",
+    "expected_answer": "Full fine-tuning uses a smaller but labeled dataset, whereas pretraining was done on a large dataset without any labels.",
     "evidence": [
-      "Tập hợp tất cả các vector có thể biểu diễn được dưới dạng một tổ hợp tuyến tính của các cột của một ma trận được gọi"
+      "The main difference is that we now use a smaller but labeled dataset whereas the\npretraining process was done on a large dataset without any labels"
     ]
   },
   {
-    "id": "factoid-vi-05",
-    "type": "factoid",
-    "language": "vi",
-    "split": "dev",
-    "question": "Theo sách Machine Learning cơ bản, một hệ vector được gọi là \"cơ sở\" (basis) của một không gian vector khi thoả mãn những điều kiện nào?",
-    "history": [],
-    "expected_answer": "Hệ vector đó phải sinh ra (span) toàn bộ không gian, và là một hệ độc lập tuyến tính.",
-    "evidence": [
-      "nếu hai điều kiện sau được thoả mãn"
-    ]
-  },
-  {
-    "id": "factoid-vi-06",
+    "id": "factoid-08",
     "type": "factoid",
     "language": "vi",
     "split": "test",
-    "question": "Theo sách Machine Learning cơ bản, hạng (rank) của một ma trận có bằng với hạng của ma trận chuyển vị của nó không?",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "Vì sao kernel SVM dùng các hàm kernel thay vì tính trực tiếp hàm biến đổi Φ(x)?",
     "history": [],
-    "expected_answer": "Có — rank(A) = rank(A^T).",
+    "expected_answer": "Vì hàm Φ(x) thường tạo ra dữ liệu có số chiều cao hơn, thậm chí vô hạn chiều, nên tính trực tiếp sẽ gặp vấn đề về bộ nhớ và hiệu năng tính toán.",
     "evidence": [
-      "Hạng của một ma trận bằng hạng của ma trận chuyển vị"
+      "Nếu tính toán các hàm này trực tiếp, chắc chắn chúng ta sẽ gặp\ncác vấn đề về bộ nhớ và hiệu năng tính toán."
     ]
   },
   {
-    "id": "factoid-vi-07",
-    "type": "factoid",
-    "language": "vi",
-    "split": "dev",
-    "question": "Theo sách Machine Learning cơ bản, một ma trận U thoả mãn UU^T = U^T U = I được gọi là ma trận gì?",
-    "history": [],
-    "expected_answer": "Ma trận trực giao (orthogonal matrix).",
-    "evidence": [
-      "ta gọi nó là ma trận trực giao"
-    ]
-  },
-  {
-    "id": "factoid-vi-08",
-    "type": "factoid",
-    "language": "vi",
-    "split": "dev",
-    "question": "Theo sách Machine Learning cơ bản, cách biểu diễn một ma trận A dưới dạng A = XΛX^-1 được gọi là gì?",
-    "history": [],
-    "expected_answer": "Eigendecomposition (chéo hoá ma trận, dựa trên vector riêng và trị riêng).",
-    "evidence": [
-      "Cách biểu diễn một ma trận như (1.28) được gọi"
-    ]
-  },
-  {
-    "id": "factoid-vi-09",
+    "id": "factoid-09",
     "type": "factoid",
     "language": "vi",
     "split": "test",
-    "question": "Theo sách Machine Learning cơ bản, mọi ma trận Hermitian nửa xác định dương có thể biểu diễn duy nhất dưới dạng A = LL^H — đây là phép khai triển gì?",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Trong ví dụ logistic regression với dữ liệu hai chiều, màu nền trong hình kết quả thể hiện điều gì?",
     "history": [],
-    "expected_answer": "Khai triển Cholesky (Cholesky decomposition).",
+    "expected_answer": "Màu nền thể hiện xác suất điểm đó thuộc class đỏ: màu xanh đậm ứng với giá trị 0, màu đỏ đậm ứng với giá trị rất gần 1.",
     "evidence": [
-      "Khai triển Cholesky (Cholesky decomposition)"
+      "màu nền thể hiện xác suất điểm đó thuộc class đỏ"
     ]
   },
   {
-    "id": "factoid-vi-10",
+    "id": "factoid-10",
+    "type": "factoid",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Định thức của một ma trận trực giao bằng bao nhiêu?",
+    "history": [],
+    "expected_answer": "Định thức của ma trận trực giao bằng 1 hoặc −1.",
+    "evidence": [
+      "Định thức của ma trận trực giao bằng1 hoặc −1"
+    ]
+  },
+  {
+    "id": "factoid-11",
+    "type": "factoid",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "MAP estimation khác MLE ở điểm nào?",
+    "history": [],
+    "expected_answer": "MLE chỉ dựa trên dữ liệu đã biết trong tập huấn luyện, còn MAP (maximum a posteriori) dựa không chỉ trên tập huấn luyện mà còn trên những thông tin biết trước của các tham số.",
+    "evidence": [
+      "Cách thứ nhất chỉ dựa trên dữ liệu đã biết trong tập huấn luyện",
+      "Cách thứ hai không những dựa trên tập\nhuấn luyện mà còn dựa trên những thông tin biết trước của các tham số"
+    ]
+  },
+  {
+    "id": "factoid-12",
+    "type": "factoid",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Trong bộ dữ liệu email của chương Naive Bayes, mỗi dòng của file features.txt có ba số, ý nghĩa của từng số là gì?",
+    "history": [],
+    "expected_answer": "Số đầu tiên là chỉ số của email (bắt đầu từ 1), số thứ hai là thứ tự của từ trong từ điển (tổng cộng 2500 từ), số thứ ba là số lượng của từ đó trong email đang xét.",
+    "evidence": [
+      "số đầu tiên là chỉ số của email, bắt đầu từ 1; số thứ hai là thứ tự của từ trong từ\nđiển (tổng cộng 2500 từ); số thứ ba là số lượng của từ đó trong email đang xét"
+    ]
+  },
+  {
+    "id": "factoid-13",
     "type": "factoid",
     "language": "vi",
     "split": "dev",
-    "question": "Theo sách Machine Learning cơ bản, chuẩn l1 (l1 norm) của một vector x được tính như thế nào?",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "Trong SVM, bài toán gốc và bài toán đối ngẫu Lagrange mỗi bên phải tìm bao nhiêu tham số?",
     "history": [],
-    "expected_answer": "Là tổng các trị tuyệt đối của từng phần tử của x: ||x||1 = |x1| + |x2| + ... + |xn|.",
+    "expected_answer": "Bài toán đối ngẫu phải tìm N tham số (N là số điểm dữ liệu), còn bài toán gốc phải tìm d+1 tham số (tổng số chiều của w và b, tức số chiều của mỗi điểm dữ liệu cộng với 1).",
     "evidence": [
-      "là tổng các trị tuyệt đối của từng phần tử"
+      "số lượng tham số phải tìm làN, là chiều củaλ, cũng chính là\nsố điểm dữ liệu",
+      "số tham số phải tìm làd+ 1"
     ]
   },
   {
-    "id": "synthesis-en-01",
-    "type": "synthesis",
-    "language": "en",
+    "id": "factoid-14",
+    "type": "factoid",
+    "language": "vi",
     "split": "dev",
-    "question": "How does a bag-of-words model turn sentences into numerical representations, according to the book?",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Vì sao các feature vector của mọi điểm dữ liệu trong cùng một bài toán thường phải có kích thước như nhau?",
     "history": [],
-    "expected_answer": "After tokenization, the unique words from all sentences are combined into a vocabulary; then the model counts how often each vocabulary word appears in each sentence, producing a vector (a bag of words) for every sentence.",
+    "expected_answer": "Vì các phép toán trong mô hình (cộng, nhân ma trận, vector) yêu cầu đầu vào có cùng kích thước.",
     "evidence": [
-      "we simply count how often a word in each sentence appears, quite literally creating a bag of words"
+      "Điều này là cần thiết vì các phép\ntoán trong mô hình (cộng, nhân ma trận, vector) yêu cầu đầu vào có cùng kích thước."
     ]
   },
   {
-    "id": "synthesis-en-02",
-    "type": "synthesis",
-    "language": "en",
-    "split": "dev",
-    "question": "What is the difference between the embeddings that bag-of-words and word2vec create?",
-    "history": [],
-    "expected_answer": "Bag-of-words creates embeddings at the document level, since it represents the entire document, whereas word2vec generates embeddings for words only.",
-    "evidence": [
-      "In contrast, word2vec generates embeddings for words only."
-    ]
-  },
-  {
-    "id": "synthesis-en-03",
-    "type": "synthesis",
+    "id": "factoid-15",
+    "type": "factoid",
     "language": "en",
     "split": "test",
-    "question": "What are the two parts of a Transformer encoder block, and how does self-attention differ from the earlier attention?",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "What does the photosynthetic action spectrum depend on, and what does it resemble in green plants?",
     "history": [],
-    "expected_answer": "An encoder block consists of self-attention and a feedforward neural network. Self-attention can attend to different positions within a single sequence and look at the entire sequence in one go, instead of processing one token at a time.",
+    "expected_answer": "It depends on the type of accessory pigments present. For example, in green plants, it resembles the absorption spectrum of chlorophylls and carotenoids, with absorption peaks in violet-blue and red light.",
     "evidence": [
-      "The encoder block in the Transformer consists of two parts, self-attention and a feedforward neural network",
-      "Instead of processing one token at a time, it can be used to look at the entire sequence in one go."
+      "The photosynthetic action spectrum depends on the type of accessory pigments present.",
+      "in green plants, the action spectrum resembles the absorption spectrum for chlorophylls and carotenoids with absorption peaks in violet-blue and red light"
     ]
   },
   {
-    "id": "synthesis-en-04",
-    "type": "synthesis",
-    "language": "en",
-    "split": "dev",
-    "question": "What is the [CLS] token in BERT and how is it used?",
-    "history": [],
-    "expected_answer": "It is an additional classification token in the input that is used as the representation for the entire input; it is often used as the input embedding when fine-tuning the model on tasks such as classification.",
-    "evidence": [
-      "the [CLS] or classification token, which is used as the representation for the entire input"
-    ]
-  },
-  {
-    "id": "synthesis-en-05",
-    "type": "synthesis",
-    "language": "en",
-    "split": "dev",
-    "question": "What happened in 2022 and 2023 that changed Language AI, according to the book?",
-    "history": [],
-    "expected_answer": "ChatGPT was released in 2022 and reached one million active users in five days and one hundred million in two months, which popularized research on LLMs; the authors call 2023 the year that drastically changed the field of Language AI.",
-    "evidence": [
-      "Reaching one million active users in five days",
-      "2023 will always be known, at least to us, as the year that drastically changed our field"
-    ]
-  },
-  {
-    "id": "synthesis-vi-01",
-    "type": "synthesis",
-    "language": "vi",
-    "split": "dev",
-    "question": "Tích của hai ma trận vuông khả nghịch có khả nghịch không, và nghịch đảo của tích được tính thế nào?",
-    "history": [],
-    "expected_answer": "Có, tích của hai ma trận vuông khả nghịch cũng khả nghịch và (AB)^-1 = B^-1 A^-1.",
-    "evidence": [
-      "tích của chúng cũng khả nghịch"
-    ]
-  },
-  {
-    "id": "synthesis-vi-02",
-    "type": "synthesis",
-    "language": "vi",
-    "split": "dev",
-    "question": "Điều kiện nào về định thức cho biết một ma trận là khả nghịch, và định thức của ma trận nghịch đảo bằng bao nhiêu?",
-    "history": [],
-    "expected_answer": "Một ma trận là khả nghịch khi và chỉ khi định thức của nó khác 0. Khi đó định thức của ma trận nghịch đảo bằng nghịch đảo định thức: det(A^-1) = 1/det(A).",
-    "evidence": [
-      "Một ma trận là khả nghịch khi và chỉ khi định thức của nó khác 0"
-    ]
-  },
-  {
-    "id": "synthesis-vi-03",
-    "type": "synthesis",
-    "language": "vi",
-    "split": "test",
-    "question": "Trị riêng của ma trận vuông liên hệ với đa thức đặc trưng như thế nào, và tập hợp các trị riêng được gọi là gì?",
-    "history": [],
-    "expected_answer": "Nếu λ là trị riêng thì A - λI không khả nghịch, tức det(A - λI) = 0, nên λ là nghiệm của phương trình det(A - tI) = 0. Định thức này là đa thức bậc n của t, gọi là đa thức đặc trưng của A. Tập hợp tất cả các trị riêng được gọi là phổ (spectrum) của ma trận.",
-    "evidence": [
-      "Tập hợp tất cả các trị riêng của một ma trận vuông"
-    ]
-  },
-  {
-    "id": "synthesis-vi-04",
-    "type": "synthesis",
-    "language": "vi",
-    "split": "dev",
-    "question": "Trị riêng của ma trận đối xứng (Hermitian) có đặc điểm gì và vì sao?",
-    "history": [],
-    "expected_answer": "Tất cả các trị riêng của ma trận đối xứng (hoặc Hermitian) đều là số thực. Lý do: từ Ax = λx suy ra λ̄ x^H x = λ x^H x, tức (λ - λ̄) x^H x = 0; vì x ≠ 0 nên x^H x ≠ 0, do đó λ̄ = λ, nghĩa là λ là số thực.",
-    "evidence": [
-      "tất cả các trị riêng của nó đều là các số thực"
-    ]
-  },
-  {
-    "id": "synthesis-vi-05",
-    "type": "synthesis",
-    "language": "vi",
-    "split": "dev",
-    "question": "Ma trận A = [[1, -1], [-1, 1]] có xác định dương không? Giải thích.",
-    "history": [],
-    "expected_answer": "Ma trận này là nửa xác định dương (không phải xác định dương) vì với mọi x = [u; v], x^T A x = u^2 + v^2 - 2uv = (u - v)^2 ≥ 0, và bằng 0 khi u = v.",
-    "evidence": [
-      "là nửa xác định dương vì với mọi vector"
-    ]
-  },
-  {
-    "id": "follow-up-en-01",
-    "type": "follow_up",
-    "language": "en",
-    "split": "dev",
-    "question": "How does it learn those embeddings?",
-    "history": [
-      [
-        "human",
-        "Which 2013 model was one of the first successful attempts at capturing the meaning of text in embeddings?"
-      ],
-      [
-        "ai",
-        "word2vec."
-      ]
-    ],
-    "expected_answer": "Every word gets a vector (for example 50 random values). In each training step the model takes pairs of words from the training data and predicts whether they are likely to be neighbors in a sentence, and the embeddings are updated accordingly. Words that tend to have the same neighbors end up with closer embeddings.",
-    "evidence": [
-      "take pairs of words from the training data and a model attempts to predict whether or not they are likely to be neighbors in a sentence"
-    ]
-  },
-  {
-    "id": "follow-up-en-02",
-    "type": "follow_up",
-    "language": "en",
-    "split": "dev",
-    "question": "And how do its embeddings differ from those of word2vec?",
-    "history": [
-      [
-        "human",
-        "What is bag-of-words?"
-      ],
-      [
-        "ai",
-        "It is a classic method for representing unstructured text as numbers by counting how often each word appears."
-      ]
-    ],
-    "expected_answer": "Bag-of-words creates embeddings at the document level, since it represents the entire document, whereas word2vec generates embeddings for words only.",
-    "evidence": [
-      "In contrast, word2vec generates embeddings for words only."
-    ]
-  },
-  {
-    "id": "follow-up-en-03",
-    "type": "follow_up",
+    "id": "factoid-16",
+    "type": "factoid",
     "language": "en",
     "split": "test",
-    "question": "What are the two parts of its encoder block?",
-    "history": [
-      [
-        "human",
-        "What is the Transformer?"
-      ],
-      [
-        "ai",
-        "It is a network architecture based solely on the attention mechanism, introduced in 2017."
-      ]
-    ],
-    "expected_answer": "The encoder block consists of two parts: self-attention and a feedforward neural network.",
-    "evidence": [
-      "The encoder block in the Transformer consists of two parts, self-attention and a feedforward neural network"
-    ]
-  },
-  {
-    "id": "follow-up-en-04",
-    "type": "follow_up",
-    "language": "en",
-    "split": "dev",
-    "question": "What does its [CLS] token do?",
-    "history": [
-      [
-        "human",
-        "What is BERT?"
-      ],
-      [
-        "ai",
-        "It is an encoder-only architecture introduced in 2018."
-      ]
-    ],
-    "expected_answer": "The [CLS] (classification) token is an additional input token that is used as the representation for the entire input; it is often used as the input embedding when fine-tuning on tasks like classification.",
-    "evidence": [
-      "the [CLS] or classification token, which is used as the representation for the entire input"
-    ]
-  },
-  {
-    "id": "follow-up-vi-01",
-    "type": "follow_up",
-    "language": "vi",
-    "split": "dev",
-    "question": "Nó thường được dùng để làm gì?",
-    "history": [
-      [
-        "human",
-        "Ma trận nghịch đảo là gì?"
-      ],
-      [
-        "ai",
-        "Với ma trận vuông A, nếu tồn tại ma trận vuông B sao cho AB = I thì B là ma trận nghịch đảo của A, ký hiệu A^-1."
-      ]
-    ],
-    "expected_answer": "Ma trận nghịch đảo thường được dùng để giải hệ phương trình tuyến tính: nếu A khả nghịch thì Ax = b có nghiệm duy nhất x = A^-1 b.",
-    "evidence": [
-      "Ma trận nghịch đảo thường được sử dụng để giải hệ phương trình tuyến tính"
-    ]
-  },
-  {
-    "id": "follow-up-vi-02",
-    "type": "follow_up",
-    "language": "vi",
-    "split": "dev",
-    "question": "Ma trận đơn vị có phải là ma trận đường chéo không?",
-    "history": [
-      [
-        "human",
-        "Ma trận đường chéo là gì?"
-      ],
-      [
-        "ai",
-        "Là ma trận chỉ có các thành phần trên đường chéo chính là khác không."
-      ]
-    ],
-    "expected_answer": "Có. Ma trận không (tất cả phần tử bằng 0) và ma trận đơn vị đều là các ma trận đường chéo.",
-    "evidence": [
-      "Ma trận đường chéo(diagonal matrix) là ma trận chỉ có các thành phần trên đường chéo chính là khác không"
-    ]
-  },
-  {
-    "id": "follow-up-vi-03",
-    "type": "follow_up",
-    "language": "vi",
-    "split": "test",
-    "question": "Còn tổng của tất cả các trị riêng thì sao?",
-    "history": [
-      [
-        "human",
-        "Nêu một tính chất của trị riêng liên quan đến định thức của ma trận."
-      ],
-      [
-        "ai",
-        "Tích của tất cả các trị riêng của một ma trận bằng định thức của ma trận đó."
-      ]
-    ],
-    "expected_answer": "Tổng tất cả các trị riêng của một ma trận bằng tổng các phần tử trên đường chéo chính của ma trận đó.",
-    "evidence": [
-      "Tổng tất cả các trị riêng của một ma trận bằng tổng các phần tử trên đường chéo của ma trận đó"
-    ]
-  },
-  {
-    "id": "follow-up-vi-04",
-    "type": "follow_up",
-    "language": "vi",
-    "split": "dev",
-    "question": "Vậy định thức của ma trận nghịch đảo của nó bằng bao nhiêu?",
-    "history": [
-      [
-        "human",
-        "Xét theo định thức, một ma trận khả nghịch khi nào?"
-      ],
-      [
-        "ai",
-        "Khi định thức của nó khác 0."
-      ]
-    ],
-    "expected_answer": "Định thức của ma trận nghịch đảo bằng nghịch đảo của định thức: det(A^-1) = 1/det(A).",
-    "evidence": [
-      "Nếu một ma trận khả nghịch, định thức của ma trận nghịch đảo của nó bằng nghịch đảo định thức của nó"
-    ]
-  },
-  {
-    "id": "out-of-doc-en-01",
-    "type": "out_of_doc",
-    "language": "en",
-    "split": "dev",
-    "question": "According to the book, how many encoder blocks does the BERT large model have?",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "What do the carboxysomes of cyanobacteria do, and which enzyme inside them releases CO2?",
     "history": [],
-    "expected_answer": "The documents do not contain this information.",
-    "evidence": []
+    "expected_answer": "Carboxysomes increase the concentration of CO2 around RuBisCO to increase the rate of photosynthesis; the enzyme carbonic anhydrase inside them releases CO2 from dissolved hydrocarbonate ions.",
+    "evidence": [
+      "Cyanobacteria possess carboxysomes, which increase the concentration of CO2 around RuBisCO to increase the rate of photosynthesis",
+      "An enzyme, carbonic anhydrase, located within the carboxysome, releases CO2 from dissolved hydrocarbonate ions"
+    ]
   },
   {
-    "id": "out-of-doc-en-02",
-    "type": "out_of_doc",
+    "id": "factoid-17",
+    "type": "factoid",
     "language": "en",
     "split": "dev",
-    "question": "What is the capital of France?",
+    "doc": "photosynthesis-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "What are the four main factors influencing photosynthesis according to the article?",
     "history": [],
-    "expected_answer": "The documents do not contain this information.",
-    "evidence": []
+    "expected_answer": "They are light irradiance and wavelength, water absorption, carbon dioxide concentration, and temperature.",
+    "evidence": [
+      "There are four main factors influencing photosynthesis and several corollary factors.",
+      "Light irradiance and wavelength\nWater absorption\nCarbon dioxide concentration\nTemperature."
+    ]
   },
   {
-    "id": "out-of-doc-en-03",
-    "type": "out_of_doc",
+    "id": "factoid-18",
+    "type": "factoid",
     "language": "en",
     "split": "test",
-    "question": "What dropout rate does the book use when training a Transformer?",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "How does CAM metabolism separate CO2 fixation from the Calvin cycle, compared with C4 metabolism?",
     "history": [],
-    "expected_answer": "The documents do not contain this information.",
-    "evidence": []
+    "expected_answer": "C4 metabolism separates the CO2 fixation to PEP from the Calvin cycle spatially, whereas CAM separates the two processes temporally: CO2 is fixed at night, when the stomata are open.",
+    "evidence": [
+      "In contrast to C4 metabolism, which spatially separates the CO2 fixation to PEP from the Calvin cycle, CAM temporally separates these two processes."
+    ]
   },
   {
-    "id": "out-of-doc-en-04",
-    "type": "out_of_doc",
-    "language": "en",
-    "split": "dev",
-    "question": "In which year was GPT-4 released, according to the book?",
-    "history": [],
-    "expected_answer": "The documents do not contain this information.",
-    "evidence": []
-  },
-  {
-    "id": "out-of-doc-en-05",
-    "type": "out_of_doc",
-    "language": "en",
-    "split": "dev",
-    "question": "Which optimizer does the book use to train neural networks, such as SGD?",
-    "history": [],
-    "expected_answer": "The documents do not contain this information.",
-    "evidence": []
-  },
-  {
-    "id": "out-of-doc-en-06",
-    "type": "out_of_doc",
+    "id": "factoid-19",
+    "type": "factoid",
     "language": "en",
     "split": "test",
-    "question": "How many parameters does GPT-2 have?",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "How many water molecules does photosystem II oxidize to yield one molecule of oxygen, and how many hydrogen ions result?",
     "history": [],
-    "expected_answer": "The documents do not contain this information.",
-    "evidence": []
+    "expected_answer": "Two water molecules are oxidized to yield one molecule of diatomic oxygen and four hydrogen ions.",
+    "evidence": [
+      "Two water molecules are oxidized by the energy of four successive charge-separation reactions of photosystem II to yield a molecule of diatomic oxygen and four hydrogen ions."
+    ]
   },
   {
-    "id": "out-of-doc-vi-01",
-    "type": "out_of_doc",
-    "language": "vi",
-    "split": "dev",
-    "question": "Thủ đô của nước Pháp là gì?",
-    "history": [],
-    "expected_answer": "Tài liệu không chứa thông tin này.",
-    "evidence": []
-  },
-  {
-    "id": "out-of-doc-vi-02",
-    "type": "out_of_doc",
-    "language": "vi",
-    "split": "dev",
-    "question": "Định lý Cayley-Hamilton phát biểu điều gì?",
-    "history": [],
-    "expected_answer": "Tài liệu không chứa thông tin này.",
-    "evidence": []
-  },
-  {
-    "id": "out-of-doc-vi-03",
-    "type": "out_of_doc",
-    "language": "vi",
-    "split": "test",
-    "question": "Dropout được dùng để làm gì trong mạng neural?",
-    "history": [],
-    "expected_answer": "Tài liệu không chứa thông tin này.",
-    "evidence": []
-  },
-  {
-    "id": "out-of-doc-vi-04",
-    "type": "out_of_doc",
-    "language": "vi",
-    "split": "dev",
-    "question": "Ma trận Jordan là gì?",
-    "history": [],
-    "expected_answer": "Tài liệu không chứa thông tin này.",
-    "evidence": []
-  },
-  {
-    "id": "out-of-doc-vi-05",
-    "type": "out_of_doc",
-    "language": "vi",
-    "split": "dev",
-    "question": "Thuật toán k-means hoạt động như thế nào?",
-    "history": [],
-    "expected_answer": "Tài liệu không chứa thông tin này.",
-    "evidence": []
-  },
-  {
-    "id": "out-of-doc-vi-06",
-    "type": "out_of_doc",
-    "language": "vi",
-    "split": "test",
-    "question": "Phương pháp bình phương tối thiểu dùng để làm gì?",
-    "history": [],
-    "expected_answer": "Tài liệu không chứa thông tin này.",
-    "evidence": []
-  },
-  {
-    "id": "hard-en-01",
-    "type": "hard",
+    "id": "factoid-20",
+    "type": "factoid",
     "language": "en",
     "split": "dev",
-    "question": "Why does the book say bag-of-words is not completely obsolete, and what flaw of it did word2vec address?",
+    "doc": "photosynthesis-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "Who used radioactive isotopes to show that the oxygen released in photosynthesis comes from water?",
     "history": [],
-    "expected_answer": "Bag-of-words is by no means completely obsolete because it can still be used to complement more recent language models (explored in Chapter 5). Its flaw is that it treats language as a bag of words and ignores the semantic nature, or meaning, of text, which word2vec addressed by capturing meaning in embeddings.",
+    "expected_answer": "They are Samuel Ruben and Martin Kamen.",
     "evidence": [
-      "by no means completely obsolete",
-      "ignores the semantic nature, or meaning, of text"
+      "Samuel Ruben and Martin Kamen used radioactive isotopes to determine that the oxygen liberated in photosynthesis came from the water."
     ]
   },
   {
-    "id": "hard-en-02",
-    "type": "hard",
-    "language": "en",
-    "split": "dev",
-    "question": "In the book's description of word2vec training, how many values does each word's initial embedding have in the example, how are they initialised, and what prediction task is the network trained on?",
-    "history": [],
-    "expected_answer": "In the example each word gets a vector of, say, 50 values initialised with random values. In each training step the model takes pairs of words from the training data and predicts whether they are likely to be neighbors in a sentence.",
-    "evidence": [
-      "say of 50 values for each word initialized with random values"
-    ]
-  },
-  {
-    "id": "hard-en-03",
-    "type": "hard",
-    "language": "en",
-    "split": "test",
-    "question": "Which use cases of embeddings does the book mention, and in which chapters are they covered?",
-    "history": [],
-    "expected_answer": "Classification (Chapter 4), clustering (Chapter 5), and semantic search and retrieval-augmented generation (Chapter 8).",
-    "evidence": [
-      "classification (see Chapter 4), clustering (see Chapter 5), and semantic search and retrieval-augmented generation (see Chapter 8)"
-    ]
-  },
-  {
-    "id": "hard-en-04",
-    "type": "hard",
-    "language": "en",
-    "split": "dev",
-    "question": "In the book's Dutch translation example, why is the attention between 'lama's' and 'llamas' high while the attention between 'lama's' and 'I' is lower?",
-    "history": [],
-    "expected_answer": "Because 'lama's' is Dutch for 'llamas', so the two words correspond and attention between them is high, whereas 'lama's' and 'I' are not as related and therefore have lower attention.",
-    "evidence": [
-      "have lower attention since they"
-    ]
-  },
-  {
-    "id": "hard-en-05",
-    "type": "hard",
-    "language": "en",
-    "split": "dev",
-    "question": "Why does the book say smaller models are still relevant even though LLMs got almost all the attention?",
-    "history": [],
-    "expected_answer": "Because LLMs have been around for a while and smaller models are still relevant to this day; LLMs are much more than a single model and there are many other techniques and models in the field of Language AI worth exploring.",
-    "evidence": [
-      "LLMs have been around for a while now"
-    ]
-  },
-  {
-    "id": "hard-en-06",
-    "type": "hard",
-    "language": "en",
-    "split": "test",
-    "question": "A colleague says the Transformer processes tokens strictly one at a time, like an RNN. According to the book, is that right?",
-    "history": [],
-    "expected_answer": "No. Self-attention in the Transformer's encoder can look at the entire sequence in one go instead of processing one token at a time, and the Transformer could be trained in parallel, unlike the recurrence network whose sequential nature precludes parallelisation.",
-    "evidence": [
-      "Instead of processing one token at a time, it can be used to look at the entire sequence in one go.",
-      "the Transformer could be trained in parallel"
-    ]
-  },
-  {
-    "id": "hard-vi-01",
-    "type": "hard",
-    "language": "vi",
-    "split": "dev",
-    "question": "Nếu ma trận hệ số A không khả nghịch, thậm chí không vuông, thì phương trình Ax = b có thể có những khả năng nào về nghiệm?",
-    "history": [],
-    "expected_answer": "Phương trình có thể không có nghiệm hoặc có vô số nghiệm (chỉ khi A khả nghịch mới có nghiệm duy nhất x = A^-1 b).",
-    "evidence": [
-      "có thể không có nghiệm hoặc có vô số nghiệm"
-    ]
-  },
-  {
-    "id": "hard-vi-02",
-    "type": "hard",
-    "language": "vi",
-    "split": "dev",
-    "question": "Định thức bằng 0 trong trường hợp nào theo cuốn sách, và điều đó cho biết gì về tính khả nghịch của ma trận?",
-    "history": [],
-    "expected_answer": "Nếu một ma trận có một hàng hoặc một cột là vector 0 thì định thức của nó bằng 0. Vì một ma trận khả nghịch khi và chỉ khi định thức của nó khác 0, nên ma trận như vậy không khả nghịch.",
-    "evidence": [
-      "thì định thức của nó bằng 0",
-      "khả nghịch khi và chỉ khi định thức của nó khác 0"
-    ]
-  },
-  {
-    "id": "hard-vi-03",
-    "type": "hard",
+    "id": "factoid-21",
+    "type": "factoid",
     "language": "vi",
     "split": "test",
-    "question": "Range của ma trận A là gì và số chiều của nó bằng bao nhiêu?",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Theo bài viết, một loạt hành động trong nông nghiệp và lâm nghiệp có thể giảm khí thải nhà kính bao nhiêu phần trăm so với năm 2010?",
     "history": [],
-    "expected_answer": "Range của A là tập các y sao cho tồn tại x với Ax = y, tức là tập hợp các tổ hợp tuyến tính của các cột của A (không gian sinh của các cột). Nó là một không gian con của R^m với số chiều bằng số lượng lớn nhất các cột của A độc lập tuyến tính.",
+    "expected_answer": "Có thể giảm 66% so với mức năm 2010.",
     "evidence": [
-      "là tập hợp các điểm là tổ hợp tuyến tính của các cột",
-      "với số chiều chính bằng"
+      "có thể làm giảm khí thải nhà kính có nguồn gốc nông lâm nghiệp đi 66% so với mức năm 2010"
     ]
   },
   {
-    "id": "hard-vi-04",
-    "type": "hard",
-    "language": "vi",
-    "split": "dev",
-    "question": "Nêu các tính chất của nghịch đảo và định thức của ma trận trực giao.",
-    "history": [],
-    "expected_answer": "Nghịch đảo của một ma trận trực giao chính là chuyển vị của nó (U^-1 = U^T); chuyển vị của ma trận trực giao cũng là ma trận trực giao; định thức của ma trận trực giao bằng 1 hoặc -1.",
-    "evidence": [
-      "nghịch đảo của một ma trận trực giao chính là chuyển vị của nó",
-      "Định thức của ma trận trực giao bằng"
-    ]
-  },
-  {
-    "id": "hard-vi-05",
-    "type": "hard",
-    "language": "vi",
-    "split": "dev",
-    "question": "Nếu (λ, x) là một cặp trị riêng, vector riêng của ma trận khả nghịch A thì A^-1 có cặp trị riêng, vector riêng nào?",
-    "history": [],
-    "expected_answer": "(1/λ, x) là một cặp trị riêng, vector riêng của A^-1, vì Ax = λx suy ra (1/λ)x = A^-1 x.",
-    "evidence": [
-      "là một cặp trị riêng, vector riêng củaA"
-    ]
-  },
-  {
-    "id": "hard-vi-06",
-    "type": "hard",
+    "id": "factoid-22",
+    "type": "factoid",
     "language": "vi",
     "split": "test",
-    "question": "Một bạn nói rằng định thức của một ma trận khả nghịch có thể bằng 0. Theo cuốn sách, điều đó có đúng không?",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Nghị định thư Kyoto 1997 bổ sung điều gì so với UNFCCC?",
     "history": [],
-    "expected_answer": "Không đúng. Theo cuốn sách, một ma trận là khả nghịch khi và chỉ khi định thức của nó khác 0 (và định thức của ma trận nghịch đảo bằng 1/det(A)).",
+    "expected_answer": "Nó mở rộng UNFCCC và bao gồm những cam kết ràng buộc pháp lý cho hầu hết các nước phát triển nhằm hạn chế lượng phát thải của họ.",
     "evidence": [
-      "khả nghịch khi và chỉ khi định thức của nó khác 0"
+      "Nghị định thư Kyoto 1997 mở rộng UNFCCC và bao gồm những cam kết ràng buộc pháp lý cho hầu hết các nước phát triển nhằm hạn chế lượng phát thải của họ."
     ]
   },
   {
-    "id": "paraphrase-en-01",
+    "id": "factoid-23",
+    "type": "factoid",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Hiện nay đất nông nghiệp chiếm bao nhiêu phần trăm diện tích đất của Trái Đất?",
+    "history": [],
+    "expected_answer": "Đất nông nghiệp chiếm 34% diện tích đất của Trái Đất.",
+    "evidence": [
+      "Hiện nay, đất nông nghiệp chiếm đến 34% diện tích đất của Trái Đất"
+    ]
+  },
+  {
+    "id": "factoid-24",
+    "type": "factoid",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "Đến năm 2018, nồng độ CO2 và methane trong khí quyển đã tăng khoảng bao nhiêu phần trăm so với năm 1750?",
+    "history": [],
+    "expected_answer": "Nồng độ CO2 tăng khoảng 45% và methane tăng khoảng 160% so với năm 1750.",
+    "evidence": [
+      "Vào năm 2018, nồng độ CO2 và methane đã tăng lần lượt khoảng 45% và 160% so với năm 1750."
+    ]
+  },
+  {
+    "id": "factoid-25",
+    "type": "factoid",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Tổ chức Y tế Thế giới ước tính biến đổi khí hậu khiến thêm khoảng bao nhiêu người già tử vong mỗi năm do nắng nóng trong giai đoạn 2030 đến 2050?",
+    "history": [],
+    "expected_answer": "Thêm khoảng 250.000 người già tử vong mỗi năm do tiếp xúc với nắng nóng.",
+    "evidence": [
+      "biến đổi khí hậu sẽ khiến thêm khoảng 250.000 người già tử vong mỗi năm do tiếp xúc với nắng nóng"
+    ]
+  },
+  {
+    "id": "explain-01",
+    "type": "explain",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "How does word2vec use a neural network to generate word embeddings, according to the book?",
+    "history": [],
+    "expected_answer": "Every word in the vocabulary gets a vector embedding (for example 50 values) initialized with random values. In each training step, pairs of words from the training data are taken and the model tries to predict whether they are likely to be neighbors in a sentence.",
+    "evidence": [
+      "We start by\nassigning every word in our vocabulary with a vector embedding, say of 50 values for\neach word initialized with random values.",
+      "we take pairs of words from the training data and a model attempts to\npredict whether or not they are likely to be neighbors in a sentence"
+    ]
+  },
+  {
+    "id": "explain-02",
+    "type": "explain",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "How can you test the quality of the silver data used to augment the training of an embedding model?",
+    "history": [],
+    "expected_answer": "By also training the embedding model only on the gold dataset. The difference in performance indicates how much the silver dataset potentially adds to the quality of the model.",
+    "evidence": [
+      "test the quality of your silver data by also training your embedding model only on the\ngold dataset. The difference in performance indicates how much your silver dataset\npotentially adds to the quality of the model."
+    ]
+  },
+  {
+    "id": "explain-03",
+    "type": "explain",
+    "language": "en",
+    "split": "dev",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "What is instruction-based prompting and what is it used for?",
+    "history": [],
+    "expected_answer": "It is prompting used to have the LLM answer a specific question or resolve a certain task.",
+    "evidence": [
+      "prompting is often used to have\nthe LLM answer a specific question or resolve a certain task. This is referred to as\ninstruction-based prompting."
+    ]
+  },
+  {
+    "id": "explain-04",
+    "type": "explain",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "Why does the book's supervised classification example separate feature extraction from classification, and what classifier does it train?",
+    "history": [],
+    "expected_answer": "The separation means the embedding model does not have to be fine-tuned, which can be costly, instead a classifier such as logistic regression is trained on the CPU.",
+    "evidence": [
+      "A major benefit of this separation is that we do not need to fine-tune our embedding\nmodel, which can be costly. In contrast, we can train a classifier, like a logistic\nregression, on the CPU instead."
+    ]
+  },
+  {
+    "id": "explain-05",
+    "type": "explain",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Agglomerative hierarchical clustering hoạt động như thế nào?",
+    "history": [],
+    "expected_answer": "Đó là cách tiếp cận \"đi từ dưới lên\": ban đầu coi một vài điểm dữ liệu gần nhau là một cluster, sau đó các cặp cluster gần giống nhau được gộp lại thành một cluster lớn hơn.",
+    "evidence": [
+      "Agglomerative tức “đi từ dưới lên”. Ban đầu coi một vài điểm dữ liệu gần nhau là một\ncluster, sau đó các cặp cluster gần giống nhau được gộp lại làm một cluster lớn hơn."
+    ]
+  },
+  {
+    "id": "explain-06",
+    "type": "explain",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "Trong ví dụ minh họa K-means của chương 10, thuật toán hội tụ sau bao nhiêu vòng lặp và kết quả phân cụm ra sao?",
+    "history": [],
+    "expected_answer": "Thuật toán hội tụ sau sáu vòng lặp, các centroid tìm được gần với các centroid ban đầu và các nhóm dữ liệu được phân ra gần như hoàn hảo, chỉ một vài điểm gần ranh giới hai cluster xanh có thể lẫn vào nhau.",
+    "evidence": [
+      "hội tụ sau chỉ sáu vòng lặp",
+      "các centroid tìm được gần với các centroid ban đầu,\nvà các nhóm dữ liệu được phân ra gần như hoàn hảo"
+    ]
+  },
+  {
+    "id": "explain-07",
+    "type": "explain",
+    "language": "vi",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "Vì sao việc biến dữ liệu thô như ảnh và văn bản thành đầu vào cho mô hình machine learning gặp khó khăn?",
+    "history": [],
+    "expected_answer": "Vì các bức ảnh thường là ma trận hoặc tensor với kích thước khác nhau và còn cần xác định vị trí vật thể. Trong khi đó, văn bản có độ dài khác nhau và có từ hiếm hoặc không có trong từ điển, còn tiếng nói thì khác nhau theo tốc độ và âm giọng.",
+    "evidence": [
+      "các bức ảnh thường là các ma trận\nhoặc tensor với kích thước khác nhau",
+      "khi độ dài của các văn bản là khác nhau, thậm chí có những từ rất hiếm gặp hoặc\nkhông có trong từ điển"
+    ]
+  },
+  {
+    "id": "explain-08",
+    "type": "explain",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "Một hàm kernel cần có những tính chất nào?",
+    "history": [],
+    "expected_answer": "Hàm kernel phải đối xứng, tức k(x,z) = k(z,x) và về lý thuyết phải thỏa mãn điều kiện Mercer để bảo đảm hàm mục tiêu của bài toán đối ngẫu là lồi.",
+    "evidence": [
+      "Đối xứng:k(x,z) = k(z,x), vì tích vô hướng của hai vector có tính đối xứng.",
+      "Về lý thuyết, hàm kernel cần thỏa mãn điều kiện Mercer"
+    ]
+  },
+  {
+    "id": "explain-09",
+    "type": "explain",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "How does photosynthesis relate to cellular respiration?",
+    "history": [],
+    "expected_answer": "In general outline photosynthesis is the opposite of cellular respiration: photosynthesis reduces carbon dioxide to carbohydrates while cellular respiration oxidizes carbohydrates or other nutrients to carbon dioxide. They are distinct processes with different sequences of reactions and in different cellular compartments (respiration happens in mitochondria).",
+    "evidence": [
+      "In general outline, photosynthesis is the opposite of cellular respiration",
+      "Photosynthesis and cellular respiration are distinct processes, as they take place through different sequences of chemical reactions and in different cellular compartments"
+    ]
+  },
+  {
+    "id": "explain-10",
+    "type": "explain",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "What role did cyanobacteria and green algae play in producing oxygen over geological time?",
+    "history": [],
+    "expected_answer": "Cyanobacteria were the principal primary producers of oxygen throughout the Proterozoic Eon, and green algae joined them as major producers on continental shelves near its end.",
+    "evidence": [
+      "Cyanobacteria remained the principal primary producers of oxygen throughout the Proterozoic Eon",
+      "Green algae joined cyanobacteria as the major primary producers of oxygen on continental shelves near the end of the Proterozoic"
+    ]
+  },
+  {
+    "id": "explain-11",
+    "type": "explain",
+    "language": "en",
+    "split": "dev",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "What does the article say about the first photosynthetic organisms and about the oxygen that cyanobacteria produced?",
+    "history": [],
+    "expected_answer": "The first photosynthetic organisms probably used reducing agents such as hydrogen or hydrogen sulfide instead of water as sources of electrons; cyanobacteria appeared later and their excess oxygen contributed directly to the oxygenation of the Earth, which made the evolution of complex life possible.",
+    "evidence": [
+      "The first photosynthetic organisms probably evolved early in the evolutionary history of life using reducing agents such as hydrogen or hydrogen sulfide, rather than water, as sources of electrons.",
+      "the excess oxygen they produced contributed directly to the oxygenation of the Earth, which rendered the evolution of complex life possible."
+    ]
+  },
+  {
+    "id": "explain-12",
+    "type": "explain",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "How efficient is photosynthesis in plants, what happens to the light that is not converted, and how does it compare with solar panels?",
+    "history": [],
+    "expected_answer": "Plants usually convert light into chemical energy with an efficiency of 3-6% (0.1% to 8% depending on conditions); unconverted light is mostly dissipated as heat, with 1-2% reemitted as chlorophyll fluorescence. Mass-produced solar panels convert about 6-20% and laboratory devices above 40%.",
+    "evidence": [
+      "Plants usually convert light into chemical energy with a photosynthetic efficiency of 3–6%.",
+      "Absorbed light that is unconverted is dissipated primarily as heat",
+      "solar panels convert light into electric energy at an efficiency of approximately 6–20% for mass-produced panels"
+    ]
+  },
+  {
+    "id": "explain-13",
+    "type": "explain",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "Giữa thích nghi và giảm thiểu biến đổi khí hậu có những sự đánh đổi nào?",
+    "history": [],
+    "expected_answer": "Biện pháp thích nghi thường đem lại lợi ích trước mắt còn giảm thiểu có lợi ích lâu dài hơn. Sử dụng nhiều điều hòa không khí giúp ứng phó với nắng nóng tốt hơn nhưng làm tăng nhu cầu năng lượng, thiết kế đô thị nhỏ gọn giảm khí thải từ xây dựng và vận tải nhưng làm tăng hiệu ứng đảo nhiệt đô thị, còn năng suất lương thực tăng có lợi cho cả hai.",
+    "evidence": [
+      "Các biện pháp thích nghi thường đem lại lợi ích trước mắt trong khi giảm thiểu có lợi ích lâu dài hơn.",
+      "Sử dụng nhiều điều hòa không khí giúp con người ứng phó tốt hơn với nắng nóng nhưng lại làm tăng nhu cầu năng lượng."
+    ]
+  },
+  {
+    "id": "explain-14",
+    "type": "explain",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Theo bài viết, những phương pháp giảm thiểu biến đổi khí hậu nào đi kèm rủi ro cao hơn, và vì sao?",
+    "history": [],
+    "expected_answer": "Phương pháp loại bỏ carbon dioxide trên phạm vi phổ quát (các kịch bản giữ mức ấm lên 1,5 °C thường dự báo áp dụng nó trong thế kỷ 21) vì lo ngại phụ thuộc quá mức và tác động môi trường, và các cách quản trị bức xạ Mặt trời (SRM) vì làm nảy sinh vấn đề pháp lý và đạo đức, rủi ro cũng chưa được nắm tường tận.",
+    "evidence": [
+      "Những kịch bản hạn chế mức ấm lên là 1,5 °C thường dự báo việc áp dụng phương pháp loại bỏ carbon dioxide trên phạm vi phổ quát trong thế kỷ 21.",
+      "Các cách quản trị bức xạ Mặt trời (SRM) cũng được tìm tòi"
+    ]
+  },
+  {
+    "id": "explain-15",
+    "type": "explain",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Vì sao hoạt động của Mặt trời và núi lửa không giải thích được sự ấm lên gần đây?",
+    "history": [],
+    "expected_answer": "Các mô hình tự nhiên không mô phỏng được sự ấm lên nhanh nếu chỉ tính đến Mặt trời và núi lửa; lượng năng lượng Mặt trời đến Trái Đất không có chiều hướng gia tăng; và tầng đối lưu ấm lên trong khi tầng bình lưu lạnh đi, điều này chỉ ra nguyên nhân là khí nhà kính, vì nếu do Mặt trời thì cả hai tầng đều ấm lên.",
+    "evidence": [
+      "Lượng năng lượng Mặt trời đến Trái Đất không có chiều hướng gia tăng.",
+      "Nếu những biến động Mặt trời góp phần gây ra sự ấm lên đã quan sát thì kết quả dự kiến phải là cả tầng đối lưu và tầng bình lưu đều ấm lên chứ không như trường hợp thực tế."
+    ]
+  },
+  {
+    "id": "multihop-01",
+    "type": "multihop",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Why does lowering the number of bits used for an LLM's weights reduce memory, and by how much does an 8-bit variant of Phi-3 cut the memory needed compared with the original 16-bit variant?",
+    "history": [],
+    "expected_answer": "Weights are numeric values with a given precision; with fewer bits a value is less accurate but the memory the model needs is lower. The 8-bit variant of Phi-3 cuts the memory requirements almost in half compared with the original 16-bit variant.",
+    "evidence": [
+      "if we lower the\namount of bits to represent a value, we get a less accurate result. However, if we lower\nthe number of bits we also lower the memory requirements of that model.",
+      "we will use an\n8-bit variant of Phi-3 compared to the original 16-bit variant, cutting the memory\nrequirements almost in half."
+    ]
+  },
+  {
+    "id": "multihop-02",
+    "type": "multihop",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which decoding strategy corresponds to setting the temperature of an LLM to zero, and what do the temperature and top_p parameters control?",
+    "history": [],
+    "expected_answer": "Greedy decoding, which always chooses the highest scoring token, is what happens with temperature zero; the temperature and top_p parameters control the randomness of the output.",
+    "evidence": [
+      "Choosing the highest scoring token every time is called greedy decoding. It’s what\nhappens if you set the temperature parameter to zero in an LLM.",
+      "These parameters control the randomness of the output."
+    ]
+  },
+  {
+    "id": "multihop-03",
+    "type": "multihop",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "In the book's search example built on the Interstellar text, who wrote the screenplay, and which sentence got the highest BM25 score for the query 'how precise was the science'?",
+    "history": [],
+    "expected_answer": "Brothers Christopher and Jonathan Nolan wrote the screenplay. The top BM25 hit (score 1.789) is the sentence 'Interstellar is a 2014 epic science fiction film co-written, directed, and produced by Christopher Nolan'.",
+    "evidence": [
+      "Brothers Christopher and Jonathan Nolan wrote the screenplay",
+      "1.789 Interstellar is a 2014 epic science fiction film co-written, directed, \nand produced by Christopher Nolan"
+    ]
+  },
+  {
+    "id": "multihop-04",
+    "type": "multihop",
+    "language": "en",
+    "split": "dev",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "What are positional embeddings for, and how do rotary embeddings differ from the static absolute embeddings added at the beginning of the forward pass?",
+    "history": [],
+    "expected_answer": "They let the model keep track of the order of tokens in a sequence. Rotary embeddings encode both absolute and relative token position by rotating vectors in the embedding space, and they are added in the attention step instead of at the beginning of the forward pass.",
+    "evidence": [
+      "They enable the model to keep track of the order of tokens/words in a sequence/\nsentence",
+      "Instead of the static, absolute embeddings that are added in the beginning of the\nforward pass, rotary embeddings are a method to encode positional information in\na way that captures absolute and relative token position information."
+    ]
+  },
+  {
+    "id": "multihop-05",
+    "type": "multihop",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-edited",
+    "question": "Softmax regression mở rộng mô hình nào cho bài toán phân lớp nhiều lớp, và khi số lớp C bằng 2 thì nó trở thành gì?",
+    "history": [],
+    "expected_answer": "Softmax regression là một phương pháp mở rộng của logistic regression cho phân lớp đa lớp. Khi C = 2, softmax regression và logistic regression là giống nhau.",
+    "evidence": [
+      "một phương pháp mở\nrộng của logistic regression có tên làsoftmax regressionsẽ được giới thiệu",
+      "softmax regression và logistic regression là giống nhau"
+    ]
+  },
+  {
+    "id": "multihop-06",
+    "type": "multihop",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "MAP dựa trên những thông tin nào ngoài tập huấn luyện, và MLE liên hệ với MAP như thế nào khi prior là một phân phối đều?",
+    "history": [],
+    "expected_answer": "MAP còn dựa trên những thông tin biết trước (prior) của các tham số, không chỉ dựa trên tập huấn luyện như MLE. MLE là một trường hợp đặc biệt của MAP khi prior là một phân phối đều.",
+    "evidence": [
+      "Cách thứ hai không những dựa trên tập\nhuấn luyện mà còn dựa trên những thông tin biết trước của các tham số",
+      "MLE là một trường hợp đặc biệt của MAP khi prior là một phân phối đều."
+    ]
+  },
+  {
+    "id": "multihop-07",
+    "type": "multihop",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "Tập huấn luyện và tập kiểm thử dùng để làm gì, và validation set giúp chọn mô hình như thế nào?",
+    "history": [],
+    "expected_answer": "Tập huấn luyện dùng để tìm các tham số mô hình, tập kiểm thử dùng để đánh giá năng lực của mô hình tìm được. Validation set là phần tách ra từ dữ liệu huấn luyện, mô hình cho validation error nhỏ nhất sẽ là mô hình tốt.",
+    "evidence": [
+      "Tập huấn luyện\nsẽ được dùng để tìm các tham số mô hình. Tập kiểm thử được dùng để đánh giá năng lực\ncủa mô hình tìm được.",
+      "Mô hình chovalidation errornhỏ nhất sẽ là một mô hình tốt."
+    ]
+  },
+  {
+    "id": "multihop-08",
+    "type": "multihop",
+    "language": "vi",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Trong bài toán canh tác, các đường nét đứt trong hình minh họa nghiệm thể hiện điều gì, và level set được định nghĩa như thế nào?",
+    "history": [],
+    "expected_answer": "Các đường nét đứt là các đường đồng mức của hàm mục tiêu. Level set là vết cắt khi cắt bề mặt bởi một mặt phẳng song song với mặt phẳng 0xy.",
+    "evidence": [
+      "Các đường nét đứt thể hiện các đường\nđồng mức của hàm mục tiêu",
+      "mỗi đườnglevel set là một vết cắt nếu ta cắt các bề mặt bởi\nmột mặt phẳng song song với mặt phẳng0xy."
+    ]
+  },
+  {
+    "id": "multihop-09",
+    "type": "multihop",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which important crop plants are C4 plants, and how many plant species use CAM?",
+    "history": [],
+    "expected_answer": "Maize, sorghum, sugarcane and millet are important C4 crop plants, and CAM is used by 16,000 species of plants.",
+    "evidence": [
+      "Many important crop plants are C4 plants, including maize, sorghum, sugarcane, and millet",
+      "CAM is used by 16,000 species of plants."
+    ]
+  },
+  {
+    "id": "multihop-10",
+    "type": "multihop",
+    "language": "en",
+    "split": "dev",
+    "doc": "photosynthesis-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which scientists worked out the path of carbon assimilation, and what prize did Melvin Calvin receive for this work, and when?",
+    "history": [],
+    "expected_answer": "Melvin Calvin, Andrew Benson and James Bassham elucidated the path of carbon assimilation; Calvin was awarded the Nobel Prize in Chemistry in 1961.",
+    "evidence": [
+      "For that original and ground-breaking work, a Nobel Prize in Chemistry was awarded to Melvin Calvin in 1961.",
+      "Melvin Calvin and Andrew Benson, along with James Bassham, elucidated the path of carbon assimilation"
+    ]
+  },
+  {
+    "id": "multihop-11",
+    "type": "multihop",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Who first proposed the general equation of photosynthesis, and who proposed the term 'photosynthesis' itself, and in which year?",
+    "history": [],
+    "expected_answer": "Cornelis van Niel first proposed the general equation; the American botanist Charles Reid Barnes proposed the terms photosyntax and photosynthesis in 1893.",
+    "evidence": [
+      "The general equation for photosynthesis as first proposed by Cornelis van Niel is:",
+      "In 1893, the American botanist Charles Reid Barnes proposed two terms, photosyntax and photosynthesis"
+    ]
+  },
+  {
+    "id": "multihop-12",
+    "type": "multihop",
+    "language": "en",
+    "split": "dev",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which molecules made by the light-dependent reactions drive the Calvin cycle, and what are the simple carbon sugars it produces used for afterwards?",
+    "history": [],
+    "expected_answer": "ATP and NADPH drive the Calvin cycle. The simple carbon sugars are then used to form other organic compounds such as cellulose, precursors for lipid and amino acid biosynthesis, or as a fuel in cellular respiration.",
+    "evidence": [
+      "Using the ATP and NADPH produced by the light-dependent reactions, the resulting compounds are then reduced and removed to form further carbohydrates",
+      "The simple carbon sugars photosynthesis produces are then used to form other organic compounds, such as the building material cellulose, the precursors for lipid and amino acid biosynthesis, or as a fuel in cellular respiration."
+    ]
+  },
+  {
+    "id": "multihop-13",
+    "type": "multihop",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-edited",
+    "question": "Những tác động nào của biến đổi khí hậu sẽ còn kéo dài hàng thế kỷ ngay cả khi hạn chế được sự ấm lên, và vì sao đại dương bị acid hóa?",
+    "history": [],
+    "expected_answer": "Mực nước biển dâng, các đại dương ấm hơn và acid hóa đại dương. Đại dương bị acid hóa vì lượng CO2 hòa tan tăng.",
+    "evidence": [
+      "Điều này bao gồm mực nước biển dâng, các đại dương ấm hơn và acid hóa đại dương.",
+      "Lượng CO2 hòa tan tăng khiến đại dương bị acid hóa."
+    ]
+  },
+  {
+    "id": "multihop-14",
+    "type": "multihop",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "Nguyên nhân chính của biến đổi khí hậu hiện nay là gì, và khoảng bao nhiêu phần lượng CO2 con người phát thải đã được thực vật mặt đất và đại dương hấp thụ?",
+    "history": [],
+    "expected_answer": "Nguyên nhân chính là phát thải khí nhà kính, chủ yếu là CO2 và methane. Khoảng một nửa lượng CO2 con người phát thải đã được thực vật mặt đất và đại dương hấp thụ.",
+    "evidence": [
+      "Nguyên nhân chính đó là sự phát thải khí nhà kính",
+      "Khoảng một nửa lượng CO2 con người phát thải đã được thực vật mặt đất và đại dương hấp thụ."
+    ]
+  },
+  {
+    "id": "multihop-15",
+    "type": "multihop",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "Những khu vực nào chịu rủi ro lớn nhất từ biến đổi khí hậu, và những phương án thích nghi nào được nêu cho nông nghiệp?",
+    "history": [],
+    "expected_answer": "Những địa bàn vĩ độ thấp, kém phát triển chịu rủi ro lớn nhất. Trong nông nghiệp, có thể chuyển sang chế độ ăn phù hợp hơn, đa dạng hóa, kiểm soát xói mòn và cải thiện di truyền để chống chịu tốt hơn.",
+    "evidence": [
+      "những địa bàn vĩ độ thấp, kém phát triển đối diện rủi ro lớn nhất",
+      "Trong nông nghiệp, các phương án thích nghi bao gồm chuyển sang những chế độ ăn phù hợp hơn, đa dạng hóa, kiểm soát xói mòn và cải thiện về di truyền để chống chịu tốt hơn với khí hậu biến đổi."
+    ]
+  },
+  {
+    "id": "numeric-01",
+    "type": "numeric",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "How many parameters does Phi-3-mini have, and how much VRAM does the book say is enough to run it?",
+    "history": [],
+    "expected_answer": "Phi-3-mini has 3.8 billion parameters, which makes it suitable for devices with up to 8 GB of VRAM.",
+    "evidence": [
+      "So let’s continue using Phi-3-mini,\nwhich has 3.8 billion parameters. This makes it suitable for running with devices\nup to 8 GB of VRAM."
+    ]
+  },
+  {
+    "id": "numeric-02",
+    "type": "numeric",
+    "language": "en",
+    "split": "dev",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "On how many books was GPT-1 trained, and how many parameters did the resulting model have?",
+    "history": [],
+    "expected_answer": "GPT-1 was trained on a corpus of 7,000 books (together with Common Crawl) and had 117 million parameters.",
+    "evidence": [
+      "GPT-1 was trained on a corpus of 7,000 books and Common Crawl, a large dataset of\nweb pages. The resulting model consisted of 117 million parameters."
+    ]
+  },
+  {
+    "id": "numeric-03",
+    "type": "numeric",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "According to the book, about how many parameters can a single weight matrix of an LLM have?",
+    "history": [],
+    "expected_answer": "About 150 million parameters, and each Transformer block has its own version of such matrices.",
+    "evidence": [
+      "Only one\nof these may have 150 million parameters and each Transformer block would have its\nversion of these."
+    ]
+  },
+  {
+    "id": "numeric-04",
+    "type": "numeric",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Bộ cơ sở dữ liệu CIFAR10 gồm bao nhiêu ảnh, bao nhiêu lớp, và mỗi ảnh có kích thước bao nhiêu?",
+    "history": [],
+    "expected_answer": "CIFAR10 gồm 60000 ảnh thuộc 10 lớp dữ liệu, mỗi ảnh có kích thước 32×32 pixel.",
+    "evidence": [
+      "Bộ cơ sở dữ liệu CIFAR10 gồm 60000 ảnh khác nhau thuộc 10 lớp dữ liệu",
+      "Mỗi bức ảnh có kích thước32×32 pixel"
+    ]
+  },
+  {
+    "id": "numeric-05",
+    "type": "numeric",
+    "language": "vi",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Trong ví dụ gradient descent cho bài toán linear regression với learning rate bằng 1, thuật toán hội tụ sau bao nhiêu vòng lặp?",
+    "history": [],
+    "expected_answer": "Thuật toán hội tụ sau 49 vòng lặp, với nghiệm w = [3.99026984, 2.98702942].",
+    "evidence": [
+      "Sau 49 vòng lặp, thuật toán đã hội tụ với một nghiệm khá gần với nghiệm tìm được theo\nsklearn."
+    ]
+  },
+  {
+    "id": "numeric-06",
+    "type": "numeric",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Ma trận dữ liệu mnist.data trong ví dụ K-means có kích thước bao nhiêu, tức bao nhiêu mẫu và mỗi mẫu có kích thước bao nhiêu?",
+    "history": [],
+    "expected_answer": "Kích thước là (70000, 784): có 70000 mẫu và mỗi mẫu có kích thước 784.",
+    "evidence": [
+      "shape của ma trận dữ liệumnist.data là (70000, 784) tức có 70000 mẫu, mỗi mẫu có kích\nthước 784."
+    ]
+  },
+  {
+    "id": "numeric-07",
+    "type": "numeric",
+    "language": "en",
+    "split": "dev",
+    "doc": "photosynthesis-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "At what CO2 concentration did C3 and C4 plants show similar leaf photosynthetic rates, and about what rate was it?",
+    "history": [],
+    "expected_answer": "At 1000 ppm CO2 both C3 and C4 plants had similar leaf photosynthetic rates of around 60 μmol CO2·m−2·s−1.",
+    "evidence": [
+      "At 1000 ppm CO2 in measuring air, both the C3 and C4 plants had similar leaf photosynthetic rates around 60"
+    ]
+  },
+  {
+    "id": "numeric-08",
+    "type": "numeric",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-edited",
+    "question": "How old are the fossils thought to be filamentous photosynthetic organisms, and how old are the thylakoid membranes that give the first direct evidence of photosynthesis?",
+    "history": [],
+    "expected_answer": "The fossils have been dated at 3.4 billion years old. The thylakoid membranes preserved in cherts are 1.75 billion years old.",
+    "evidence": [
+      "Fossils of what are thought to be filamentous photosynthetic organisms have been dated at 3.4 billion years old.",
+      "thylakoid membranes preserved in 1.75-billion-year-old cherts"
+    ]
+  },
+  {
+    "id": "numeric-09",
+    "type": "numeric",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "How many organisms using oxygenic photosynthesis are known to rely on shortwave infrared or far-red radiation for the light-dependent reactions?",
+    "history": [],
+    "expected_answer": "At least three.",
+    "evidence": [
+      "although at least three use shortwave infrared or, more specifically, far-red radiation"
+    ]
+  },
+  {
+    "id": "numeric-10",
+    "type": "numeric",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "James Hansen điều trần trước Quốc hội năm nào, và Ủy ban Liên chính phủ về Biến đổi Khí hậu được thành lập năm nào?",
+    "history": [],
+    "expected_answer": "Cả hai đều vào năm 1988.",
+    "evidence": [
+      "Giới khoa học cảnh báo công chúng và nguy cơ được trình bày tại phiên chứng nhận trước Quốc hội của James Hansen năm 1988.",
+      "Ủy ban Liên chính phủ về Biến đổi Khí hậu được thành lập năm 1988"
+    ]
+  },
+  {
+    "id": "numeric-11",
+    "type": "numeric",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "Bể chứa bề mặt đất ước tính loại bỏ khoảng bao nhiêu phần trăm khí thải CO2 toàn cầu mỗi năm, và các đại dương đã hấp thu bao nhiêu trong hai thập kỷ qua?",
+    "history": [],
+    "expected_answer": "Bể chứa bề mặt đất loại bỏ khoảng 29% khí thải CO2 toàn cầu mỗi năm và các đại dương hấp thu 20 đến 30% khí thải CO2 trong hai thập kỷ qua.",
+    "evidence": [
+      "Bể chứa bề mặt đất ước tính loại bỏ khoảng 29% khí thải CO2 toàn cầu mỗi năm.",
+      "Trong hai thập kỷ vừa qua các đại dương trên Trái Đất đã hấp thu 20 đến 30% khí thải CO2."
+    ]
+  },
+  {
+    "id": "numeric-12",
+    "type": "numeric",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Nếu đạt được các mục tiêu của Hiệp định Paris, hạn chế ấm lên ở mức 2 °C có thể cứu khoảng bao nhiêu sinh mạng mỗi năm đến năm 2050?",
+    "history": [],
+    "expected_answer": "Khoảng một triệu sinh mạng mỗi năm cho đến năm 2050.",
+    "evidence": [
+      "hạn chế ấm lên ở mức 2 °C có thể cứu khoảng một triệu sinh mạng mỗi năm cho đến năm 2050"
+    ]
+  },
+  {
+    "id": "compare-list-01",
+    "type": "compare_list",
+    "language": "en",
+    "split": "dev",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "What two masking methods does the book mention for masked language modeling, and how do they differ?",
+    "history": [],
+    "expected_answer": "Token masking and whole-word masking. With token masking, 15% of the tokens in a sentence are randomly masked, so part of a word may be masked; whole-word masking masks the entire word.",
+    "evidence": [
+      "There are two methods that are generally used for this: token and whole-word\nmasking. With token masking, we randomly mask 15% of the tokens in a sentence.\nIt might happen that part of a word will be masked. To enable masking of the entire\nword, we could apply whole-word masking"
+    ]
+  },
+  {
+    "id": "compare-list-02",
+    "type": "compare_list",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "How do ConversationBufferMemory and ConversationBufferWindowMemory differ in how they deal with a growing chat history?",
+    "history": [],
+    "expected_answer": "ConversationBufferMemory keeps the whole conversation, which grows and slowly approaches the token limit; ConversationBufferWindowMemory resolves the token-limit issue to an extent but retains only the last k conversations.",
+    "evidence": [
+      "when using Conversation\nBufferMemory, the conversation starts to increase in size and will slowly approach\nyour token limit. Although ConversationBufferWindowMemory resolves the issue of\ntoken limits to an extent, only the last k conversations are retained."
+    ]
+  },
+  {
+    "id": "compare-list-03",
+    "type": "compare_list",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "How is a confusion matrix built from correct and incorrect predictions?",
+    "history": [],
+    "expected_answer": "It has four combinations, depending on whether a prediction is correct (True) or incorrect (False) and on whether the predicted class is the correct class (Positive) or the incorrect class (Negative).",
+    "evidence": [
+      "There are four combinations depending\non whether we predict something correctly (True) versus incorrectly (False) and\nwhether we predict the correct class (Positive) versus incorrect class (Negative)."
+    ]
+  },
+  {
+    "id": "compare-list-04",
+    "type": "compare_list",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Vì sao cách tính đạo hàm numerical không được dùng để tính đạo hàm, dù cho giá trị khá chính xác?",
+    "history": [],
+    "expected_answer": "Vì độ phức tạp quá cao so với cách tính trực tiếp: tại mỗi thành phần phải tính giá trị của hàm số ở phía trái và phía phải, nên không khả thi với các ma trận lớn.",
+    "evidence": [
+      "Cách tính xấp xỉ đạo hàm theo phương phápnumerical thường cho giá trị khá chính xác.\nTuy nhiên, cách này không được sử dụng để tính đạo hàm vì độ phức tạp quá cao so với\ncách tính trực tiếp."
+    ]
+  },
+  {
+    "id": "compare-list-05",
+    "type": "compare_list",
+    "language": "vi",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "Trong bộ dữ liệu MovieLens của ví dụ, file u.data chứa gì và các file ua.base, ua.test, ub.base, ub.test dùng để làm gì?",
+    "history": [],
+    "expected_answer": "u.data chứa toàn bộ các đánh giá của 943 người dùng cho 1682 bộ phim. Còn ua.base, ua.test, ub.base, ub.test là hai cách chia toàn bộ dữ liệu thành hai tập con, một cho huấn luyện và một cho kiểm thử.",
+    "evidence": [
+      "u.data: Chứa toàn bộ các đánh giá của 943 người dùng cho 1682 bộ phim.",
+      "ua.base, ua.test, ub.base, ub.test: là hai cách chia toàn bộ dữ liệu ra thành hai tập con,\nmột cho huấn luyện, một cho kiểm thử."
+    ]
+  },
+  {
+    "id": "compare-list-06",
+    "type": "compare_list",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Việc tính giá trị hàm mất mát và đạo hàm của nó gồm những bước nào theo thứ tự?",
+    "history": [],
+    "expected_answer": "Bước thứ nhất là đảm bảo các tính toán chính xác, dù cách tính có thể rất chậm; bước thứ hai là đảm bảo có một cách tính hiệu quả để thuật toán chạy nhanh hơn.",
+    "evidence": [
+      "Bước thứ nhất là đảm bảo rằng các tính toán làchính xác, dù cách\ntính có thể rất chậm. Bước thứ hai, ta phải đảm bảo có một cách tínhhiệu quả để thuật\ntoán chạy nhanh hơn."
+    ]
+  },
+  {
+    "id": "compare-list-07",
+    "type": "compare_list",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "What are the steps of the light-dependent reactions, from the electron lost by chlorophyll to the formation of NADPH and ATP?",
+    "history": [],
+    "expected_answer": "A chlorophyll molecule absorbs one photon and loses one electron; pheophytin takes it up and passes it to a quinone molecule, starting an electron transport chain that ends with the reduction of NADP to NADPH. This also creates a proton gradient across the chloroplast membrane, used by ATP synthase to make ATP, and chlorophyll regains its electron when a water molecule is split (photolysis), releasing oxygen.",
+    "evidence": [
+      "one molecule of the pigment chlorophyll absorbs one photon and loses one electron. This electron is taken up by a modified form of chlorophyll called pheophytin, which passes the electron to a quinone molecule, starting the flow of electrons down an electron transport chain that leads to the ultimate reduction of NADP to NADPH.",
+      "this creates a proton gradient (energy gradient) across the chloroplast membrane, which is used by ATP synthase in the synthesis of ATP"
+    ]
+  },
+  {
+    "id": "compare-list-08",
+    "type": "compare_list",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "How does the movement of the electron toward the photo center combine quantum and classical motion, and why is the quantum part limited?",
+    "history": [],
+    "expected_answer": "The movement is covered in a series of conventional hops and quantum walks. Quantum walking happens at temperatures far higher than quantum phenomena usually occur, so it is only possible over very short distances; destructive interference makes the particle lose its wave properties until it is freed by a classic hop.",
+    "evidence": [
+      "The movement of the electron towards the photo center is therefore covered in a series of conventional hops and quantum walks.",
+      "it is only possible over very short distances"
+    ]
+  },
+  {
+    "id": "compare-list-09",
+    "type": "compare_list",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Các chiến lược giảm nhu cầu năng lượng khác nhau thế nào giữa vận tải, công nghiệp và xây dựng?",
+    "history": [],
+    "expected_answer": "Vận tải: chuyển hành khách và hàng hóa sang phương thức hiệu quả hơn như xe buýt, xe lửa, hay dùng nhiều xe điện hơn. Công nghiệp: tăng hiệu quả năng lượng của động cơ và hệ thống sưởi, thiết kế sản phẩm tiết kiệm năng lượng, tăng tuổi thọ sản phẩm. Xây dựng: thiết kế tòa nhà mới tốt hơn và trang bị công nghệ hiệu quả hơn cho công trình hiện có.",
+    "evidence": [
+      "Trong vận tải, lợi nhuận có thể thu được bằng cách chuyển hành khách và hàng hóa sang những phương thức di chuyển hiệu quả hơn như xe buýt và xe lửa, hay tăng cường sử dụng xe điện.",
+      "Chiến lược công nghiệp nhằm làm giảm nhu cầu năng lượng bao gồm gia tăng hiệu quả năng lượng của động cơ và hệ thống sưởi, thiết kế những sản phẩm tiết kiệm năng lượng, gia tăng tuổi thọ sản phẩm.",
+      "Trong xây dựng trọng tâm là thiết kế những tòa nhà mới tốt hơn và trang bị thêm công nghệ có mức hiệu quả năng lượng cao hơn cho công trình hiện có."
+    ]
+  },
+  {
+    "id": "compare-list-10",
+    "type": "compare_list",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Nhiệt độ tăng gây ra những hiện tượng nào trên đất liền và ở vùng Bắc cực?",
+    "history": [],
+    "expected_answer": "Trên đất liền nhiệt độ tăng nhanh gấp hai lần mức trung bình toàn cầu, diện tích sa mạc mở rộng, các đợt nóng và cháy rừng xảy ra thường xuyên hơn. Ở vùng Bắc cực các tầng băng vĩnh cửu tan, sông băng lùi dần và diện tích băng phủ bề mặt biển giảm.",
+    "evidence": [
+      "Trên đất liền, nhiệt độ tăng nhanh gấp hai lần so với trung bình toàn cầu.",
+      "Nhiệt độ tăng ở vùng Bắc cực đã làm các tầng băng vĩnh cửu tan, sông băng lùi dần và giảm diện tích băng phủ bề mặt biển."
+    ]
+  },
+  {
+    "id": "paraphrase-01",
     "type": "paraphrase",
     "language": "en",
     "split": "dev",
-    "question": "What kind of numeric vector does a model assign to a word so that words appearing in similar surroundings end up close together?",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "What property of the early sequence-to-sequence translation networks makes every new word depend on all the words generated before it?",
     "history": [],
-    "expected_answer": "An embedding (as learned by word2vec): if two words tend to have the same neighbors, their embeddings will be closer to one another.",
+    "expected_answer": "They are autoregressive: when generating the next word the architecture needs to consume all previously generated words.",
     "evidence": [
-      "If the two words tend to have the same neighbors, their embeddings will be closer"
+      "Each step in this architecture is autoregressive. When generating the next word,\nthis architecture needs to consume all previously generated words"
     ]
   },
   {
-    "id": "paraphrase-en-02",
+    "id": "paraphrase-02",
+    "type": "paraphrase",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Why does the book advise starting from an already trained embedding model instead of building one from nothing when you want embeddings tuned to your own data?",
+    "history": [],
+    "expected_answer": "Building an embedding model from scratch can be quite costly and time-consuming, while the sentence-transformers framework allows nearly all embedding models to be used as a base for fine-tuning.",
+    "evidence": [
+      "This process can be quite costly and time-consuming.",
+      "the sentence-transformers framework allows nearly all embedding models\nto be used as a base for fine-tuning"
+    ]
+  },
+  {
+    "id": "paraphrase-03",
+    "type": "paraphrase",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "What is the purpose of connecting a text-generating model to a search component?",
+    "history": [],
+    "expected_answer": "To reduce hallucinations, increase factuality, and/or ground the generation model on a specific dataset.",
+    "evidence": [
+      "text generation systems that incorporate search\ncapabilities to reduce hallucinations, increase factuality, and/or ground the"
+    ]
+  },
+  {
+    "id": "paraphrase-04",
+    "type": "paraphrase",
+    "language": "vi",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Theo định nghĩa không chính thức, một tập hợp thỏa mãn điều kiện gì về đoạn thẳng nối hai điểm thì được coi là lồi?",
+    "history": [],
+    "expected_answer": "Mọi điểm trên đoạn thẳng nối hai điểm bất kỳ trong tập hợp đó đều thuộc tập hợp đó.",
+    "evidence": [
+      "Một tập hợp được gọi làtập lồi nếu mọi\nđiểm trên đoạn thẳng nối hai điểmbất kỳ trong tập hợp hợp đó đều thuộc tập hợp đó."
+    ]
+  },
+  {
+    "id": "paraphrase-05",
+    "type": "paraphrase",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Vì sao tính đạo hàm xấp xỉ bằng cách lấy chênh lệch ở cả hai phía của điểm lại tốt hơn chỉ lấy một phía?",
+    "history": [],
+    "expected_answer": "Vì khi hàm số bị bẻ cong mạnh, xấp xỉ trái và phải khác nhau rất nhiều, còn xấp xỉ hai bên ổn định hơn, nên xấp xỉ đạo hàm hai phía là xấp xỉ tốt hơn.",
+    "evidence": [
+      "xấp xỉ trái và phải sẽ khác nhau rất nhiều",
+      "Từ đó ta thấy rằng xấp xỉ đạo hàm hai phía là xấp xỉ tốt hơn."
+    ]
+  },
+  {
+    "id": "paraphrase-06",
+    "type": "paraphrase",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Tên gọi của hiện tượng trong đó một phần nhỏ sản phẩm tạo ra phần lớn doanh số còn rất nhiều sản phẩm ít phổ biến chỉ đóng góp một chút là gì?",
+    "history": [],
+    "expected_answer": "Đó là long tail phenomenon, tức phần đuôi dài của những sản phẩm ít phổ biến.",
+    "evidence": [
+      "Hiện tượng này còn được gọi làlong tail phenomenon"
+    ]
+  },
+  {
+    "id": "paraphrase-07",
+    "type": "paraphrase",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "When did the ability to split water for photosynthesis arise, and in which group of organisms?",
+    "history": [],
+    "expected_answer": "It evolved once, in a common ancestor of the extant cyanobacteria, at least 2450-2320 million years ago.",
+    "evidence": [
+      "The biochemical capacity to use water as the source for electrons in photosynthesis evolved once, in a common ancestor of extant cyanobacteria",
+      "at least 2450–2320 million years ago (Ma)"
+    ]
+  },
+  {
+    "id": "paraphrase-08",
+    "type": "paraphrase",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "After an electron has entered photosystem I, what is the energy that it hands over along the chain of acceptors used for, and where does the electron end up?",
+    "history": [],
+    "expected_answer": "The energy is used to move hydrogen ions across the thylakoid membrane into the lumen, and the electron is eventually used to reduce the coenzyme NADP with an H+ to NADPH.",
+    "evidence": [
+      "The energy delivered to the electron acceptors is used to move hydrogen ions across the thylakoid membrane into the lumen.",
+      "The electron is eventually used to reduce the coenzyme NADP with an H+ to NADPH"
+    ]
+  },
+  {
+    "id": "paraphrase-09",
     "type": "paraphrase",
     "language": "en",
     "split": "dev",
-    "question": "What single fixed summary of the whole input sentence caused trouble for long sentences in the early encoder-decoder networks?",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which five-carbon sugar takes up carbon dioxide during carbon fixation, and what does it turn into?",
     "history": [],
-    "expected_answer": "The context embedding: it is merely a single embedding representing the entire input, which makes it difficult to deal with longer sentences.",
+    "expected_answer": "Ribulose 1,5-bisphosphate combines with carbon dioxide to yield two molecules of the three-carbon compound glycerate 3-phosphate (3-phosphoglycerate).",
     "evidence": [
-      "makes it difficult to deal with longer sentences since it is merely a single embedding representing the entire input"
+      "carbon dioxide combines with a five-carbon sugar, ribulose 1,5-bisphosphate, to yield two molecules of a three-carbon compound, glycerate 3-phosphate"
     ]
   },
   {
-    "id": "distractor-en-01",
+    "id": "paraphrase-10",
+    "type": "paraphrase",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Việc thay đổi lớp phủ thực vật của một khu vực ảnh hưởng đến nhiệt độ khu vực đó qua những yếu tố nào?",
+    "history": [],
+    "expected_answer": "Qua sự thay đổi về lượng ánh sáng phản chiếu vào không gian và nhiệt mất đi do bay hơi.",
+    "evidence": [
+      "nhiệt độ khu vực đó sẽ bị ảnh hưởng bởi sự thay đổi về lượng ánh sáng phản chiếu vào không gian và nhiệt mất đi do bay hơi"
+    ]
+  },
+  {
+    "id": "paraphrase-11",
+    "type": "paraphrase",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Con người có thể giúp các hệ sinh thái thích ứng với khí hậu thay đổi bằng cách nào?",
+    "history": [],
+    "expected_answer": "Giúp các hệ sinh thái kết nối với nhau hơn để các loài dịch chuyển đến nơi có khí hậu phù hợp và tái định cư, đồng thời bảo vệ và khôi phục các khu vực tự nhiên hay bán tự nhiên để tạo cơ hội phục hồi.",
+    "evidence": [
+      "Phản ứng có thể xảy ra là các hệ sinh thái kết nối với nhau hơn, cho phép các loài dịch chuyển đến những nơi có khí hậu phù hợp hơn và tái định cư.",
+      "Việc bảo vệ và khôi phục những khu vực tự nhiên hay bán tự nhiên mang đến cơ hội phục hồi"
+    ]
+  },
+  {
+    "id": "paraphrase-12",
+    "type": "paraphrase",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Việc dùng năng lượng sạch đem lại lợi ích nào cho sức khỏe con người thấy ngay, không phải đợi tương lai?",
+    "history": [],
+    "expected_answer": "Làm giảm số người chết do ô nhiễm không khí, ước tính là 7 triệu mỗi năm vào năm 2016.",
+    "evidence": [
+      "có lợi ích thấy ngay là làm giảm con số người chết do ô nhiễm không khí mà ước tính là 7 triệu mỗi năm vào năm 2016"
+    ]
+  },
+  {
+    "id": "distractor-01",
     "type": "distractor",
     "language": "en",
     "split": "dev",
-    "question": "Around which decade did bag-of-words become popular, as opposed to when it was first mentioned?",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "In the book's zero-shot classification with embeddings, how is a label assigned to a document?",
     "history": [],
-    "expected_answer": "Bag-of-words became popular around the 2000s (it was first mentioned around the 1950s).",
+    "expected_answer": "The embeddings of the document and of the label descriptions are compared with cosine similarity, and the label with the highest similarity to the document is chosen.",
     "evidence": [
-      "became popular around the 2000s"
+      "To assign labels to documents, we can apply cosine similarity to the document label\npairs."
     ]
   },
   {
-    "id": "distractor-en-02",
-    "type": "distractor",
-    "language": "en",
-    "split": "dev",
-    "question": "In which chapter does the book say retrieval-augmented generation is covered, and in which chapters are classification and clustering covered?",
-    "history": [],
-    "expected_answer": "Semantic search and retrieval-augmented generation are covered in Chapter 8; classification in Chapter 4 and clustering in Chapter 5.",
-    "evidence": [
-      "classification (see Chapter 4), clustering (see Chapter 5), and semantic search and retrieval-augmented generation (see Chapter 8)"
-    ]
-  },
-  {
-    "id": "distractor-en-03",
+    "id": "distractor-02",
     "type": "distractor",
     "language": "en",
     "split": "test",
-    "question": "Where does the book say it will go in depth about tokenization, and where does it say it will take its first deep dive into token embeddings?",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "What do you have to specify for the model to apply a JSON grammar so that its output adheres to the JSON format?",
     "history": [],
-    "expected_answer": "It goes in depth about tokenization in the next chapter (Chapter 2), and Chapter 2 is also where it takes its first deep dive into token embeddings.",
+    "expected_answer": "Specify the response_format as a JSON object; under the hood a JSON grammar is applied to make sure the output adheres to that format.",
     "evidence": [
-      "go in depth about tokenization",
-      "In Chapter 2, we will take our first deep dive into token embeddings"
+      "we only need to specify the\nresponse_format as a JSON object."
     ]
   },
   {
-    "id": "paraphrase-vi-01",
-    "type": "paraphrase",
-    "language": "vi",
-    "split": "dev",
-    "question": "Có cách nào giải hệ phương trình có ma trận hệ số dạng tam giác mà không cần tính ma trận nghịch đảo không?",
+    "id": "distractor-03",
+    "type": "distractor",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "How is the representation learned by the Q-Former used by the LLM in BLIP-2?",
     "history": [],
-    "expected_answer": "Có. Giải x_n từ phương trình cuối cùng, thay vào phương trình gần cuối để tìm x_{n-1}, và tiếp tục như vậy; quá trình giải từ cuối lên đầu này gọi là back substitution và có chi phí tính toán thấp.",
+    "expected_answer": "It is used as a soft prompt to the LLM, so the LLM receives information about the image similarly to the context provided in a prompt.",
     "evidence": [
-      "quá trình tính ma trận nghịch đảo thường tốn khá nhiều thời gian"
+      "which can be used\nas a soft prompt to the LLM."
     ]
   },
   {
-    "id": "paraphrase-vi-02",
-    "type": "paraphrase",
-    "language": "vi",
-    "split": "dev",
-    "question": "Với ma trận vuông A, khi nào phương trình Ax = b chắc chắn có nghiệm duy nhất với mọi b, và nghiệm đó viết thế nào?",
-    "history": [],
-    "expected_answer": "Khi A khả nghịch thì phương trình Ax = b có nghiệm duy nhất x = A^-1 b, với mọi vector b.",
-    "evidence": [
-      "có nghiệm duy nhất làx"
-    ]
-  },
-  {
-    "id": "distractor-vi-01",
+    "id": "distractor-04",
     "type": "distractor",
     "language": "vi",
     "split": "dev",
-    "question": "Trị riêng của ma trận xác định dương khác gì so với trị riêng của ma trận đối xứng nói chung?",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Trong bài toán canh tác giải bằng CVXOPT, vì sao hàm mục tiêu được đổi sang dạng −5x−3y?",
     "history": [],
-    "expected_answer": "Ma trận đối xứng (Hermitian) có mọi trị riêng là số thực, còn mọi trị riêng của ma trận xác định dương đều là số thực dương.",
+    "expected_answer": "Vì bài toán cần tìm giá trị lớn nhất nên phải đổi hàm mục tiêu về dạng −5x−3y, do đó c = matrix([−5., −3.]).",
     "evidence": [
-      "Mọi trị riêng của một ma trận xác định dương đều là một số thực dương",
-      "tất cả các trị riêng của nó đều là các số thực"
+      "Trong bài toán của chúng ta, vì ta cần tìm giá trị lớn nhất nên ta phải đổi hàm mục tiêu\nvề dạng−5x−3y."
     ]
   },
   {
-    "id": "distractor-vi-02",
-    "type": "distractor",
-    "language": "vi",
-    "split": "dev",
-    "question": "Chuẩn ℓ2 khác chuẩn ℓ1 thế nào về công thức và cách diễn giải khoảng cách?",
-    "history": [],
-    "expected_answer": "ℓ2 norm (độ dài Euclid) là căn bậc hai của tổng bình phương các phần tử, tương ứng đường chim bay giữa hai điểm; bình phương của nó chính là tích vô hướng x^T x. ℓ1 norm là tổng các trị tuyệt đối của các phần tử, diễn giải như đường đi trong thành phố có đường phố hình bàn cờ.",
-    "evidence": [
-      "chính là tích vô hướng của một vector với chính nó",
-      "tổng các trị tuyệt đối"
-    ]
-  },
-  {
-    "id": "distractor-vi-03",
+    "id": "distractor-05",
     "type": "distractor",
     "language": "vi",
     "split": "test",
-    "question": "Theo mục về chuẩn, để xác định khoảng cách giữa hai vector y và z người ta làm thế nào?",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Trong ví dụ KNN với Iris flower dataset, bao nhiêu mẫu được chọn làm test set và bao nhiêu mẫu làm training set?",
     "history": [],
-    "expected_answer": "Người ta thường áp dụng một hàm số (norm) lên vector hiệu x = y - z.",
+    "expected_answer": "130 mẫu được chọn ngẫu nhiên làm test set và 20 mẫu còn lại làm training set.",
     "evidence": [
-      "người ta thường áp dụng một hàm số lên vector hiệu"
+      "chọn ra ngẫu nhiên 130 mẫu làm test set, 20 mẫu\ncòn lại được dùng làm training set."
+    ]
+  },
+  {
+    "id": "distractor-06",
+    "type": "distractor",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Laplace smoothing giải quyết hạn chế nào của cách tính xác suất trong Naive Bayes, và hệ số α thường bằng bao nhiêu?",
+    "history": [],
+    "expected_answer": "Nếu một từ mới chưa bao giờ xuất hiện trong class thì xác suất bằng không làm vế phải bằng không; Laplace smoothing cộng α vào tử số (và dα vào mẫu số), với α là số dương thường bằng 1.",
+    "evidence": [
+      "Cách tính này có một hạn chế là nếu có một từ mới chưa bao giờ xuất hiện trong classc\nthì biểu thức (11.7) sẽ bằng không",
+      "với α là một số dương, thường bằng 1, để tránh trường hợp tử số bằng không."
+    ]
+  },
+  {
+    "id": "distractor-07",
+    "type": "distractor",
+    "language": "en",
+    "split": "dev",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "How many chloroplasts does a typical plant cell contain, and what is the aqueous fluid enclosed by the chloroplast membrane called?",
+    "history": [],
+    "expected_answer": "A typical plant cell contains about 10 to 100 chloroplasts, and the fluid enclosed by the membrane is called the stroma.",
+    "evidence": [
+      "A typical plant cell contains about 10 to 100 chloroplasts.",
+      "Enclosed by the membrane is an aqueous fluid called the stroma."
+    ]
+  },
+  {
+    "id": "distractor-08",
+    "type": "distractor",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "What catalyzes the oxidation of water in photosystem II, and which ions does it contain?",
+    "history": [],
+    "expected_answer": "A redox-active structure, the oxygen-evolving complex, which contains four manganese ions and a calcium ion and binds two water molecules.",
+    "evidence": [
+      "The oxidation of water is catalyzed in photosystem II by a redox-active structure that contains four manganese ions and a calcium ion"
+    ]
+  },
+  {
+    "id": "distractor-09",
+    "type": "distractor",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-edited",
+    "question": "Ví dụ nào được nêu cho điểm tới hạn trong hệ thống khí hậu, và mức ấm lên nào có thể làm phiến băng tan chảy?",
+    "history": [],
+    "expected_answer": "Sự sụp đổ của phiến băng Greenland và Tây Nam Cực với mức nhiệt tăng 1,5 đến 2,0 °C có thể làm phiến băng tan chảy.",
+    "evidence": [
+      "Một ví dụ là sự sụp đổ phiến băng Greenland và Tây Nam Cực, những nơi mà nhiệt độ tăng 1,5 đến 2,0 °C (2,7 đến 3,6 °F) có thể làm phiến băng tan chảy"
+    ]
+  },
+  {
+    "id": "distractor-10",
+    "type": "distractor",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Các phản hồi củng cố chính và phản hồi cân bằng chính đối với sự gia tăng nhiệt độ bề mặt là gì?",
+    "history": [],
+    "expected_answer": "Phản hồi củng cố chính là phản hồi hơi nước, phản hồi băng–suất phản chiếu và có thể là hiệu ứng ròng của mây; phản hồi cân bằng chính là làm mát bức xạ, tức nhiệt thoát vào không gian dưới dạng bức xạ hồng ngoại.",
+    "evidence": [
+      "Các phản hồi củng cố chính là phản hồi hơi nước, phản hồi băng–suất phản chiếu và có thể là hiệu ứng ròng của mây.",
+      "Trong khi phản hồi cân bằng chính đối với sự gia tăng nhiệt độ bề mặt là làm mát bức xạ"
+    ]
+  },
+  {
+    "id": "follow-up-01",
+    "type": "follow_up",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Does that approach have any downsides?",
+    "history": [
+      [
+        "human",
+        "Why does the book prefer open source LLMs over proprietary ones?"
+      ],
+      [
+        "ai",
+        "With an open source model you have complete control: you can use it without depending on an API connection, fine-tune it, and run sensitive data through it."
+      ]
+    ],
+    "expected_answer": "Yes: you need powerful hardware to run these models, and even more when training or fine-tuning them, and it requires specific knowledge to set up and use them.",
+    "evidence": [
+      "A downside is that you need powerful hardware to run these models and even more\nwhen training or fine-tuning them. Moreover, it requires specific knowledge to set up\nand use these models"
+    ]
+  },
+  {
+    "id": "follow-up-02",
+    "type": "follow_up",
+    "language": "en",
+    "split": "dev",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "What does it take as input and what does it produce?",
+    "history": [
+      [
+        "human",
+        "In the book's story-generation example, what is the first component of the chain?"
+      ],
+      [
+        "ai",
+        "The first component is the one that writes the title of the story."
+      ]
+    ],
+    "expected_answer": "It takes the \"summary\" variable as its input variable and produces \"title\" as the output; it is the only component that requires some input from the user.",
+    "evidence": [
+      "This first link is the only component that requires some input from the user. We\ndefine the template and use the \"summary\" variable as the input variable and \"title\"\nas the output."
+    ]
+  },
+  {
+    "id": "follow-up-03",
+    "type": "follow_up",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "How many problems does it contain?",
+    "history": [
+      [
+        "human",
+        "Which public benchmark does the book use to evaluate generated code?"
+      ],
+      [
+        "ai",
+        "The HumanEval benchmark."
+      ]
+    ],
+    "expected_answer": "It contains 164 programming problems.",
+    "evidence": [
+      "HumanEval The HumanEval benchmark is used for evaluating generated code based on 164\nprogramming problems."
+    ]
+  },
+  {
+    "id": "follow-up-04",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Còn hàm lõm thì được định nghĩa thế nào?",
+    "history": [
+      [
+        "human",
+        "Hàm lồi là gì?"
+      ],
+      [
+        "ai",
+        "Một hàm số f được gọi là hàm lồi nếu miền xác định của nó là một tập lồi và đoạn thẳng nối hai điểm bất kỳ trên đồ thị không nằm dưới đồ thị đó."
+      ]
+    ],
+    "expected_answer": "Một hàm số f được gọi là concave (lõm) nếu −f là convex.",
+    "evidence": [
+      "Một hàm sốf được gọi làconcave(tạm dịch làlõm) nếu−f là convex."
+    ]
+  },
+  {
+    "id": "follow-up-05",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Nếu dữ liệu chỉ gần linearly separable thì nó gặp vấn đề gì?",
+    "history": [
+      [
+        "human",
+        "PLA đòi hỏi dữ liệu phải thoả mãn điều kiện gì?"
+      ],
+      [
+        "ai",
+        "PLA đòi hỏi hai lớp dữ liệu phải linearly separable."
+      ]
+    ],
+    "expected_answer": "PLA không hội tụ, tức không bao giờ dừng lại, vì với mọi đường thẳng ranh giới luôn có ít nhất hai điểm bị phân lớp lỗi; đây là một nhược điểm lớn của PLA.",
+    "evidence": [
+      "PLA sẽ không làm việc, tức không bao giờ dừng lại, trong trường hợp này vì\nvới mọi đường thẳng ranh giới, luôn có ít nhất hai điểm bị phân lớp lỗi.",
+      "Việc không hội tụ với dữ liệugần linearly\nseparable chính là một nhược điểm lớn của PLA."
+    ]
+  },
+  {
+    "id": "follow-up-06",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Còn khi dự đoán cho chiều cao 160cm thì kết quả ra sao?",
+    "history": [
+      [
+        "human",
+        "Trong ví dụ linear regression về chiều cao và cân nặng, mô hình hoạt động thế nào trên tập huấn luyện?"
+      ],
+      [
+        "ai",
+        "Các điểm dữ liệu nằm khá gần đường thẳng dự đoán nên mô hình hoạt động tốt với tập huấn luyện."
+      ]
+    ],
+    "expected_answer": "Với đầu vào 160cm, cân nặng thực là 56kg và mô hình dự đoán 55.74kg.",
+    "evidence": [
+      "Input 160cm, true output 56kg, predicted output 55.74kg"
+    ]
+  },
+  {
+    "id": "follow-up-07",
+    "type": "follow_up",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "What happens when the carbon dioxide concentration is low?",
+    "history": [
+      [
+        "human",
+        "Which enzyme captures carbon dioxide in the light-independent reactions?"
+      ],
+      [
+        "ai",
+        "RuBisCO captures carbon dioxide in the light-independent reactions."
+      ]
+    ],
+    "expected_answer": "RuBisCO binds oxygen instead of carbon dioxide; this process, called photorespiration, uses energy but does not produce sugars.",
+    "evidence": [
+      "if the carbon dioxide concentration is low, RuBisCO will bind oxygen instead of carbon dioxide. This process, called photorespiration, uses energy, but does not produce sugars."
+    ]
+  },
+  {
+    "id": "follow-up-08",
+    "type": "follow_up",
+    "language": "en",
+    "split": "dev",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "How does it travel to the reaction center?",
+    "history": [
+      [
+        "human",
+        "What happens to a photon when a chromophore absorbs it?"
+      ],
+      [
+        "ai",
+        "It is converted into a quasiparticle called an exciton."
+      ]
+    ],
+    "expected_answer": "The exciton jumps from chromophore to chromophore towards the reaction center, and its wave properties let it cover a wider area and try several paths simultaneously to choose the most efficient route.",
+    "evidence": [
+      "which jumps from chromophore to chromophore towards the reaction center of the photocomplex",
+      "The exciton's wave properties enable it to cover a wider area and try out several possible paths simultaneously"
+    ]
+  },
+  {
+    "id": "follow-up-09",
+    "type": "follow_up",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "Which pigments do plants use for that?",
+    "history": [
+      [
+        "human",
+        "What starts the light-dependent reactions of photosynthesis?"
+      ],
+      [
+        "ai",
+        "They begin when light energy is absorbed by the reaction centers, proteins that contain photosynthetic pigments."
+      ]
+    ],
+    "expected_answer": "Plants use chlorophylls (a porphyrin derivative that absorbs the red and blue spectra of light and thus reflects green) held inside chloroplasts.",
+    "evidence": [
+      "In plants, these pigments are chlorophylls (a porphyrin derivative that absorbs the red and blue spectra of light, thus reflecting green) held inside chloroplasts"
+    ]
+  },
+  {
+    "id": "follow-up-10",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-edited",
+    "question": "Ông công bố vào năm nào và tính ra điều gì khi lượng CO2 tăng gấp đôi?",
+    "history": [
+      [
+        "human",
+        "Ai công bố mô hình khí hậu đầu tiên về tác động của CO2 lên nhiệt độ?"
+      ],
+      [
+        "ai",
+        "Svante Arrhenius là người công bố mô hình khí hậu đầu tiên về hiện tượng này."
+      ]
+    ],
+    "expected_answer": "Ông công bố năm 1896 và tính rằng nếu gấp đôi lượng CO2 thì nhiệt độ sẽ tăng cỡ 5–6 °C (9,0–10,8 °F).",
+    "evidence": [
+      "Vào năm 1896, ông công bố mô hình khí hậu đầu tiên về hiện tượng này",
+      "Arrhenius tính toán rằng nếu gấp đôi lượng CO2 thì nhiệt độ sẽ tăng cỡ 5–6 °C (9,0–10,8 °F)."
+    ]
+  },
+  {
+    "id": "follow-up-11",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Trong giai đoạn 1993 đến 2017 nó dâng trung bình bao nhiêu mỗi năm?",
+    "history": [
+      [
+        "human",
+        "Nguyên nhân chính khiến mực nước biển dâng cao là gì?"
+      ],
+      [
+        "ai",
+        "Mực nước biển dâng cao là hệ quả của việc sông băng cùng các phiến băng ở Greenland và châu Nam Cực tan chảy."
+      ]
+    ],
+    "expected_answer": "Trung bình 3,1 ± 0,3 mm một năm.",
+    "evidence": [
+      "Giai đoạn 1993 đến 2017 mức dâng tăng theo thời gian, trung bình 3,1 ± 0,3 mm một năm."
+    ]
+  },
+  {
+    "id": "follow-up-12",
+    "type": "follow_up",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Các mô hình quá khứ đánh giá thấp những gì?",
+    "history": [
+      [
+        "human",
+        "Các mô hình khí hậu được kiểm tra năng lực như thế nào?"
+      ],
+      [
+        "ai",
+        "Chúng được kiểm tra bằng cách xem chúng mô phỏng khí hậu quá khứ và hiện tại chính xác đến đâu."
+      ]
+    ],
+    "expected_answer": "Các mô hình quá khứ đánh giá thấp tốc độ thu hẹp vùng Bắc Cực cũng như tốc độ gia tăng giáng thủy.",
+    "evidence": [
+      "Các mô hình quá khứ đánh giá thấp tốc độ thu hẹp vùng Bắc Cực cũng như tốc độ gia tăng giáng thủy."
+    ]
+  },
+  {
+    "id": "cross-lingual-01",
+    "type": "cross_lingual",
+    "language": "vi",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Hàm chatgpt_generation trong sách dùng để làm gì?",
+    "history": [],
+    "expected_answer": "Hàm này dùng để sinh văn bản dựa trên một prompt cụ thể, một tài liệu đầu vào và mô hình được chọn.",
+    "evidence": [
+      "we create the chatgpt_generation function, which allows us to\ngenerate some text based on a specific prompt, input document, and the selected\nmodel"
+    ]
+  },
+  {
+    "id": "cross-lingual-02",
+    "type": "cross_lingual",
+    "language": "vi",
+    "split": "dev",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Những yếu tố chính nào quyết định các token xuất hiện trong một tokenizer?",
+    "history": [],
+    "expected_answer": "Ba yếu tố: phương pháp tokenization, các tham số và token đặc biệt dùng để khởi tạo tokenizer, và bộ dữ liệu mà tokenizer được huấn luyện.",
+    "evidence": [
+      "three major factors that dictate the tokens that appear\nwithin a tokenizer: the tokenization method, the parameters and special tokens we\nuse to initialize the tokenizer, and the dataset the tokenizer is trained on."
+    ]
+  },
+  {
+    "id": "cross-lingual-03",
+    "type": "cross_lingual",
+    "language": "en",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "In the matrix factorization collaborative filtering chapter, what is the first thing implemented in Python?",
+    "history": [],
+    "expected_answer": "A class MF that optimizes the variables, taking the utility matrix as Y_data just as the neighborhood-based collaborative filtering (NBCF) code does.",
+    "evidence": [
+      "chúng ta sẽ viết mộtclass MF thực hiện việc tối ưu các biến với một ma trận\nutility được cho dưới dạngY_data giống như với NBCF."
+    ]
+  },
+  {
+    "id": "cross-lingual-04",
+    "type": "cross_lingual",
+    "language": "en",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which two issues have to be considered in KNN because it decides based on the nearest points?",
+    "history": [],
+    "expected_answer": "First, how the distance is defined; second, how to compute the distances efficiently.",
+    "evidence": [
+      "Vì KNN ra quyết định dựa trên các điểm gần nhất nên có hai vấn đề ta cần lưu tâm. Thứ\nnhất, khoảng cách được định nghĩa như thế nào. Thứ hai, cần phải tính toán khoảng cách\nnhư thế nào cho hiệu quả."
+    ]
+  },
+  {
+    "id": "cross-lingual-05",
+    "type": "cross_lingual",
+    "language": "vi",
+    "split": "dev",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Archaea như Halobacterium thực hiện loại quang hợp nào và dùng sắc tố nào để hấp thụ ánh sáng?",
+    "history": [],
+    "expected_answer": "Chúng thực hiện một loại quang hợp không cố định carbon và không sinh oxy (anoxygenic), dùng sắc tố đơn giản retinal và các dẫn xuất rhodopsin vi sinh vật để hấp thụ ánh sáng xanh lục.",
+    "evidence": [
+      "Archaea such as Halobacterium also perform a type of non-carbon-fixing anoxygenic photosynthesis, where the simpler photopigment retinal and its microbial rhodopsin derivatives are used to absorb green light"
+    ]
+  },
+  {
+    "id": "cross-lingual-06",
+    "type": "cross_lingual",
+    "language": "vi",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Thực vật C4 cố định carbon dioxide trong tế bào mô giậu bằng cách nào và enzyme nào xúc tác phản ứng đó?",
+    "history": [],
+    "expected_answer": "Chúng gắn CO2 vào phân tử ba carbon phosphoenolpyruvate (PEP) nhờ enzyme PEP carboxylase, tạo ra axit hữu cơ bốn carbon oxaloacetic.",
+    "evidence": [
+      "Plants that use the C4 carbon fixation process chemically fix carbon dioxide in the cells of the mesophyll by adding it to the three-carbon molecule phosphoenolpyruvate (PEP), a reaction catalyzed by an enzyme called PEP carboxylase, creating the four-carbon organic acid oxaloacetic acid."
+    ]
+  },
+  {
+    "id": "cross-lingual-07",
+    "type": "cross_lingual",
+    "language": "vi",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Tại Đại học Cornell, ngô trồng ngoài đồng được báo cáo có tốc độ quang hợp ở lá như thế nào so với các loài khác?",
+    "history": [],
+    "expected_answer": "Khoảng 40 μmol CO2·m−2·s−1 và không bão hòa ở gần ánh sáng mặt trời đầy đủ; gần gấp đôi tốc độ quan sát được ở các loài như lúa mì và đậu tương.",
+    "evidence": [
+      "field grown maize was reported to have much greater leaf photosynthetic rates of 40",
+      "This higher rate in maize was almost double of those observed in other species such as wheat and soybean"
+    ]
+  },
+  {
+    "id": "cross-lingual-08",
+    "type": "cross_lingual",
+    "language": "en",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-edited",
+    "question": "According to the IPCC projections cited in the article, how much could the global surface temperature rise during the 21st century in the moderate scenario and in the extreme scenario?",
+    "history": [],
+    "expected_answer": "By about 0.3 to 1.7 °C (0.5 to 3.1 °F) in the moderate scenario and by roughly 2.6 to 4.8 °C (4.7 to 8.6 °F) in the most extreme scenario.",
+    "evidence": [
+      "nhiệt độ bề mặt toàn cầu có chiều hướng tăng thêm 0,3 đến 1,7 °C (0,5 đến 3,1 °F) với kịch bản vừa phải",
+      "gần 2,6 đến 4,8 °C (4,7 đến 8,6 °F) với kịch bản tột cùng"
+    ]
+  },
+  {
+    "id": "cross-lingual-09",
+    "type": "cross_lingual",
+    "language": "en",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "How many more people could climate change push into poverty by 2030, according to the World Bank estimate in the article?",
+    "history": [],
+    "expected_answer": "More than 120 million people.",
+    "evidence": [
+      "Ngân hàng Thế giới ước tính đến năm 2030 biến đổi khí hậu có thể khiến hơn 120 triệu người lâm vào cảnh nghèo khổ."
+    ]
+  },
+  {
+    "id": "cross-lingual-10",
+    "type": "cross_lingual",
+    "language": "en",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which Sustainable Development Goal links climate action to sustainable development, and how is it worded?",
+    "history": [],
+    "expected_answer": "Sustainable Development Goal 13, \"urgent action to combat climate change and its impacts\".",
+    "evidence": [
+      "Mối liên kết giữa hai vấn đề được công nhận trong Mục tiêu Phát triển Bền vững 13 đó là \"hành động khẩn cấp để chống lại biến đổi khí hậu và các tác động của nó\"."
+    ]
+  },
+  {
+    "id": "typo-short-01",
+    "type": "typo_short",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "bag of wrds meaning?",
+    "history": [],
+    "expected_answer": "Bag-of-words is a technique, the start of the history of Language AI, for representing unstructured text.",
+    "evidence": [
+      "a technique called bag-of-words, a method for\nrepresenting unstructured text"
+    ]
+  },
+  {
+    "id": "typo-short-02",
+    "type": "typo_short",
+    "language": "en",
+    "split": "dev",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "zero shot chain of thot phrase",
+    "history": [],
+    "expected_answer": "The phrase \"Let's think step-by-step\" is appended to the prompt to prime reasoning without giving examples.",
+    "evidence": [
+      "phrase “Let’s think step-by-step” to prime reasoning in its answer"
+    ]
+  },
+  {
+    "id": "typo-short-03",
+    "type": "typo_short",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "sieu phang hyperplane la gi",
+    "history": [],
+    "expected_answer": "Là ranh giới phẳng trong không gian nhiều chiều (đường thẳng trong không gian hai chiều, mặt phẳng trong không gian ba chiều), có thể biểu diễn bằng một hàm số tuyến tính.",
+    "evidence": [
+      "Ranh giới đơn giản nhất trong không gian\nhai chiều là một đường thẳng, trong không gian ba chiều là một mặt phẳng, trong không\ngian nhiều chiều hơn là mộtsiêu mặt phẳnghoặc siêu phẳng(hyperplane)."
+    ]
+  },
+  {
+    "id": "typo-short-04",
+    "type": "typo_short",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "transfer learning la gi",
+    "history": [],
+    "expected_answer": "Là phương pháp sử dụng các mô hình đã được huấn luyện sẵn để giải quyết bài toán mới (ít dữ liệu hơn) mà không cần xây dựng lại network và huấn luyện từ đầu.",
+    "evidence": [
+      "Phương pháp\nsử dụng các mô hình có sẵn như thế này được gọi làtransfer learning."
+    ]
+  },
+  {
+    "id": "typo-short-05",
+    "type": "typo_short",
+    "language": "vi",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "co bao nhieu support vector trong vi du svm",
+    "history": [],
+    "expected_answer": "Có ba support vector trong số 20 điểm dữ liệu của hai lớp.",
+    "evidence": [
+      "Như vậy trong số 20 điểm dữ liệu của cả hai lớp, chỉ có ba điểm nằm trongsupport set, tức\ncó ba điểm đóng vai trò là cácsupport vector."
+    ]
+  },
+  {
+    "id": "typo-short-06",
+    "type": "typo_short",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "wich pigment do some archea use insted of chlorophyll",
+    "history": [],
+    "expected_answer": "Bacteriorhodopsin, a pigment similar to those used for vision in animals; it changes its configuration in response to sunlight and acts as a proton pump.",
+    "evidence": [
+      "Some archaea use a simpler method that employs a pigment similar to those used for vision in animals. The bacteriorhodopsin changes its configuration in response to sunlight, acting as a proton pump."
+    ]
+  },
+  {
+    "id": "typo-short-07",
+    "type": "typo_short",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "thep va xi mang tao ra bao nhieu khi thai co2 cong nghiep",
+    "history": [],
+    "expected_answer": "Khoảng 13% khí thải CO2 công nghiệp.",
+    "evidence": [
+      "Hai ngành sản xuất thép và xi măng mà cùng nhau tạo ra khoảng 13% khí thải CO2 công nghiệp"
+    ]
+  },
+  {
+    "id": "typo-short-08",
+    "type": "typo_short",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "khi nha kinh lam khong khi gan be mat am hon bao nhieu do",
+    "history": [],
+    "expected_answer": "Khoảng 33 °C (59 °F) so với khi không có khí nhà kính.",
+    "evidence": [
+      "lượng khí nhà kính phát sinh tự nhiên khiến không khí gần bề mặt ấm hơn khoảng 33 °C (59 °F) so với khi không có khí nhà kính"
+    ]
+  },
+  {
+    "id": "out-of-doc-01",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Who founded Hugging Face?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": [],
+    "kind": "near-miss (company named in the book)"
+  },
+  {
+    "id": "out-of-doc-02",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "How does the Switch Transformer route tokens to experts in a mixture-of-experts model?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": [],
+    "kind": "near-miss (related architecture)"
+  },
+  {
+    "id": "out-of-doc-03",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "What is the context window of GPT-5?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": [],
+    "kind": "false premise (model not covered)"
+  },
+  {
+    "id": "out-of-doc-04",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "dev",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "What is the price of the Hugging Face Pro plan?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": [],
+    "kind": "near-miss (service named in the book)"
+  },
+  {
+    "id": "out-of-doc-05",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Thuật toán Apriori hoạt động như thế nào?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": [],
+    "kind": "near-miss (related ML topic)"
+  },
+  {
+    "id": "out-of-doc-06",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "XGBoost khác gì với Gradient Boosting thông thường?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": [],
+    "kind": "near-miss (related ML topic)"
+  },
+  {
+    "id": "out-of-doc-07",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Hàm kích hoạt GELU được định nghĩa thế nào?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": [],
+    "kind": "near-miss (related ML topic)"
+  },
+  {
+    "id": "out-of-doc-08",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Mạng LSTM có những cổng nào và mỗi cổng làm gì?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": [],
+    "kind": "near-miss (related ML topic)"
+  },
+  {
+    "id": "out-of-doc-09",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "dev",
+    "doc": "photosynthesis-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "What is the Q-cycle in the cytochrome b6f complex?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": [],
+    "kind": "near-miss (same subject)"
+  },
+  {
+    "id": "out-of-doc-10",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "dev",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which pigment makes carrots orange and what is its chemical formula?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": [],
+    "kind": "near-miss (pigments)"
+  },
+  {
+    "id": "out-of-doc-11",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Who won the Nobel Prize in Physics in 2019?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": [],
+    "kind": "unrelated"
+  },
+  {
+    "id": "out-of-doc-12",
+    "type": "out_of_doc",
+    "language": "en",
+    "split": "test",
+    "doc": "photosynthesis-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "What is the boiling point of water at sea level?",
+    "history": [],
+    "expected_answer": "The documents do not contain this information.",
+    "evidence": [],
+    "kind": "unrelated"
+  },
+  {
+    "id": "out-of-doc-13",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Hiệp định Escazú quy định điều gì về môi trường?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": [],
+    "kind": "near-miss (climate treaties)"
+  },
+  {
+    "id": "out-of-doc-14",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "test",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Phở bò được nấu như thế nào?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": [],
+    "kind": "unrelated"
+  },
+  {
+    "id": "out-of-doc-15",
+    "type": "out_of_doc",
+    "language": "vi",
+    "split": "dev",
+    "doc": "bien-doi-khi-hau-wikipedia",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Ai là tổng thống Hoa Kỳ năm 2020?",
+    "history": [],
+    "expected_answer": "Tài liệu không chứa thông tin này.",
+    "evidence": [],
+    "kind": "unrelated"
+  },
+  {
+    "id": "table-formula-code-01",
+    "type": "table_formula_code",
+    "language": "en",
+    "split": "dev",
+    "doc": "hands-on-llms",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "In the printed structure of the Phi-3 model, how many decoder layers does it have, and what are the dimensions of its embedding layer?",
+    "history": [],
+    "expected_answer": "It has 32 Phi3DecoderLayer layers, and the embedding layer is Embedding(32064, 3072): a vocabulary of 32064 tokens with 3072 dimensions.",
+    "evidence": [
+      "(embed_tokens): Embedding(32064, 3072, padding_idx=32000)",
+      "(0-31): 32 x Phi3DecoderLayer("
+    ]
+  },
+  {
+    "id": "table-formula-code-02",
+    "type": "table_formula_code",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Which model name does the book pass to AutoModelForCausalLM.from_pretrained when loading the text generation model?",
+    "history": [],
+    "expected_answer": "\"microsoft/Phi-3-mini-4k-instruct\".",
+    "evidence": [
+      "model = AutoModelForCausalLM.from_pretrained(\n    \"microsoft/Phi-3-mini-4k-instruct\","
+    ]
+  },
+  {
+    "id": "table-formula-code-03",
+    "type": "table_formula_code",
+    "language": "en",
+    "split": "test",
+    "doc": "hands-on-llms",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "What is the 'pearson_cosine' score of the embedding model after training, and what does that metric measure?",
+    "history": [],
+    "expected_answer": "About 0.59 (0.598): the cosine similarity between centered vectors, a value between 0 and 1 where a higher value means a higher degree of similarity; the book treats it as the baseline.",
+    "evidence": [
+      "'pearson_cosine': 0.5982288436666162,",
+      "'pearson_cosine', which is the cosine similarity between centered vectors."
+    ]
+  },
+  {
+    "id": "table-formula-code-04",
+    "type": "table_formula_code",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "start",
+    "author": "ai-draft, human-reviewed",
+    "question": "Một ma trận đối xứng A được gọi là xác định dương khi nào, và nửa xác định dương khác ở điểm nào?",
+    "history": [],
+    "expected_answer": "A là xác định dương nếu xᵀAx > 0 với mọi x ∈ Rⁿ, x ≠ 0; A là nửa xác định dương nếu xᵀAx ≥ 0 với mọi x ∈ Rⁿ, x ≠ 0.",
+    "evidence": [
+      "Một ma trận đối xứng2 A ∈Rn×n được gọi làxác định dương(positive definite) nếu:",
+      "xTAx ≥0,∀x ∈Rn,x"
+    ]
+  },
+  {
+    "id": "table-formula-code-05",
+    "type": "table_formula_code",
+    "language": "vi",
+    "split": "test",
+    "doc": "ml-co-ban",
+    "region": "end",
+    "author": "ai-draft, human-reviewed",
+    "question": "Trong bảng thuật ngữ của bài toán tối ưu, optimization variable được gọi là gì trong tiếng Việt và được ký hiệu thế nào?",
+    "history": [],
+    "expected_answer": "Là biến tối ưu, ký hiệu x ∈ Rⁿ.",
+    "evidence": [
+      "x ∈Rn optimization variable biến tối ưu"
+    ]
+  },
+  {
+    "id": "table-formula-code-06",
+    "type": "table_formula_code",
+    "language": "vi",
+    "split": "dev",
+    "doc": "ml-co-ban",
+    "region": "middle",
+    "author": "ai-draft, human-reviewed",
+    "question": "Trong ví dụ content-based recommendation, RMSE trên tập huấn luyện và trên tập kiểm thử là bao nhiêu?",
+    "history": [],
+    "expected_answer": "RMSE là 0.91 trên tập huấn luyện và 1.27 trên tập kiểm thử.",
+    "evidence": [
+      "RMSE for training: 0.91\nRMSE for test : 1.27"
     ]
   }
 ]

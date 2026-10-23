@@ -28,7 +28,7 @@ dependencies = [
     "fastapi",
     "uvicorn",
     "python-multipart",
-    # Ghi kết quả evaluate.py (client nhẹ)
+    # Ghi kết quả eval/evaluate.py (client nhẹ)
     "mlflow-skinny==2.22.5",
 ]
 
@@ -78,7 +78,7 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 # Các entrypoint set os.environ (TOKENIZERS_PARALLELISM, OMP_NUM_THREADS) TRƯỚC mọi import ML
 "api/main.py" = ["E402"]
-"evaluate.py" = ["E402"]
+"eval/evaluate.py" = ["E402"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

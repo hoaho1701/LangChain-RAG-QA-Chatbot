@@ -9,7 +9,7 @@ from src.prompts import CORRECTNESS_SYSTEM_PROMPT, FAITHFULNESS_SYSTEM_PROMPT, Q
 
 def log_evaluation(report: dict, report_md: str, dataset_path: str, experiment: str = "rag-eval") -> str:
     """Log one evaluation run (params, metrics, report) to MLflow and return its run id."""
-    import mlflow  # lazy: evaluate.py must still work without --mlflow
+    import mlflow  # lazy: eval.evaluate must still work without --mlflow
 
     mlflow.set_tracking_uri(os.environ.get("MLFLOW_TRACKING_URI", "./mlruns"))
     mlflow.set_experiment(experiment)

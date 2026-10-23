@@ -1,12 +1,12 @@
 """Compare two evaluation runs question by question.
 
 Usage:
-    python eval/compare.py before.json after.json [--out comparison.md]
+    python -m eval.compare before.json after.json [--out comparison.md]
 
-Both files come from `evaluate.py --per-case-json`. The questions are paired by id, so the comparison only counts a
-question that both runs answered. For every metric it shows the mean in each run, the difference, a 95% interval for
-that difference (paired bootstrap) and how many questions got better or worse. When the interval contains 0 the two
-runs cannot be told apart on this many questions.
+Both files come from `python -m eval.evaluate --per-case-json`. The questions are paired by id, so the comparison
+only counts a question that both runs answered. For every metric it shows the mean in each run, the difference, a 95%
+interval for that difference (paired bootstrap) and how many questions got better or worse. When the interval
+contains 0 the two runs cannot be told apart on this many questions.
 """
 
 import argparse
@@ -109,7 +109,7 @@ def render(results: Dict[str, dict], notes: List[str]) -> str:
 
 
 def main(argv: Optional[List[str]] = None) -> None:
-    parser = argparse.ArgumentParser(description="Compare two runs of evaluate.py --per-case-json.")
+    parser = argparse.ArgumentParser(description="Compare two runs of eval.evaluate --per-case-json.")
     parser.add_argument("before", help="Per-case JSON of the run to compare against (the baseline).")
     parser.add_argument("after", help="Per-case JSON of the new run.")
     parser.add_argument("--out", help="Also write the comparison to this Markdown file.")

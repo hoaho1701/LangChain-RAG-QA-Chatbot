@@ -82,6 +82,7 @@ CASE = {
     "type": "factoid",
     "language": "en",
     "split": "dev",
+    "doc": "doc-a",
     "question": "q",
     "history": [],
     "expected_answer": "a",
@@ -193,10 +194,10 @@ def test_every_generation_result_names_its_case_and_how_long_the_answer_took():
     assert result["seconds"] >= 0
 
 
-def test_metrics_are_broken_down_by_language_type_and_split():
+def test_metrics_are_broken_down_by_language_type_split_and_document():
     cases = [
-        make_case(id="a", type="factoid", language="en", split="dev"),
-        make_case(id="b", type="hard", language="vi", split="test"),
+        make_case(id="a", type="factoid", language="en", split="dev", doc="book"),
+        make_case(id="b", type="hard", language="vi", split="test", doc="article"),
     ]
     pipeline = FakePipeline(FakeLLM("yes"), ["the evidence"])
 
@@ -206,6 +207,15 @@ def test_metrics_are_broken_down_by_language_type_and_split():
     assert set(retrieval["mrr_by_split"]) == {"dev", "test"}
     assert set(generation["correctness_by_language"]) == {"en", "vi"}
     assert set(generation["faithfulness_by_type"]) == {"factoid", "hard"}
+    assert set(retrieval["recall_at_k_by_doc"]) == {"book", "article"}
+    assert set(generation["correctness_by_doc"]) == {"book", "article"}
+
+
+def test_a_dataset_without_the_doc_field_is_reported_under_unknown():
+    case = {k: v for k, v in make_case().items() if k != "doc"}
+    pipeline = FakePipeline(FakeLLM("yes"), ["the evidence"])
+
+    assert set(evaluate_retrieval(pipeline, [case])["mrr_by_doc"]) == {"unknown"}
 
 
 def test_per_case_results_put_retrieval_and_generation_side_by_side():
