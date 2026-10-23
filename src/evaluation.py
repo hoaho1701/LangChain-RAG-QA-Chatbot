@@ -30,7 +30,7 @@ from src.config import OLLAMA_BASE_URL
 from src.prompts import CORRECTNESS_JUDGE_PROMPT, FAITHFULNESS_JUDGE_PROMPT
 
 # The tags a metric is broken down by in the report.
-GROUPS = ("language", "type", "split")
+GROUPS = ("language", "type", "split", "doc")
 # PDF text marks a hyphenated line break with U+2010 (hyphen) or U+00AD (soft hyphen). Code points, not the characters
 # themselves, because U+00AD is invisible and `ruff format` rewrites escapes into the literal character.
 PDF_HYPHENS: dict = {0x2010: "-", 0x00AD: None}
@@ -41,6 +41,7 @@ class EvalCase(TypedDict):
     type: str
     language: str
     split: str
+    doc: str  # which document the question is about; an older dataset without it reports "unknown"
     question: str
     history: List[List[str]]
     expected_answer: str
@@ -146,6 +147,7 @@ def evaluate_retrieval(pipeline, dataset: List[EvalCase]) -> dict:
                 "id": case["id"],
                 "type": case["type"],
                 "split": case["split"],
+                "doc": case.get("doc", "unknown"),
                 "question": case["question"],
                 "language": case["language"],
                 "hit": hit,
@@ -200,6 +202,7 @@ def evaluate_generation(pipeline, dataset: List[EvalCase], judge=None) -> dict:
                 "id": case["id"],
                 "type": case["type"],
                 "split": case["split"],
+                "doc": case.get("doc", "unknown"),
                 "question": case["question"],
                 "language": case["language"],
                 "answer": answer,

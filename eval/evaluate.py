@@ -1,8 +1,8 @@
-# evaluate.py
+# eval/evaluate.py
 """CLI: run the RAG evaluation harness against a Q&A dataset and print a report.
 
 Usage:
-    python evaluate.py [--dataset eval/dataset.json] [--report eval/last_report.md] [--mlflow] [--judge-model NAME]
+    python -m eval.evaluate [--dataset eval/dataset.json] [--report eval/last_report.md] [--mlflow] [--judge-model NAME]
                        [--split dev|test|all] [--per-case-json PATH]
 """
 
@@ -23,7 +23,7 @@ from typing import List
 
 from src.config import JUDGE_MODEL, RERANKER_TOP_N
 from src.rag_pipeline import RAGPipeline
-from src.evaluation import load_dataset, make_judge, missing_evidence, run_evaluation, per_case_results
+from src.evaluation import GROUPS, load_dataset, make_judge, missing_evidence, run_evaluation, per_case_results
 
 
 def _breakdown(group: str, r: dict, g: dict) -> List[str]:
@@ -61,7 +61,7 @@ def render_report(report: dict) -> str:
         f"median {g['median_seconds']:.0f} s per answer",
         "",
     ]
-    for group in ("language", "type", "split"):
+    for group in GROUPS:
         lines += _breakdown(group, r, g)
     lines += [
         "",

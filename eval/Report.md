@@ -1,11 +1,11 @@
 <!--
-This is a committed snapshot of a real `python evaluate.py` run, kept so the
+This is a committed snapshot of a real `python -m eval.evaluate` run, kept so the
 evaluation results are visible on GitHub without requiring a local Ollama +
-model setup to reproduce. It is NOT regenerated automatically — `evaluate.py`
+model setup to reproduce. It is NOT regenerated automatically — `eval.evaluate`
 always writes to `eval/last_report.md` (gitignored) instead. Update this file
 by hand (copy from `eval/last_report.md`) if you want to refresh the snapshot.
 
-This snapshot: `evaluate.py --split all`, answering model qwen3.5:9b, judge
+This snapshot: `python -m eval.evaluate --split all`, answering model qwen3.5:9b, judge
 gemma4:12b, all 72 questions (52 dev + 20 test). A second run with the judge
 phi4:14b gave identical answers and retrieval; its numbers are in the
 cross-check section below.
